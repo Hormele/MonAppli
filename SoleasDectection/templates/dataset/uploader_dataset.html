@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Uploader un dataset</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label>Nom :</label>
+    <input type="text" name="nom" required>
+
+    <br><br>
+
+    <label>Description :</label>
+    <textarea name="description"></textarea>
+
+    <br><br>
+
+    <label>Type de fichier :</label>
+    <select name="type" required>
+        <option value="brut">Fichier brut</option>
+        <option value="nettoye">Fichier nettoyé</option>
+    </select>
+
+    <br><br>
+
+    <label>Fichier (CSV):</label>
+    <input type="file" name="fichier" required>
+
+    <br><br>
+
+    <button type="submit">Uploader</button>
+</form>
+
+{% endblock %}

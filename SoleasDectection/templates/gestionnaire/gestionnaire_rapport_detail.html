@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Rapport de Fraude - Campagne {{ rapport.campagne.id }}</h2>
+
+<pre>{{ rapport.rapport }}</pre>
+
+<a href="{% url 'exporter_rapport_pdf' rapport.campagne.id %}" target="_blank">Exporter le rapport en PDF</a>
+<a href="{% url 'gestionnaire_campagnes' %}">← Retour aux campagnes</a>
+
+{% endblock %}

@@ -1,0 +1,156 @@
+/* Définir la taille du conteneur principal */
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* Section de bienvenue */
+.hero {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(to right, #28a745, #007bff); /* dégradé de couleur */
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 30px;
+}
+
+/* Titres dans la section 'hero' */
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.btn-connexion {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 30px;
+    font-size: 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.btn-connexion:hover {
+    background-color: #0056b3;
+}
+
+/* Cartes de résumé */
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    padding: 20px;
+    border-radius: 8px;
+    color: white;
+}
+
+.card h3 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 1.2rem;
+}
+
+.bg-primary {
+    background-color: #007bff;
+}
+
+.bg-success {
+    background-color: #28a745;
+}
+
+.bg-danger {
+    background-color: #dc3545;
+}
+
+.bg-warning {
+    background-color: #ffc107;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Graphiques */
+.stats {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.stats h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.stats p {
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+canvas {
+    display: block;
+    margin: 0 auto;
+}
+
+/* Section des graphiques avec un espacement spécifique */
+.charts {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.chart-container {
+    width: 48%;
+}
+
+/* Section graphique pour les cartes */
+.card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+/* Styling du pied de page */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1rem;
+    padding: 20px;
+    background-color: #343a40;
+    color: white;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Réactivité pour petits écrans */
+@media screen and (max-width: 768px) {
+    .row {
+        flex-direction: column;
+    }
+
+    .charts {
+        flex-direction: column;
+    }
+
+    .chart-container {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+}

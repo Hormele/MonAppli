@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Supprimer la règle métier</h2>
+
+<p>Êtes-vous sûr de vouloir supprimer la règle "<strong>{{ regle.nom }}</strong>" ?</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Oui, supprimer</button>
+    <a href="{% url 'gestionnaire_regles_metier' %}">Annuler</a>
+</form>
+
+{% endblock %}

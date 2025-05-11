@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Mes Campagnes</h2>
+<ul>
+{% for campagne in campagnes %}
+    <li>
+        Campagne {{ campagne.id }} - Statut : {{ campagne.statut }}
+        <a href="{% url 'gestionnaire_suspects' campagne.id %}">Voir suspects</a>
+        <a href="{% url 'consulter_rapport' campagne.id %}">Voir Rapport</a>
+    </li>
+{% endfor %}
+</ul>
+
+{% endblock %}

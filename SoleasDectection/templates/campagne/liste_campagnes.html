@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Liste des campagnes</h1>
+<p>Visualisez, gérez et lancez de nouvelles campagnes de détection de fraude.</p>
+
+<a href="{% url 'lancer_campagne' %}" class="btn btn-success mb-4">+ Lancer une nouvelle campagne</a>
+
+<h2>Statistiques des campagnes</h2>
+
+<div style="display: flex; gap: 30px; flex-wrap: wrap;">
+  <div>
+    <h4>Par statut</h4>
+    <canvas id="statutChart" width="300" height="300"></canvas>
+  </div>
+  <div>
+    <h4>Par algorithme</h4>
+    <canvas id="algoChart" width="300" height="300"></canvas>
+  </div>
+  <div>
+    <h4>Par fréquence</h4>
+    <canvas id="freqChart" width="300" height="300"></canvas>
+  </div>
+</div>
+
+<div class="mt-5">
+  <h4>Progression des campagnes</h4>
+  <canvas id="progressionChart" width="900" height="300"></canvas>
+</div>
+
+<hr>
+
+<h2>Tableau des campagnes</h2>
+<table class="table table-bordered table-striped mt-3">
+  <thead class="thead-dark">
+    <tr>
+      <th>ID</th>
+      <th>Modèle</th>
+      <th>Datasets</th>
+      <th>Fréquence</th>
+      <th>Répétition</th>
+      <th>Statut</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for campagne in campagnes %}
+    <tr>
+      <td>{{ campagne.id }}</td>
+      <td>{{ campagne.modele_ml.nom }}</td>
+      <td>
+        {% for ds in campagne.datasets.all %}
+          {{ ds.nom }}<br>
+        {% endfor %}
+      </td>
+      <td>{{ campagne.frequence }}</td>
+      <td>{{ campagne.repetition }}</td>
+      <td>{{ campagne.statut }}</td>
+      <td>
+        {% if campagne.statut == 'en_attente' %}
+          <a href="{% url 'demarrer_campagne' campagne.id %}">Démarrer</a>
+        {% elif campagne.statut == 'en_cours' %}
+          <a href="{% url 'suspendre_campagne' campagne.id %}">Suspendre</a> |
+          <a href="{% url 'arreter_campagne' campagne.id %}">Terminer</a>
+        {% elif campagne.statut == 'suspendue' %}
+          <a href="{% url 'demarrer_campagne' campagne.id %}">Reprendre</a>
+        {% endif %}
+        <br>
+        <a href="{% url 'detail_campagne' campagne.id %}">Voir détails</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  function makeChart(id, labels, data, color) {
+    new Chart(document.getElementById(id), {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: id,
+          data: data,
+          backgroundColor: color
+        }]
+      }
+    });
+  }
+
+  makeChart('statutChart', {{ statut_labels|safe }}, {{ statut_data|safe }}, 'orange');
+  makeChart('algoChart', {{ algo_labels|safe }}, {{ algo_data|safe }}, 'blue');
+  makeChart('freqChart', {{ freq_labels|safe }}, {{ freq_data|safe }}, 'green');
+
+  new Chart(document.getElementById('progressionChart'), {
+    type: 'line',
+    data: {
+      labels: {{ progression_labels|safe }},
+      datasets: [{
+        label: 'Campagnes créées',
+        data: {{ progression_data|safe }},
+        borderColor: '#007bff',
+        backgroundColor: 'rgba(0,123,255,0.2)',
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          precision: 0
+        }
+      }
+    }
+  });
+</script>
+{% endblock %}

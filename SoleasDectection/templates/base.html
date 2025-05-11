@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}SoleasDetection{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav>
+            <div class="nav-left">
+              <a href="{% url 'dashboard_accueil' %}"><img src="{% static 'img/logo.png' %}" alt="SoleasDetection Logo" class="logo"></a>
+            </div>
+            
+            <div class="nav-right">
+              <ul>
+                <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+                <li><a href="{% url 'about' %}">À propos de nous</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
+                {% if user.is_authenticated %}
+                  <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                {% else %}
+                  <li><a href="{% url 'login' %}">Se connecter</a></li>
+                {% endif %}
+              </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 SoleasDetection - Tous droits réservés</p>
+    </footer>
+</body>
+</html>

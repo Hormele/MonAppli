@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Détail de la Campagne : {{ campagne.nom }}</h2>
+
+<p><strong>Statut :</strong> {{ campagne.statut }}</p>
+<p><strong>Date de début :</strong> {{ campagne.date_debut_c }}</p>
+<p><strong>Modèle utilisé :</strong> {{ campagne.modele_ml.nom }}</p>
+<p><strong>Dataset :</strong> {{ campagne.dataset.nom }}</p>
+
+<hr>
+<h3>Rapports associés</h3>
+<ul>
+    {% for rapport in rapports %}
+    <li>
+        Rapport ID {{ rapport.id }} : 
+        <a href="{{ rapport.fichier.url }}">Télécharger</a>
+    </li>
+    {% empty %}
+    <p>Aucun rapport généré pour cette campagne.</p>
+    {% endfor %}
+</ul>
+
+<hr>
+<h3>Suspects détectés</h3>
+<table border="1">
+    <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Matricule</th>
+        <th>Description</th>
+        <th>Statut</th>
+    </tr>
+    {% for suspect in suspects %}
+    <tr>
+        <td>{{ suspect.nom }}</td>
+        <td>{{ suspect.email }}</td>
+        <td>{{ suspect.matricule }}</td>
+        <td>{{ suspect.description }}</td>
+        <td>{{ suspect.decision }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="5">Aucun suspect détecté pour cette campagne.</td></tr>
+    {% endfor %}
+</table>
+{% endblock %}

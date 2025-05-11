@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Entraîner un nouveau modèle ML</h1>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Choisir un dataset nettoyé :</label>
+    <select name="dataset" required>
+        {% for dataset in datasets %}
+        <option value="{{ dataset.id }}">{{ dataset.nom }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Choisir l'algorithme :</label>
+    <select name="algorithme" required>
+        <option value="isolation_forest">Isolation Forest</option>
+        <option value="svm">SVM</option>
+        <option value="kmeans">KMeans</option>
+    </select>
+
+    <br><br>
+
+    <label>Type de fraude :</label>
+    <select name="type_fraude" required>
+        <option value="cartes">Cartes virtuelles</option>
+        <option value="transactions">Transactions</option>
+    </select>
+
+    <br><br>
+
+    <button type="submit">Entraîner le modèle</button>
+</form>
+
+{% endblock %}

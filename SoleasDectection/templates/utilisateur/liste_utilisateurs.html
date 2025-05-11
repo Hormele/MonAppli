@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>Gestion des utilisateurs</h1>
+  <p>Visualisez, filtrez et gérez les utilisateurs de la plateforme.</p>
+
+  <a href="{% url 'ajouter_utilisateur' %}" class="btn btn-success mb-3">+ Ajouter un utilisateur</a>
+
+  <!-- Filtre par rôle -->
+  <form method="get" class="form-inline mb-4">
+    <label for="role" class="mr-2">Filtrer par rôle :</label>
+    <select name="role" id="role" class="form-control mr-2">
+      <option value="">Tous</option>
+      <option value="admin" {% if role_filter == 'admin' %}selected{% endif %}>Admin</option>
+      <option value="analyste" {% if role_filter == 'analyste' %}selected{% endif %}>Analyste</option>
+    </select>
+    <button type="submit" class="btn btn-primary">Filtrer</button>
+  </form>
+
+  <!-- Tableau -->
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Rôle</th>
+        <th>Statut</th>
+        <th>Date d'adhésion</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for utilisateur in utilisateurs %}
+      <tr>
+        <td>{{ utilisateur.nom }}</td>
+        <td>{{ utilisateur.email }}</td>
+        <td>{{ utilisateur.role|title }}</td>
+        <td>{{ utilisateur.is_active|yesno:"Actif,Inactif" }}</td>
+        <td>{{ utilisateur.date_joined|date:"d/m/Y" }}</td>
+        <td>
+          <a href="{% url 'modifier_utilisateur' utilisateur.id %}" class="btn btn-sm btn-warning">Modifier</a>
+          <a href="{% url 'supprimer_utilisateur' utilisateur.id %}" class="btn btn-sm btn-danger">Supprimer</a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="6">Aucun utilisateur trouvé.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <hr>
+  <h4>Répartition des utilisateurs</h4>
+  <canvas id="roleChart" width="600" height="300"></canvas>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('roleChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Admins', 'Analystes'],
+      datasets: [{
+        label: 'Utilisateurs',
+        data: [{{ admins_count }}, {{ analystes_count }}],
+        backgroundColor: ['#007bff', '#ffc107']
+      }]
+    }
+  });
+</script>
+{% endblock %}

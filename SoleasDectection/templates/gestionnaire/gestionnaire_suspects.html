@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Suspects de la Campagne</h2>
+<table border="1">
+    <tr>
+        <th>Email</th>
+        <th>Nom</th>
+        <th>Matricule</th>
+        <th>Description</th>
+        <th>Décision</th>
+        <th>Action</th>
+    </tr>
+    {% for suspect in suspects %}
+    <tr>
+        <td>{{ suspect.email }}</td>
+        <td>{{ suspect.nom }}</td>
+        <td>{{ suspect.matricule }}</td>
+        <td>{{ suspect.description }}</td>
+        <td>{{ suspect.get_decision_display }}</td>
+        <td>
+            <a href="{% url 'prendre_decision_suspect' suspect.id %}">Prendre décision</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Modifier une règle métier</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Nom :</label>
+    <input type="text" name="nom" value="{{ regle.nom }}"><br>
+
+    <label>Description :</label>
+    <textarea name="description">{{ regle.description }}</textarea><br>
+
+    <label>Condition :</label>
+    <input type="text" name="condition" value="{{ regle.condition }}"><br>
+
+    <button type="submit">Modifier</button>
+    <a href="{% url 'gestionnaire_regles_metier' %}">Annuler</a>
+</form>
+
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h1>Liste des modèles ML</h1>
+<p>Gérez, testez et visualisez tous les modèles entraînés.</p>
+
+<!-- Boutons -->
+<p>
+  <a href="{% url 'entrainer_modele' %}" class="btn btn-success">+ Entraîner un nouveau modèle</a>
+  <a href="{% url 'tester_modele' %}" class="btn btn-warning">[Tester un modèle sur un dataset]</a>
+</p>
+
+<!-- Filtre par algorithme -->
+<form method="GET" class="form-inline mb-3">
+  <label for="algo">Filtrer par algorithme :</label>
+  <select name="algo" id="algo" class="form-control mx-2">
+    <option value="">-- Tous --</option>
+    <option value="isolation_forest">Isolation Forest</option>
+    <option value="svm">SVM</option>
+    <option value="kmeans">K-Means</option>
+  </select>
+  <button type="submit" class="btn btn-primary">Filtrer</button>
+</form>
+
+<hr>
+
+<h2>Statistiques des modèles</h2>
+<div style="display: flex; gap: 40px; flex-wrap: wrap;">
+  <div>
+    <h4>Par Algorithme</h4>
+    <canvas id="algoChart" width="400" height="250"></canvas>
+  </div>
+  <div>
+    <h4>Par Type de Fraude</h4>
+    <canvas id="fraudeChart" width="400" height="250"></canvas>
+  </div>
+</div>
+
+<hr>
+
+<h2>Tableau des modèles</h2>
+<table class="table table-bordered table-hover mt-4">
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Algorithme</th>
+      <th>Type de Fraude</th>
+      <th>Date</th>
+      <th>Fichier</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for modele in modeles %}
+    <tr>
+      <td>{{ modele.nom }}</td>
+      <td>{{ modele.algorithme }}</td>
+      <td>{{ modele.type_fraude }}</td>
+      <td>{{ modele.date_creation }}</td>
+      <td>
+        {% if modele.fichier_modele %}
+        <a href="{{ modele.fichier_modele.url }}">Télécharger</a>
+        {% else %}
+        Aucun
+        {% endif %}
+      </td>
+      <td>
+        <a href="{% url 'tester_modele' %}">Tester</a> |
+        <a href="{% url 'supprimer_modele' modele.id %}">Supprimer</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Script Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const algoCtx = document.getElementById('algoChart').getContext('2d');
+  new Chart(algoCtx, {
+    type: 'bar',
+    data: {
+      labels: {{ algo_labels|safe }},
+      datasets: [{
+        label: 'Nombre de modèles',
+        data: {{ algo_data|safe }},
+        backgroundColor: 'steelblue'
+      }]
+    }
+  });
+
+  const fraudeCtx = document.getElementById('fraudeChart').getContext('2d');
+  new Chart(fraudeCtx, {
+    type: 'bar',
+    data: {
+      labels: {{ fraude_labels|safe }},
+      datasets: [{
+        label: 'Par type de fraude',
+        data: {{ fraude_data|safe }},
+        backgroundColor: 'orange'
+      }]
+    }
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Tester un modèle ML</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    
+    <label>Choisir un modèle :</label>
+    <select name="modele" required>
+        {% for modele in modeles %}
+        <option value="{{ modele.id }}">{{ modele.nom }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label>Choisir un dataset nettoyé :</label>
+    <select name="dataset" required>
+        {% for dataset in datasets %}
+        <option value="{{ dataset.id }}">{{ dataset.nom }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <button type="submit">Lancer la prédiction</button>
+</form>
+
+{% if resultat %}
+<hr>
+<h2>Résultat des prédictions</h2>
+
+<ul>
+    {% for r in resultat %}
+    <li>{{ r }}</li>
+    {% endfor %}
+</ul>
+
+<h3>Graphique des prédictions</h3>
+<canvas id="resultChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var graph_data = {{ graph_data|safe }};
+
+var ctx = document.getElementById('resultChart').getContext('2d');
+var resultChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: graph_data.labels,
+        datasets: [{
+            label: 'Nombre',
+            data: graph_data.data,
+            backgroundColor: ['blue', 'red']
+        }]
+    }
+});
+</script>
+
+{% endif %}
+
+{% endblock %}

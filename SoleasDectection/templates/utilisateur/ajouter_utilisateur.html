@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Ajouter un utilisateur</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Nom :</label>
+    <input type="text" name="nom"><br>
+
+    <label>Email :</label>
+    <input type="email" name="email"><br>
+
+    <label>Mot de passe :</label>
+    <input type="password" name="password"><br>
+
+    <label>Rôle :</label>
+    <select name="role">
+        <option value="analyste">Analyste</option>
+        <option value="admin">Administrateur</option>
+    </select><br>
+
+    <button type="submit">Ajouter</button>
+</form>
+{% endblock %}

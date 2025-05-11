@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Gestion des Règles Métier</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>Condition</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for regle in regles %}
+        <tr>
+            <td>{{ regle.nom }}</td>
+            <td>{{ regle.description }}</td>
+            <td>{{ regle.condition }}</td>
+            <td>
+                {% if regle.actif %}
+                    <span style="color: green;">Active</span>
+                {% else %}
+                    <span style="color: red;">Désactivée</span>
+                {% endif %}
+            </td>
+            <td>
+                <!-- Activer/Désactiver -->
+                <a href="{% url 'toggle_regle_metier' regle.id %}">Activer/Désactiver</a> | 
+
+                {% if request.user.role == 'admin' %}
+                    <!-- Modifier -->
+                    <a href="{% url 'modifier_regle_metier' regle.id %}">Modifier</a> | 
+                    <!-- Supprimer -->
+                    <a href="{% url 'supprimer_regle_metier' regle.id %}">Supprimer</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<hr>
+
+{% if request.user.role == 'admin' %}
+    <a href="{% url 'ajouter_regle_metier' %}">Ajouter une nouvelle règle</a>
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Administrateur{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Bienvenue sur le Dashboard Administrateur</h1>
+
+    <!-- Cartes de Synthèse -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <h5>Utilisateurs</h5>
+                    <h3>{{ users_count }}</h3>
+                    <p>Utilisateurs enregistrés</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <h5>Campagnes en cours</h5>
+                    <h3>{{ campaigns_count }}</h3>
+                    <p>Campagnes en cours</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <h5>Campagnes Terminées</h5>
+                    <h3>{{ finished_campaigns_count }}</h3>
+                    <p>Campagnes clôturées</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-danger text-white">
+                <div class="card-body">
+                    <h5>Datasets</h5>
+                    <h3>{{ datasets_count }}</h3>
+                    <p>Datasets chargés</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Graphiques -->
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="datasetsChart"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="campaignsChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Graphique des Datasets (Exemple de graphique à lignes)
+        var ctx1 = document.getElementById('datasetsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Juil', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Datasets chargés',
+                    data: [12, 15, 10, 20, 30, 35],
+                    borderColor: '#007bff',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Mois'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Nombre de Datasets'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Graphique des Campagnes (Graphique à barres)
+        var ctx2 = document.getElementById('campaignsChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Juil', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Campagnes',
+                    data: [5, 10, 8, 12, 14, 16],
+                    backgroundColor: '#28a745'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Mois'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Nombre de Campagnes'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+{% endblock %}

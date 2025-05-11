@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Modifier un utilisateur</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>Nom :</label>
+    <input type="text" name="nom" value="{{ utilisateur.nom }}"><br>
+
+    <label>Email :</label>
+    <input type="email" name="email" value="{{ utilisateur.email }}"><br>
+
+    <label>Rôle :</label>
+    <select name="role">
+        <option value="analyste" {% if utilisateur.role == 'analyste' %}selected{% endif %}>Analyste</option>
+        <option value="admin" {% if utilisateur.role == 'admin' %}selected{% endif %}>Administrateur</option>
+    </select><br>
+
+    <button type="submit">Modifier</button>
+</form>
+{% endblock %}

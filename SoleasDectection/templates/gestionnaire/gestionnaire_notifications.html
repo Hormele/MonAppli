@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Notifications – Détection de Suspects</h2>
+<ul>
+  {% for notification in notifications %}
+    <li>
+      <strong>Notification :</strong> {{ notification.message }}<br>
+      <em>Date :</em> {{ notification.date_creation }}
+    </li>
+  {% empty %}
+    <li>Aucune alerte de suspects détectés pour le moment.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

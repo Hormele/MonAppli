@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau de bord Accueil{% endblock %}
+
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/dashboard_accueil.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="hero">
+        <h1>Bienvenue sur SoleasDetection</h1>
+        <p>Analysez vos transactions, détectez des anomalies, et prenez des décisions informées rapidement.</p>
+        <a href="{% url 'login' %}" class="btn-connexion">Se connecter</a>
+    </section>
+
+    <section class="stats">
+        <h2>Statistiques générales</h2>
+        <p>Quelques chiffres clés sur les campagnes et les analyses en cours.</p>
+        <!-- Optional Graphs -->
+    </section>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <h1 class="mt-4">Bienvenue Analyste</h1>
+
+  <section>
+    <h2>Vue synthétique</h2>
+    <ul>
+      <li>Campagnes en cours : {{ campagnes_en_cours }}</li>
+      <li>Campagnes terminées : {{ campagnes_terminees }}</li>
+      <li>Suspects légitimes : {{ suspects_legitime }}</li>
+      <li>Suspects bloqués : {{ suspects_bloque }}</li>
+      <li>Suspects en attente : {{ suspects_attente }}</li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Navigation rapide</h2>
+    <ul>
+      <li><a href="{% url 'liste_campagnes' %}">Liste des campagnes</a></li>
+      <li><a href="{% url 'liste_modeles' %}">Liste des modèles ML</a></li>
+      <li><a href="{% url 'liste_datasets' %}">Liste des datasets</a></li>
+      <li><a href="{% url 'gestionnaire_dashboard' %}">Gestionnaire de risques</a></li>
+    </ul>
+  </section>
+
+  <hr>
+
+  <section>
+    <h2>Graphiques</h2>
+    <div style="display: flex; gap: 30px; flex-wrap: wrap;">
+      <div>
+        <h4>Décisions sur les suspects</h4>
+        <canvas id="suspectChart" width="400" height="250"></canvas>
+      </div>
+      <div>
+        <h4>État des campagnes</h4>
+        <canvas id="campagneChart" width="400" height="250"></canvas>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const suspectCtx = document.getElementById('suspectChart').getContext('2d');
+  new Chart(suspectCtx, {
+    type: 'pie',
+    data: {
+      labels: ['Légitime', 'Bloqué', 'En attente'],
+      datasets: [{
+        data: [{{ suspects_legitime }}, {{ suspects_bloque }}, {{ suspects_attente }}],
+        backgroundColor: ['green', 'red', 'orange']
+      }]
+    }
+  });
+
+  const campagneCtx = document.getElementById('campagneChart').getContext('2d');
+  new Chart(campagneCtx, {
+    type: 'bar',
+    data: {
+      labels: ['Terminées', 'En cours'],
+      datasets: [{
+        label: 'Campagnes',
+        data: [{{ campagnes_terminees }}, {{ campagnes_en_cours }}],
+        backgroundColor: ['blue', 'grey']
+      }]
+    }
+  });
+</script>
+{% endblock %}

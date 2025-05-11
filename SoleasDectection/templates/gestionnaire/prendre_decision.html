@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Prendre une décision</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label>Décision :</label>
+    <select name="decision">
+        <option value="en_attente">En attente</option>
+        <option value="bloque">Bloqué</option>
+        <option value="legitime">Légitime</option>
+    </select>
+    <button type="submit">Valider</button>
+</form>
+
+{% endblock %}
