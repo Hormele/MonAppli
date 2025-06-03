@@ -1,0 +1,201 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des campagnes</title>
+    <link rel="stylesheet" href="{% static 'css/liste_campagnes.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- Barre latérale -->
+    <nav class="sidebar">
+        <h2>SoleasDetection</h2>
+        <ul>
+          <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+          <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+          <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+          <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+          <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+          <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+          <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+          <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+          <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Mes campagnes</h1>
+            <a href="{% url 'lancer_campagne' %}" class="btn-vert">Lancer une nouvelle campagne</a>
+        </div>
+        <p>Visualisez, gérez et lancez de nouvelles campagnes de détection de fraude.</p>
+
+        <!-- Filtres -->
+        <form method="get" class="form-filtres">
+            <label for="algo">Algorithme :</label>
+            <select name="algo" id="algo">
+                <option value="">Tous</option>
+                {% for algo in algos %}
+                    <option value="{{ algo }}" {% if selected_algo == algo %}selected{% endif %}>{{ algo }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="date_debut">Date de :</label>
+            <input type="date" name="date_debut" value="{{ date_debut }}">
+
+            <label for="date_fin">à :</label>
+            <input type="date" name="date_fin" value="{{ date_fin }}">
+
+            <button type="submit" class="btn-filtrer">Filtrer</button>
+        </form>
+
+        <!-- Tableau -->
+        <h2>Tableau des campagnes</h2>
+        <table class="table-campagnes">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Modèle ML</th>
+                    <th>Datasets</th>
+                    <th>Fréquence</th>
+                    <th>Répétition</th>
+                    <th>Statut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for campagne in campagnes %}
+                <tr>
+                    <td>{{ campagne.id }}</td>
+                    <td>{{ campagne.modele_ml.nom }}</td>
+                    <td>
+                        {% for ds in campagne.datasets.all %}
+                            {{ ds.nom }}<br>
+                        {% endfor %}
+                    </td>
+                    <td>{{ campagne.frequence }}</td>
+                    <td>{{ campagne.repetition }}</td>
+                    <td>{{ campagne.statut }}</td>
+                    <td>
+                        {% if campagne.statut == 'en_attente' %}
+                            <a href="{% url 'demarrer_campagne' campagne.id %}">Démarrer</a>
+                        {% elif campagne.statut == 'en_cours' %}
+                            <a href="{% url 'suspendre_campagne' campagne.id %}">Suspendre</a> |
+                            <a href="{% url 'arreter_campagne' campagne.id %}">Terminer</a>
+                        {% elif campagne.statut == 'suspendue' %}
+                            <a href="{% url 'demarrer_campagne' campagne.id %}">Reprendre</a>
+                        {% endif %}
+                        <a href="{% url 'detail_campagne' campagne.id %}">Voir détails</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="7">Aucune campagne trouvée.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Statistiques -->
+        <section class="stats-section">
+            <h2>Statistiques des campagnes</h2>
+            <div class="charts-row">
+              <div class="chart-card">
+                <h3>Par statut</h3>
+                <canvas id="statutChart" width="300" height="300"></canvas>
+              </div>
+              <div class="chart-card">
+                <h3>Par algorithme</h3>
+                <canvas id="algoChart" width="300" height="300"></canvas>
+              </div>
+              <div class="chart-card">
+                <h3>Par fréquence</h3>
+                <canvas id="freqChart" width="300" height="300"></canvas>
+              </div>
+            </div>
+          
+            <div class="progression-campaigns">
+              <h3>Progression des campagnes</h3>
+              <canvas id="progressChart" width="100%" height="300"></canvas>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+        </footer>
+    </div>
+</div>
+
+<!-- Script ChartJS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const statutCtx = document.getElementById('statutChart').getContext('2d');
+    new Chart(statutCtx, {
+      type: 'doughnut',
+      data: {
+        labels: {{ statuts_labels|safe }},
+        datasets: [{
+          data: {{ statuts_data|safe }},
+          backgroundColor: ['#f39c12', '#3498db', '#9b59b6', '#2ecc71', '#e74c3c'],
+          borderWidth: 1
+        }]
+      },
+      options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+  
+    const algoCtx = document.getElementById('algoChart').getContext('2d');
+    new Chart(algoCtx, {
+      type: 'doughnut',
+      data: {
+        labels: {{ algos_labels|safe }},
+        datasets: [{
+          data: {{ algos_data|safe }},
+          backgroundColor: ['#16a085', '#2980b9', '#d35400', '#c0392b', '#8e44ad'],
+          borderWidth: 1
+        }]
+      },
+      options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+  
+    const freqCtx = document.getElementById('freqChart').getContext('2d');
+    new Chart(freqCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Fréquence 1', 'Fréquence 2', 'Fréquence 3'],
+        datasets: [{
+          data: {{ frequences_data|safe }},
+          backgroundColor: ['#1abc9c', '#f1c40f', '#e67e22'],
+          borderWidth: 1
+        }]
+      },
+      options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
+    });
+  
+    const progressCtx = document.getElementById('progressChart').getContext('2d');
+    new Chart(progressCtx, {
+      type: 'line',
+      data: {
+        labels: {{ mois_labels|safe }},
+        datasets: [{
+          label: 'Campagnes créées',
+          data: {{ campagnes_par_mois|safe }},
+          fill: false,
+          borderColor: '#007bff',
+          tension: 0.4,
+          pointBackgroundColor: '#007bff'
+        }]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+</script>
+</body>
+</html>

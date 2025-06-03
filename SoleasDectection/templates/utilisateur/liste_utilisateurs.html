@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Utilisateurs</title>
+    <link rel="stylesheet" href="{% static 'css/liste_utilisateurs.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Gestion des utilisateurs</h1>
+        <p>Visualisez, filtrez et gérez les utilisateurs de la plateforme.</p>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_datasets' %}" class="active">Datasets</a></li>
+            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </nav>
+
+        <form method="get" class="form-inline mb-4">
+            <label for="role" class="mr-2">Filtrer par rôle :</label>
+            <select name="role" id="role" class="form-control mr-2">
+                <option value="">Tous</option>
+                <option value="admin" {% if role_filter == 'admin' %}selected{% endif %}>Admin</option>
+                <option value="analyste" {% if role_filter == 'analyste' %}selected{% endif %}>Analyste</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+        </form>
+
+        <div class="ajouter-btn">
+            <a href="{% url 'ajouter_utilisateur' %}" class="btn btn-success">+ Ajouter un utilisateur</a>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Rôle</th>
+                    <th>Statut</th>
+                    <th>Date d'adhésion</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for utilisateur in utilisateurs %}
+                <tr>
+                    <td>{{ utilisateur.nom }}</td>
+                    <td>{{ utilisateur.email }}</td>
+                    <td>{{ utilisateur.role|title }}</td>
+                    <td>{{ utilisateur.is_active|yesno:"Actif,Inactif" }}</td>
+                    <td>{{ utilisateur.date_joined|date:"d/m/Y" }}</td>
+                    <td>
+                        <a href="{% url 'modifier_utilisateur' utilisateur.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                        <a href="{% url 'supprimer_utilisateur' utilisateur.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="6">Aucun utilisateur trouvé.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h4>Répartition des utilisateurs</h4>
+        <canvas id="roleChart" width="400" height="300" style="max-width: 100%; max-height: 300px;"></canvas>
+    </div>
+
+    <footer>
+        <p>© 2025 - SoleasDetection. Tous droits réservés.</p>
+    </footer>
+
+    <script>
+        const ctx = document.getElementById('roleChart').getContext('2d');
+        const roleChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: {{ chart_labels|safe }},
+                datasets: [{
+                    data: {{ chart_data|safe }},
+                    backgroundColor: ['#3498db', '#2ecc71']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        enabled: true, // Active les tooltips
+                        callbacks: {
+                            label: function(context) {
+                                const data = context.chart.data.datasets[0].data;
+                                const total = data.reduce((sum, val) => sum + val, 0);
+                                const value = context.raw;
+                                const percentage = ((value / total) * 100).toFixed(2);
+                                const label = context.label || '';
+                                return `${label}: ${percentage}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

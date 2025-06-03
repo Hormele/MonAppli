@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier un utilisateur</title>
+    <link rel="stylesheet" href="{% static 'css/modifier_utilisateur.css' %}">
+</head>
+<body>
+<div class="container">
+    <h2>Modifier {{ utilisateur.nom }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-modifier">Enregistrer</button>
+        <a href="{% url 'liste_utilisateurs' %}" class="btn-retour">Annuler</a>
+    </form>
+</div>
+</body>
+</html>

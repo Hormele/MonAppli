@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f0f2f5;
+}
+
+.wrapper {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #2c3e50;
+    padding: 20px;
+    color: white;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #34495e;
+}
+
+.main-content {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+h2 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.table-suspects {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.table-suspects th, .table-suspects td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table-suspects th {
+    background-color: #2c3e50;
+    color: white;
+}
+
+.table-suspects tr:hover {
+    background-color: #f9f9f9;
+}
+
+.btn-decision {
+    background-color: #2980b9;
+    color: white;
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn-decision:hover {
+    background-color: #1c6690;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 15px;
+    color: #777;
+    font-size: 0.9em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wrapper {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        text-align: center;
+    }
+
+    .sidebar ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .sidebar ul li {
+        margin: 5px 10px;
+    }
+
+    .main-content {
+        padding: 20px;
+    }
+}

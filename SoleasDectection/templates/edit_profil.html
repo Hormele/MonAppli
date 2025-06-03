@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Mon Profil</title>
+    <link rel="stylesheet" href="{% static 'css/edit_profil.css' %}"> <!-- Lien vers le CSS spécifique -->
+</head>
+<body>
+    <!-- Barre de navigation -->
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="{% url 'dashboard_accueil' %}">Accueil</a>
+                <a href="{% url 'mon_profil' %}">Mon Profil</a>
+            </div>
+            <div class="nav-right">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}">Déconnexion</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Se connecter</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- Formulaire d'édition du profil -->
+    <div class="container">
+        <h1>Modifier Mon Profil</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}  <!-- Affiche les champs du formulaire -->
+            <button type="submit">Enregistrer les modifications</button>
+        </form>
+    </div>
+
+    <!-- Pied de page -->
+    <footer>
+        <p>&copy; 2025 SoleasDetection - Tous droits réservés</p>
+    </footer>
+</body>
+</html>

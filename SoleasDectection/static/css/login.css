@@ -1,0 +1,141 @@
+/* style global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom right, #2c3e50, #4ca1af);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* NAVIGATION */
+header {
+    width: 100%;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.nav-left a, .nav-right a {
+    color: #333;
+    text-decoration: none;
+    margin-right: 15px;
+    font-weight: 500;
+}
+
+.nav-right a {
+    background: #007bff;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
+
+.nav-right a:hover {
+    background: #0056b3;
+}
+
+/* CONTENU PRINCIPAL */
+.container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    margin-top: 30px;
+    text-align: center;
+}
+
+.container h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* MESSAGES */
+.alert {
+    padding: 10px;
+    margin-bottom: 20px;
+    color: white;
+    background-color: #e74c3c;
+    border-radius: 5px;
+}
+
+/* FORMULAIRE */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #34495e;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccd1d9;
+    border-radius: 5px;
+    font-size: 1em;
+}
+
+/* BOUTON */
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* PIED DE PAGE */
+footer {
+    margin-top: 30px;
+    color: #f0f0f0;
+    font-size: 0.9em;
+}
+
+@media (max-width: 480px) {
+    .nav-left a, .nav-right a {
+        display: block;
+        margin: 8px 0;
+    }
+
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    button[type="submit"] {
+        font-size: 0.95em;
+        padding: 10px;
+    }
+}

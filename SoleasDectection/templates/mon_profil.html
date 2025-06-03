@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil</title>
+    <link rel="stylesheet" href="{% static 'css/mon_profil.css' %}"> <!-- Lien vers le CSS spécifique -->
+</head>
+<body>
+    <!-- Barre de navigation -->
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="{% url 'dashboard_accueil' %}">Accueil</a>
+                <a href="{% url 'mon_profil' %}">Mon Profil</a>
+            </div>
+            <div class="nav-right">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}">Déconnexion</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Se connecter</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <h1>Mon Profil</h1>
+        <p>Nom : {{ user.first_name }} {{ user.last_name }}</p>
+        <p>Email : {{ user.email }}</p>
+        <!-- ajouter plus d'informations de l'utilisateur ici -->
+    </div>
+
+    <!-- Pied de page -->
+    <footer>
+        <p>&copy; 2025 SoleasDetection - Tous droits réservés</p>
+    </footer>
+</body>
+</html>

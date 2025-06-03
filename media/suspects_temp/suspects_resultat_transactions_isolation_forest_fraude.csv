@@ -1,0 +1,211 @@
+user_id,username_y,matricule_y,is_fraud,description
+1,bruyan,SP20201A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+6,xpimentOld,SP20202A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+8,sopay,SP20208U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+16,MYSOLEAS,SP202116A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+17,perlita,SP202117U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+20,GL,SP202120A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+22,dider,SP202122U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+23,Fourol,SP202123U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+25,testlazare,SP202125U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+26,AFRIJOB,SP202126A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+32,Test live,SP202132M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+37,testMerchand3,SP202137M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+38,Alex foka,SP202138A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+39,Lor serge,SP202139M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+42,gema1980,SP202142A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+46,Kous01,SP202146U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+51,Kanjori Stehenda,SP202151U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+53,TACHE PRISCA,SP202153U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+54,Momo23,SP202154U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+56,Katlyn,SP202256U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+57,Eva Joelle,SP202257U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+68,Kolok a Dang Marie Lesline,SP202268U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+69,Tanguan ,SP202269U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+72,Tania Mvondo,SP202272M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+74,MOTO MOUNTANG Noëlle Prisca,SP202274U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+75,Sissie,SP202275U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+76,MervyF,SP202276U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+80,Valantine ngewih Ayeah,SP202280U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+84,Lazare,SP202284U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+88,Sylvia,SP202288M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+90,Franck,SP202290M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+91,Marie France ,SP202291U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+94,Cynthia mashi,SP202294M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+98,Christiemanuella,SP202298U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+100,Mandaha tsomelou rodiane,SP2022100A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+102,Mbazoa Fouda Elisabeth,SP2024102U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+103,Elise Ghislaine,SP2022103U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+108,Djuine reine,SP2022108U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+109,PAGNIN TERTULAINE,SP2022109U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+110,Rosita,SP2022110U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+112,Jeanne D’arc,SP2022112U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+114,Ebogo Tabi ,SP2022114U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+116,Delya,SP2022116U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+117,Hashley,SP2022117A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+120,TsafackDerrick,SP2022120U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+126,Nguega Noumba Ingride Pagnole ,SP2022126U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+129,NÉCATOR,SP2022129U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+131,Sandrine,SP2022131U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+132,Corine Ntoutou,SP2022132U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+134,NKEUTOU BIAKEU  Leila Samanta Lydia ,SP2022134U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+135,Brenda,SP2022135U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+138,Leuwat ndounkeu Ludivine avelange ,SP2022138A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+139,Betah Desiree botia,SP2022139U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+140,Ndomtche longang,SP2022140U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+142,Blanchoux,SP2022142U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+146,Audrey fih,SP2022146U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+155,Kelly foudjo,SP2022155U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+157,Maryline angue,SP2022157U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+160,Mbarga stella,SP2022160U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+169,Michel,SP2022169U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+176,Bisso Blanche,SP2022176U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+180,Smile ,SP2022180U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+181,Christiane,SP2022181U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+182,Nkoa laurine ,SP2022182U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+183,Flore,SP2022183U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+190,Erg,SP2022190U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+193,YEMELONG ANNETTE,SP2022193U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+195,NDOUMOU ZOBO BENOÎT FRANCK,SP2022195U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+199,Godivia Tambo ,SP2022199A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+204,Cindy obele,SP2022204A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+206,briceesther770@gmail.com,SP2022206U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+207,Leuwat Ludivine avelange,SP2022207A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+210,operateur2,SP2022210A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+211,Sys_val,SP2022211A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+213,Cécilia fleur,SP2022213U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+219,Jujulove,SP2022219U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+221,Armelle,SP2022221U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+223,Samanta samidjo,SP2022223U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+229,Blondy,SP2022229U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+241,Laeticia Etame ,SP2022241M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+244,Yannick,SP2022244A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+245,Calvio2021 ,SP2022245U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+247,Yao Landry,SP2022247U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+248,Maxim mbakop,SP2022248U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+250,Tchopify,SP2022250A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+253,cabrel Tchomte,SP2022253A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+255,Curtys,SP2022255M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+258,Domaine ABESSOLO,SP2022258M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+259,fotsing,SP2022259M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+266,leenscorp,SP2022266A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+267,Haridam Sylvain salvador,SP2022267U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+268,Hassan ,SP2022268A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+269,BayangMDilane,SP2022269A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+271,Miamy,SP2022271M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+272,Dechallenger1,SP2022272A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+277,Lorenzo maxim,SP2022277U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+278,Christian,SP2022278U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+279,Miguel Garros,SP2022279M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+280,Nebalove,SP2022280A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+285,Yengni,SP2022285M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+288,Taleh85,SP2022288M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+289,thmart,SP2022289M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+290,essohglwadys91,SP2022290M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+291,ruthdjoufack,SP2022291M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+292,charlesduclairessoh,SP2022292M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+293,leutchalionel04,SP2022293M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+294,nidelecreation,SP2022294M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+295,aurelmoundou,SP2022295M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+296,kammichelle,SP2022296M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+297,sobtchindaclemencerolande,SP2022297M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+298,pokemalive1,SP2022298M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+299,kaderzagle,SP2022299M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+300,jordancarmel83,SP2022300M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+301,Felixfouodjo01,SP2022301M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+302,dj_paul120002000,SP2022302M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+303,coopjcim,SP2022303M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+304,fouodjeo,SP2022304M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+305,REEVY,SP2022305A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+306,pichoutatina,SP2022306M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+307,tchindaguilaine1,SP2022307M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+308,Abi shopping,SP2022308M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+309,Abi shopping,SP2022309M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+310,emmanfoungonaoussi6,SP2022310M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+311,olndedi,SP2022311M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+313,makiesemilca664,SP2022313M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+314,christianecolle20,SP2022314M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+316,jujukpomegbe,SP2022316M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+317,AgroBusiness,SP2022317M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+318,AgroBusiness,SP2022318A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+319,kendhaldjoufack,SP2022319M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+320,Ngo Cynthia ,SP2022320U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+321,sorelle,SP2022321M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+322,efastwork,SP2022322A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+323,joansimdze1984,SP2022323M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+324,themariestore,SP2022324M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+325,daniellembono793,SP2022325M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+326,leonornematcha,SP2022326M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+327,complexeads,SP2022327M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+331,landrywafo,SP2022331U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+332,tiktokcompilation237,SP2022332M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+333,afrijobcameroun,SP2022333M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+334,YrraL14,SP2022334U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+335,mouafogicjpn,SP2022335M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+337,ingridlaeticia540,SP2022337M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+340,domchewinnieo,SP2022340M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+341,leopoldkouaye,SP2022341M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+342,teamleader362,SP2022342M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+343,idennenokam12,SP2022343M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+344,makonannesandra,SP2022344M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+345,banasynthia,SP2022345M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+346,rmwaha,SP2022346M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+347,Malinaodinwamkpa,SP2022347M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+348,belibinathasha454,SP2022348M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+350,seedneyfossi01,SP2022350M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+351,cyrilekwa0,SP2022351M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+352,carelefeujio,SP2022352M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+353,paulbrendaekosso,SP2022353M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+354,trydahdai,SP2022354M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+355,cedricmac80,SP2022355M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+356,mendougamarquise,SP2022356M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+357,leonardngobo98,SP2022357M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+359,arianetamdjo50,SP2022359M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+360,ondoajude74,SP2022360M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+361,carolayissi6,SP2022361M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+362,maguyazanguim10,SP2022362M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+363,medomchediane294,SP2022363M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+365,djikiakamdarelle2022,SP2022365M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+366,jessicabitang0,SP2022366M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+367,massouzenab,SP2022367M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+368,djomo68,SP2022368M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+369,blanchentonga21,SP2022369M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+370,kamoaugustine60,SP2022370M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+371,mabelleguepi09,SP2022371M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+372,fiolasandrine,SP2022372M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+374,Toumakouahenry,SP2022374M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+375,APMMUSICGROUP,SP2022375M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+376,lankolaura22,SP2022376M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+377,marenow,SP2022377M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+378,jules8,SP2022378A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+379,sandraefozo9,SP2022379M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+380,nsaleslie3,SP2022380M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+381,gabinebikele,SP2022381M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+383,tonclems,SP2022383M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+384,priscaenjohtata,SP2022384M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+385,simplicen5,SP2022385M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+386,rosalinem,SP2022386M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+387,daniellevera34,SP2022387M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+388,elenssarl,SP2022388M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+394,Sidney ,SP2022394M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+395,Patricia Donmo ,SP2022395U,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+396,takoubojordan,SP2023396M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+397,nikese504@gmail.com,SP2023397M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+398,menyeg2,SP2023398M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+399,premiermatata1,SP2023399M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+400,williamseboule488,SP2023400M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+401,cynthiakeumbouk,SP2023401M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+402,boicheewetie,SP2023402M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+403,deparislena82,SP2023403M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+404,fabiolatchoumi96,SP2023404M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+405,zameraissa09,SP2023405M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+406,Mole,SP2023406M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+407,annembende07,SP2023407M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+408,angefosso968,SP2023408M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+409,merveilleflavytsamotankeu,SP2023409M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+410,marieflorebilame,SP2023410M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+411,mcorallye,SP2023411M,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+412,Meridians,SP2023412A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+413,ahmar6553@gmail.com,SP2023413A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+414,FENESTRA CM,SP2023414A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde
+415,My Helper Travel,SP2023415A,1,le KYC de l'utilisateur est non initié | le montant de la transaction dépasse le solde

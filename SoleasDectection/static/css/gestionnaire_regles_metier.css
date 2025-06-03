@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+}
+
+.sidebar {
+    background-color: #1e3a5f;
+    color: white;
+    padding: 20px;
+    width: 200px;
+    height: 100vh;
+    float: left;
+}
+
+.sidebar h2 {
+    font-size: 20px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar li {
+    margin: 10px 0;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+}
+
+.content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+h1 {
+    color: #1e3a5f;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #1e3a5f;
+    color: white;
+}
+
+.actif {
+    color: green;
+    font-weight: bold;
+}
+
+.inactif {
+    color: red;
+    font-weight: bold;
+}
+
+.btn {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.btn-warning { background-color: #e67e22; }
+.btn-success { background-color: #27ae60; }
+.btn-primary { background-color: #3498db; }
+.btn-danger  { background-color: #c0392b; }
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.ajout-regle {
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background-color: #1e3a5f;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

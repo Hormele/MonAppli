@@ -1,0 +1,56 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Notifications - Détection de Suspects</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/gestionnaire_notifications.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+        <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+        <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+        <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+        <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+        <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+        <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+        <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+        <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <h1>Notifications - Détection de Suspects</h1>
+    <form method="get" class="filter-form">
+      <label for="date_debut">Date début :</label>
+      <input type="date" id="date_debut" name="date_debut" value="{{ date_debut }}">
+
+      <label for="date_fin">Date fin :</label>
+      <input type="date" id="date_fin" name="date_fin" value="{{ date_fin }}">
+
+      <button type="submit">Filtrer</button>
+    </form>
+    <ul>
+        {% for notification in notifications %}
+            <li>
+                <strong>Notification :</strong> {{ notification.message }}<br>
+                <em>Date :</em> {{ notification.date_creation }}
+            </li>
+        {% empty %}
+            <li>Aucune alerte de suspects détectés pour le moment.</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<footer>
+    <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

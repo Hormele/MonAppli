@@ -1,0 +1,200 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Modèles Testés</title>
+    <link rel="stylesheet" href="{% static 'css/liste_campagne_test.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>SoleasDetection</h2>
+        <ul>
+            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}" class="active">Campagne Test</a></li>
+            <li><a href="{% url 'gestionnaire_regles_metier' %}">Gerer les regles metiers</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <h1>Liste des Campagnes_test Testés</h1>
+        <p>Visualisez, filtrez et gérez vos resultais des predictions et models test.</p>
+    
+        <!-- Formulaire de filtre -->
+        <div class="filters">
+            <form method="get">
+                <label for="statut">Statut :</label>
+                <select name="statut" id="statut">
+                    <option value="">Tous</option>
+                    <option value="succes">Succes</option>
+                    <option value="echec">Echec</option>
+                </select>
+            
+                <label for="date_debut">Date debut :</label>
+                <input type="date" name="date_debut" id="date_debut">
+            
+                <label for="date_fin">Date fin :</label>
+                <input type="date" name="date_fin" id="date_fin">
+            
+                <button type="submit">Filtrer</button>
+            </form>
+
+            <a href="{% url 'lancer_campagne_test' %}" class="btn btn-warning">Lancer une Campagne_test</a>
+        </div>
+            
+    
+        <!-- Tableau des tests -->
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Modèle</th>
+                    <th>Dataset</th>
+                    <th>Fichier</th>
+                    <th>Nb Total</th>
+                    <th>Nb fraude</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for test in tests %}
+                <tr>
+                    <td>{{ test.id }}</td>
+                    <td>Resultat - {{ test.modele.nom }}_fraude</td>
+                    <td>{{ test.modele.nom }}</td>
+                    <td>{{ test.dataset.nom }}</td>
+                    <td>
+                        {% if test.fichier_fraude %}
+                            <a href="{{ test.fichier_fraude.url }}">Télécharger</a> 
+                        {% else %}
+                        Aucun fichier
+                        {% endif %}
+                    </td>
+                    <td>{{ test.nb_total }}</td>
+                    <td>{{ test.nb_fraudes }}</td>
+                    <td>{{ test.get_statut_display }}</td>
+                    <td>{{ test.date_test|date:"d/m/Y" }}</td>
+                    <td>
+                        <a href="{% url 'uploader_resultats_fraude' %}?test_id={{ test.id }}">Uploader</a> |
+                        <a href="{% url 'supprimer_modele_test' test.id %}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce test ?');">Supprimer</a>
+                    </td>                    
+                </tr>
+                {% empty %}
+                <tr><td>Aucun test trouve.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+    
+        <div class="chart-container">
+            <!-- Graphiques (repartition des statut) -->
+            <div class="graph">
+                <h3>Répartition des predictions par Statuts</h3>
+                <canvas id="statutChart" width="400" height="200"></canvas>
+            </div>
+
+            <!-- Graphique circulaire (Répartition des prédictions) -->
+            <div class="graph">
+                <h3>Répartition des prédictions par fraude</h3>
+                <canvas id="predictionChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <script>
+            // --- Statut des Tests ---
+            const statutLabels = {{ statut_labels|safe }};
+            const statutData = {{ statut_data|safe }};
+        
+            const statutCtx = document.getElementById('statutChart').getContext('2d');
+            new Chart(statutCtx, {
+                type: 'pie',
+                data: {
+                    labels: statutLabels,
+                    datasets: [{
+                        label: 'Statut',
+                        data: statutData,
+                        backgroundColor: ['#28a745', '#dc3545'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const data = context.chart.data.datasets[0].data;
+                                    const total = data.reduce((sum, val) => sum + val, 0);
+                                    const value = context.raw;
+                                    const percentage = ((value / total) * 100).toFixed(2);
+                                    return `${context.label}: ${percentage}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        
+            // --- Répartition des prédictions (Normal / Anomalie) ---
+            const predictionLabels = {{ graph_labels|safe }};
+            const predictionData = {{ graph_values|safe }};
+        
+            const predictionCtx = document.getElementById('predictionChart').getContext('2d');
+            new Chart(predictionCtx, {
+                type: 'pie',
+                data: {
+                    labels: predictionLabels,
+                    datasets: [{
+                        label: 'Prédictions',
+                        data: predictionData,
+                        backgroundColor: ['#007bff', '#ffc107'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: { position: 'top' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const data = context.chart.data.datasets[0].data;
+                                    const total = data.reduce((sum, val) => sum + val, 0);
+                                    const value = context.raw;
+                                    const percentage = ((value / total) * 100).toFixed(2);
+                                    return `${context.label}: ${percentage}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+        
+
+    </div>
+    
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

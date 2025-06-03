@@ -1,0 +1,101 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Analyste</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="{% static 'css/dashboard_analyste.css' %}">
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <h2>SoleasDetection</h2>
+        <ul>
+            <li><a href="{% url 'dashboard_analyste' %}" class="active">Tabeau de bord Analyste</a></li>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <h1>Dashboard Analyste</h1>
+
+        <div class="cards">
+            <div class="card"><h2>{{ campaigns_count }}</h2><p>Campagnes en cours</p></div>
+            <div class="card"><h2>{{ finished_campaigns_count }}</h2><p>Campagnes terminées</p></div>
+            <div class="card"><h2>{{ datasets_count }}</h2><p>Jeux de données</p></div>
+            <div class="card"><h2>{{ suspects_legitime }}</h2><p>Suspects légitimes</p></div>
+            <div class="card"><h2>{{ suspects_bloque }}</h2><p>Suspects bloqués</p></div>
+            <div class="card"><h2>{{ suspects_attente }}</h2><p>Suspects en attente</p></div>
+        </div>
+
+        <div class="chart-container">
+            <h2>Évolution des jeux de données</h2>
+            <canvas id="datasetsChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Évolution des campagnes</h2>
+            <canvas id="campaignsChart"></canvas>
+        </div>
+
+        <footer class="footer">
+            <p>© 2025 SoleasDetection. Tous droits réservés.</p>
+        </footer>
+    </div>
+</div>
+
+<script>
+    const moisLabels = {{ mois_labels|safe }};
+    const datasetsData = {{ datasets_data|safe }};
+    const campaignsData = {{ campaign_data|safe }};
+
+    new Chart(document.getElementById('datasetsChart'), {
+        type: 'bar',
+        data: {
+            labels: moisLabels,
+            datasets: [{
+                label: 'Jeux de données',
+                data: datasetsData,
+                backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+
+    new Chart(document.getElementById('campaignsChart'), {
+        type: 'line',
+        data: {
+            labels: moisLabels,
+            datasets: [{
+                label: 'Campagnes',
+                data: campaignsData,
+                borderColor: 'rgba(255, 206, 86, 1)',
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+</script>
+</body>
+</html>

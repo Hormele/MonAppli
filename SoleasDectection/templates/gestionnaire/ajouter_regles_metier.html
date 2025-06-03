@@ -1,0 +1,50 @@
+{% load static %}
+
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter une règle métier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/ajouter_regles_metier.css' %}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+        <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+        <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+        <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+        <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+        <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+        <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+        <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+        <li><a href="{% url 'gestionnaire_regles_metier' %}">Gerer les regles metiers</a></li>
+        <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <h2>Ajouter une règle métier</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <label>Nom :</label>
+        <input type="text" name="nom" required><br>
+
+        <label>Description :</label>
+        <textarea name="description" required></textarea><br>
+
+        <label>Condition :</label>
+        <input type="text" name="condition" required><br>
+
+        <button type="submit">Ajouter</button>
+    </form>
+</div>
+
+<footer>
+    <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des jeux de données</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/liste_datasets.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <h2>Gestion des Datasets</h2>
+        <ul>
+            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <h1>Liste des jeux de données</h1>
+        <p>Visualisez, filtrez et gérez vos fichiers de jeux de données.</p>
+
+        <a href="{% url 'uploader_dataset' %}" id="telecharger-btn">Telecharger un nouveau jeu de donnees</a>
+
+        <h2>Filtres</h2>
+        <form method="get" class="form-inline mb-4">
+            <label>Type :</label>
+            <select name="type">
+                <option value="">Tous</option>
+                <option value="brut">Brut</option>
+                <option value="nettoye">Nettoyé</option>
+            </select>
+
+            <label>Format :</label>
+            <select name="format">
+                <option value="">Tous</option>
+                <option value="csv">CSV</option>
+                <option value="json">JSON</option>
+            </select>
+
+            <label>Date de :</label>
+            <input type="date" name="date_min">
+
+            <label>à :</label>
+            <input type="date" name="date_max">
+
+            <button type="submit" class="btn btn-primary">Filtrer</button>
+        </form>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Type</th>
+                    <th>Format</th>
+                    <th>Date</th>
+                    <th>Fichier</th>
+                    <th>Fichier brut</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dataset in datasets %}
+                <tr>
+                    <td>{{ dataset.id }}</td>
+                    <td>{{ dataset.nom }}</td>
+                    <td>{{ dataset.type }}</td>
+                    <td>{{ dataset.format_fichier }}</td>
+                    <td>{{ dataset.dateC|date:"d/m/Y" }}</td>
+                    <td>
+                        {% if dataset.fichier %}
+                            <a href="{{ dataset.fichier.url }}">Télécharger</a>
+                        {% else %}
+                            Aucun
+                        {% endif %}
+
+                    </td>
+                    <td>
+                        {% if dataset.fichier_brut %}
+                            <a href="{{ dataset.fichier_brut.url }}">Télécharger</a>
+                        {% else %}
+                            Aucun
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'supprimer_dataset' dataset.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                    </td>
+                </tr>
+                {% empty %}
+                    <tr><td colspan="6">Aucun ensemble de données trouvé.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Statistiques des ensembles de données</h2>
+        <canvas id="datasetChart" width="600" height="200"></canvas>
+
+        <!-- Pied de page -->
+        <footer>
+          <p>© 2025 SoleasDetection. Tous droits réservés.</p>
+        </footer>
+
+    </div>
+</div>
+
+<!-- Chart -->
+<script>
+    var ctx = document.getElementById('datasetChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Brut', 'Nettoyé'],
+            datasets: [{
+                label: 'Nombre de datasets',
+                data: [{{ brut_count }}, {{ nettoye_count }}],
+                backgroundColor: ['#6c757d', '#28a745']
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    precision: 0
+                }
+            }
+        }
+    });
+</script>
+</body>
+</html>

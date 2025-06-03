@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmation action</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/toogle_regle_metier.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            {% if regle.actif %}
+                <h2 class="danger">Désactiver cette règle ?</h2>
+            {% else %}
+                <h2 class="success">Activer cette règle ?</h2>
+            {% endif %}
+
+            <p><strong>Nom :</strong> {{ regle.nom }}</p>
+            <p><strong>Condition :</strong> {{ regle.condition }}</p>
+
+            <form method="post" class="form-actions">
+                {% csrf_token %}
+                <button type="submit" class="{% if regle.active %}btn-danger{% else %}btn-success{% endif %}">
+                    {% if regle.actif %}Confirmer la désactivation{% else %}Confirmer l'activation{% endif %}
+                </button>
+                <a href="{% url 'gestionnaire_regles_metier' %}" class="btn-cancel">Annuler</a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

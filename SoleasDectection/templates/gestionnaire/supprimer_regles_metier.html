@@ -1,0 +1,25 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Supprimer une règle métier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/supprimer_regles_metier.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="container">
+    <h2>Confirmer la suppression</h2>
+    <p>Êtes-vous sûr de vouloir supprimer la règle <strong>{{ regle.nom }}</strong> ?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn-danger">Oui, supprimer</button>
+        <a href="{% url 'gestionnaire_regles_metier' %}" class="btn-secondary">Annuler</a>
+    </form>
+</div>
+
+</body>
+</html>

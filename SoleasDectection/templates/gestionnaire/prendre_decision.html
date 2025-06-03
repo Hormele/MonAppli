@@ -1,0 +1,52 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Prendre une décision</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/prendre_decision.css' %}">
+</head>
+<body>
+<div class="container">
+    <div class="card">
+        <h2>Prendre une décision</h2>
+
+        <p><strong>Nom :</strong> {{ suspect.nom }}</p>
+        <p><strong>Email :</strong> {{ suspect.email }}</p>
+        <p><strong>Matricule :</strong> {{ suspect.matricule }}</p>
+        <p><strong>Description :</strong> {{ suspect.description }}</p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="radio-group">
+                <label>
+                    <input type="radio" name="decision" value="legitime" required
+                        {% if suspect.decision == "legitime" %}checked{% endif %}>
+                    Légitime
+                </label>
+
+                <label>
+                    <input type="radio" name="decision" value="fraude"
+                        {% if suspect.decision == "fraude" %}checked{% endif %}>
+                    Fraude
+                </label>
+
+                <label>
+                    <input type="radio" name="decision" value="en attente"
+                        {% if suspect.decision == "en attente" %}checked{% endif %}>
+                    En attente
+                </label>
+            </div>
+
+            <div class="buttons">
+                <button type="submit" class="btn-primary">Valider</button>
+                <a href="{% url 'gestionnaire_suspects' %}" class="btn-cancel">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

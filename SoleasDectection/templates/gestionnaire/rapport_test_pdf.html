@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport de détection</title>
+    <style>
+        body {
+            font-family: "Helvetica", sans-serif;
+            font-size: 12px;
+        }
+        h2, h3 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            border: 1px solid #444;
+            padding: 5px;
+            text-align: left;
+        }
+
+        
+        th {
+            background-color: #f2f2f2;
+        }
+    
+        /* Largeurs fixes pour éviter l’écrasement */
+        th:nth-child(1), td:nth-child(1) { width: 8%; }   /* ID */
+        th:nth-child(2), td:nth-child(2) { width: 15%; }  /* Nom */
+        th:nth-child(3), td:nth-child(3) { width: 15%; }  /* Matricule */
+        th:nth-child(4), td:nth-child(4) { width: 10%; }  /* Fraude */
+        th:nth-child(5), td:nth-child(5) { width: 35%; }  /* Description */
+        th:nth-child(6), td:nth-child(6) { width: 17%; }  /* Décision */
+    </style>
+</head>
+</head>
+<body>
+
+    <h1>Rapport de détection de fraudes</h1>
+    <h2>Fichier #{{ fichier.id }} - {{ date_test }}</h2>
+
+    <div class="infos">
+        <p><strong>Nom du modèle :</strong> {{ nom_modele }}</p>
+        <p><strong>Dataset utilisé :</strong> {{ nom_dataset }}</p>
+        <p><strong>Date du test :</strong> {{ date_test }}</p>
+    </div>
+
+    <h2>Suspects détectés</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Utilisateur</th>
+                <th>Nom</th>
+                <th>Matricule</th>
+                <th>Fraude</th>
+                <th>Description</th>
+                <th>Décision</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for suspect in suspects %}
+            <tr>
+                <td>{{ suspect.user_id }}</td>
+                <td>{{ suspect.username_y }}</td>
+                <td>{{ suspect.matricule_y }}</td>
+                <td>{% if suspect.is_fraud %}Oui{% else %}Non{% endif %}</td>
+                <td>{{ suspect.description }}</td>
+                <td>{{ suspect.decision }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>

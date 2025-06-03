@@ -1,0 +1,50 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Details du Rapport</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/gestionnaire_rapport_detail.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+        <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+        <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+        <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+        <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+        <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+        <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+        <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+        <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+    </ul>
+</div>
+
+<div class="container">
+    <h1>Rapport de Fraude – Campagne #{{ campagne.id }}</h1>
+
+    <div class="actions">
+        <a href="{% url 'css/gestionnaire_rapport_detail' campagne.id %}" class="btn btn-view" target="_blank">
+            Voir le rapport
+        </a>
+
+        <a href="{% url 'exporter_rapport_pdf' campagne.id %}" class="btn btn-pdf">
+            Télécharger le PDF
+        </a>
+    </div>
+
+    <a href="{% url 'liste_campagnes' %}" class="back-link">← Retour aux campagnes</a>
+</div>
+</div>
+
+<footer>
+    <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un utilisateur</title>
+    <link rel="stylesheet" href="{% static 'css/ajouter_utilisateur.css' %}">
+</head>
+<body>
+<div class="container">
+    <h2>Ajouter un utilisateur</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-ajouter">Ajouter</button>
+        <a href="{% url 'liste_utilisateurs' %}" class="btn-retour">Retour</a>
+    </form>
+</div>
+</body>
+</html>

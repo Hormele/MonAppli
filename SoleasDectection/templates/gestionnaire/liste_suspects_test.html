@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des fichiers de suspects détectés</title>
+    <link rel="stylesheet" href="{% static 'css/liste_suspects_test.css' %}">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>SoleasDetection</h2>
+    <ul>
+        <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'liste_modeles' %}" class="active">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+            <li><a href="{% url 'gestionnaire_regles_metier' %}">Gerer les regles metiers</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+    </ul>
+</div>
+
+<div class="main-content">
+    <h1>Fichiers de suspects détectés</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom du fichier</th>
+                <th>Télécharger</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for fichier in fichiers_suspects %}
+                <tr>
+                    <td>{{ fichier.id }}</td>
+                    <td>{{ fichier.nom_fichier }}</td>
+                    <td>
+                        {% if fichier.campagne_test.fichier_suspects_temp %}
+                            <a href="{{ fichier.campagne_test.fichier_suspects_temp.url }}">Télécharger</a> <!-- A REVOIR-->
+                        {% else %}
+                            <sapn style="color: gray;">Aucun fichier</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ fichier.date_enregistrement|date:"d/m/Y H:i" }}</td>
+                    <td>
+                        <a href="{% url 'detail_test' fichier.id %}" class="btn-detail">Detail</a> |
+                        <a href="{% url 'supprimer_liste_test' fichier.id %}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce test ?');">Supprimer</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">Aucun fichier de suspects disponible.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<footer>
+    <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

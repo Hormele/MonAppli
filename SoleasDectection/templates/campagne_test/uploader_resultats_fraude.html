@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Uploader Résultats</title>
+    <link rel="stylesheet" href="{% static 'css/uploader_resultats_fraude.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+                <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+                <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+                <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+                <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+                <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+                <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+                <li><a href="{% url 'gestionnaire_regles_metier' %}">Gerer les regles metiers</a></li>
+                <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+                <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+            </ul>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="main-content">
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert {{message.tags }}">{{ message }}</div>
+                    {% endfor%}
+                </div>  
+            {% endif %}
+
+            <h1>Uploader Résultats de Prédiction</h1>
+
+            <form method="POST">
+                {% csrf_token %}
+                <label for="fichier_resultat">Résultat :</label>
+                <select name="fichier_resultat" required>
+                    <option value="">-- Charger le fichier des resultats apres predictions --</option>
+                    {% for fichier in fichiers_resultats %}
+                        <option value="{{ fichier }}">{{ fichier }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="fichier_user">Fichier Utilisateur (brut) :</label>
+                <select name="fichier_user" required>
+                    <option value="" disabled selected style="font-style: italic; color: gray;">-- Charger le fichier user brut --</option>
+                    {% for fichier in fichiers_users %}
+                        <option value="{{ fichier }}">{{ fichier }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="fichier_dataset">Dataset Test (utilise pour le test) :</label>
+                <select name="fichier_dataset" required>
+                    <option value="" disabled selected style="font-style: italic; color: gray;">-- Charger le dataset utilise pour le fichier resultat --</option>
+                    {% for fichier in fichiers_datasets %}
+                        <option value="{{ fichier }}">{{ fichier }}</option>
+                    {% endfor %}
+                </select>
+
+                <label for="regles">Règles Métiers à Appliquer :</label>
+                {% for regle in regles %}
+                    <div>
+                        <input type="checkbox" name="regles" value="{{ regle.id }}">
+                        {{ regle.nom }}
+                    </div>
+                {% endfor %}
+
+                {% if test %}
+                    <input type="hidden" name="test_id" value="{{ test.id }}">
+                {% endif %}
+
+                <button type="submit">Lancer le traitement</button>
+            </form>
+        </div>
+    </div>
+
+    <script> // script pour faire disparaitre les messages apres 5 secondes
+        setTimeout(function() {
+          const alerts = document.querySelectorAll('.alert');
+          alerts.forEach(function(alert) {
+            alert.style.transition = 'opacity 0.5s ease-out';
+            alert.style.opacity = '0';
+            setTimeout(() => alert.remove(), 500);
+          });
+        }, 5000); // 5 secondes
+    </script>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,69 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Suspects de la Campagne</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/gestionnaire_suspects.css' %}">
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <h2>Gestionnaire Risque</h2>
+        <ul>
+            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <h2>Suspects de la Campagne</h2>
+
+        <table class="table-suspects">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Nom</th>
+                    <th>Matricule</th>
+                    <th>Description</th>
+                    <th>Décision</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for suspect in suspects %}
+                    <tr>
+                        <td>{{ suspect.email }}</td>
+                        <td>{{ suspect.nom }}</td>
+                        <td>{{ suspect.matricule }}</td>
+                        <td>{{ suspect.description }}</td>
+                        <td>{{ suspect.get_decision_display }}</td>
+                        <td>
+                            <a href="{% url 'prendre_decision_suspect' suspect.id %}" class="btn-decision">
+                                Prendre décision
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <footer class="footer">
+            <p>© 2025 SoleasDetection. Tous droits réservés.</p>
+        </footer>
+    </div>
+</div>
+</body>
+</html>

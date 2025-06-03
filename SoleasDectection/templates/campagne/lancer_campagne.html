@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lancer une campagne</title>
+    <link rel="stylesheet" href="{% static 'css/lancer_campagne.css' %}">
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </div>
+
+    <div class="content">
+        <h1>Lancer une campagne</h1>
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Modèle :</label>
+            <select name="modele" required>
+                {% for modele in modeles %}
+                    <option value="{{ modele.id }}">{{ modele.fichier_modele.nom }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Datasets :</label>
+            <select name="datasets" multiple required>
+                {% for dataset in datasets %}
+                    <option value="{{ dataset.id }}">{{ dataset.nom }}</option>
+                {% endfor %}
+            </select>
+
+            <label>Fréquence :</label>
+            <select name="frequence">
+                <option value="quotidien">Quotidien</option>
+                <option value="hebdomadaire">Hebdomadaire</option>
+                <option value="bimensuel">Bimensuel</option>
+                <option value="mensuel">Mensuel</option>
+            </select>
+
+            <label>Répétition :</label>
+            <select name="repetition">
+                <option value="unique">Unique</option>
+                <option value="1h">Toutes les 1h</option>
+                <option value="6h">Toutes les 6h</option>
+                <option value="12h">Toutes les 12h</option>
+                <option value="24h">Toutes les 24h</option>
+            </select>
+
+            <button type="submit">Lancer</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

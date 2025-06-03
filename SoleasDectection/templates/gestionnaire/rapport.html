@@ -1,0 +1,78 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Rapport de la campagne {{ campagne.id }}</title>
+    <link rel="stylesheet" href="{% static 'css/rapport.css' %}">
+</head>
+<body>
+    <!-- Bouton Télécharger PDF -->
+    <div class="download-button">
+        <a href="{% url 'exporter_rapport_pdf' campagne.id %}" class="btn-download" target="_blank">
+            Télécharger ce rapport en PDF
+        </a>
+    </div>
+
+        <!-- Titre du rapport-->
+    <div class="header">
+        <h1>Rapport de la Campagne {{ campagne.id }}</h1>
+        <p>Généré par SoleasDetection</p>
+    </div>
+
+    <!-- Infos de la campagne-->
+    <div class="section">
+        <h2>Détails de la campagne</h2>
+        <p><strong>Modèle ML :</strong> {{ campagne.modele_ml.nom }}</p>
+        <p><strong>Fréquence :</strong> {{ campagne.frequence }}</p>
+        <p><strong>Répétition :</strong> {{ campagne.repetition }}</p>
+        <p><strong>Date de début :</strong> {{ campagne.date_debut_c }}</p>
+        <p><strong>Date de fin :</strong> {{ campagne.date_fin_c }}</p>
+        <p><strong>Statut :</strong> {{ campagne.statut }}</p>
+    </div>
+
+    <!-- Liste des suspects-->
+    <div class="section">
+        <h2>Suspects détectés</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Email</th>
+                    <th>Matricule</th>
+                    <th>Description</th>
+                    <th>Décision</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for suspect in suspects %}
+                <tr>
+                    <td>{{ suspect.nom }}</td>
+                    <td>{{ suspect.email }}</td>
+                    <td>{{ suspect.matricule }}</td>
+                    <td>{{ suspect.description }}</td>
+                    <td>{{ suspect.get_decision_display }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">Aucun suspect détecté pour cette campagne.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Footer-->
+    <div class="footer">
+        <p>Rapport généré automatiquement le {{ now|date:"d/m/Y H:i" }}</p>
+        <p><strong>SoleasDetection - © 2025</strong></p>
+        <p>
+            <a href="{% url 'gestion_rapport_detail' campagne.id %}" style="font-size: 11px; color: #555;">
+                ← Retour à l'écran de rapport
+            </a>
+        </p>
+    </div>
+
+</body>
+</html>

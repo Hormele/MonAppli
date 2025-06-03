@@ -1,0 +1,75 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Suspects</title>
+    <link rel="stylesheet" href="{% static 'css/liste_suspects.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="wrapper">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Soleas</h2>
+        <ul>
+            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'liste_modeles' %}" class="active">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+            <li><a href="{% url 'liste_suspects' %}">Liste Suspects Test</a></li>
+            <li><a href="{% url 'gestionnaire_regles_metier' %}">Gerer les regles metiers</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </div>
+
+    <!-- Contenu principal -->
+    <div class="main-content">
+        <h1>Liste des suspects détectés</h1>
+
+        {% if suspects %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom d'utilisateur</th>
+                        <th>Matricule</th>
+                        <th>Description</th>
+                        <th>ID Test</th>
+                        <th>Date du test</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for suspect in suspects %}
+                        <tr>
+                            <td>{{ suspect.id }}</td>
+                            <td>{{ suspect.username }}</td>
+                            <td>{{ suspect.matricule }}</td>
+                            <td>{{ suspect.description }}</td>
+                            <td>{{ suspect.modele_test.id }}</td>
+                            <td>{{ suspect.modele_test.date_test|date:"d/m/Y H:i" }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Aucun suspect détecté.</p>
+        {% endif %}
+
+        <a href="{% url 'dashboard_admin' %}" class="btn btn-back">⬅ Retour au tableau de bord</a>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

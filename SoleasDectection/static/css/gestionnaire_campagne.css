@@ -1,0 +1,128 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #1d3557;
+    color: white;
+    padding: 20px;
+    flex-shrink: 0;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.sidebar h2 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.sidebar li {
+    margin-bottom: 15px;
+}
+
+.sidebar a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar a.active,
+.sidebar a:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.content {
+    margin-left: 240px;
+    padding: 30px;
+    flex-grow: 1;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+}
+
+h1 {
+    color: #1d3557;
+    margin-bottom: 20px;
+}
+
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 25px;
+    background-color: #ffffff;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.filter-form label {
+    font-weight: bold;
+}
+
+.filter-form select,
+.filter-form input[type="date"] {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #aaa;
+}
+
+.filter-form button {
+    background-color: #1d3557;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-form button:hover {
+    background-color: #0c223f;
+}
+
+.campaign-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.campaign-list li {
+    background-color: #fff;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-left: 4px solid #1d3557;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+.campaign-list a {
+    color: #1d3557;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.campaign-list a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #1d3557;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}

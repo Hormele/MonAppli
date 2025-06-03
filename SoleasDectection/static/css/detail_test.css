@@ -1,0 +1,171 @@
+/* Structure de base */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f8;
+    color: #333;
+}
+
+.sidebar {
+    width: 230px;
+    background-color: #2c3e50;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    color: #ecf0f1;
+    margin-bottom: 30px;
+    font-size: 22px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.sidebar ul li a:hover {
+    text-decoration: underline;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+}
+
+h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.filters {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filters label {
+    font-weight: bold;
+}
+
+.filters select,
+.filters input[type="date"],
+.filters button {
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.filters button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.filters button:hover {
+    background-color: #2980b9;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: #fff;
+    box-shadow: 0 0 5px #ccc;
+}
+
+table thead {
+    background-color: #2980b9;
+    color: white;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+select {
+    padding: 5px;
+    border-radius: 4px;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.center {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.validate-btn {
+    padding: 10px 25px;
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.validate-btn:hover {
+    background-color: #27ae60;
+}
+
+footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    margin-left: 250px;
+}
+
+@media screen and (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    footer {
+        margin-left: 0;
+    }
+
+    table th,
+    table td {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .filters {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

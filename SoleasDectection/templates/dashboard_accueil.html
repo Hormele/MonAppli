@@ -1,0 +1,58 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord Accueil</title>
+
+    <!-- Lien vers le CSS spécifique de la page Dashboard -->
+    <link rel="stylesheet" href="{% static 'css/dashboard_accueil.css' %}">
+
+    <!-- Autres styles et éléments de l'entête peuvent être ajoutés ici -->
+</head>
+<body>
+
+    <!-- En-tête avec barre de navigation -->
+    <header>
+        <nav>
+            <div class="nav-left">
+                <a href="{% url 'dashboard_accueil' %}"><img src="{% static 'img/logo.png' %}" alt="SoleasDetection Logo" class="logo"></a>
+            </div>
+
+            <div class="nav-right">
+                <ul>
+                    <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+                    <li><a href="{% url 'mon_profil' %}">Mon Profil</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">Se connecter</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <section class="hero">
+            <h1>Bienvenue sur SoleasDetection</h1>
+            <p>Analysez vos transactions, détectez des anomalies, et prenez des décisions informées rapidement.</p>
+            <a href="{% url 'login' %}" class="btn-connexion">Se connecter</a>
+        </section>
+
+        <section class="stats">
+            <h2>Statistiques générales</h2>
+            <p>Quelques chiffres clés sur les campagnes et les analyses en cours.</p>
+        </section>
+    </div>
+
+    <!-- Pied de page -->
+    <footer>
+        <p>&copy; 2025 SoleasDetection - Tous droits réservés</p>
+    </footer>
+    
+</body>
+</html>

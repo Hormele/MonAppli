@@ -1,0 +1,71 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Tester un modèle ML</title>
+    <link rel="stylesheet" href="{% static 'css/lancer_campagne_test.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="wrapper">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>Soleas</h2>
+        <ul>
+            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+            <li><a href="{% url 'liste_modeles' %}" class="active">Modèles ML</a></li>
+            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+            <li><a href="{% url 'gestionnaire_regles_metier' %}">Gerer les regles metiers</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <h1>Predire les resultats d'un Modèle de Machine Learning</h1>
+
+        {% if message %}
+            <div class="alert success">{{ message }}</div>
+        {% endif %}
+        {% if error %}
+            <div class="alert error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <label for="modele">Modèle :</label>
+            <select name="modele" required>
+                {% for m in modeles %}
+                    <option value="{{ m.id }}">{{ m.nom }} ({{ m.algorithme }})</option>
+                {% endfor %}
+            </select>
+
+            <label for="dataset">Dataset Nettoyé :</label>
+            <select name="dataset" required>
+                {% for d in datasets %}
+                    <option value="{{ d.id }}">{{ d.nom }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Lancer la prédiction</button>
+        </form>
+    </main>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2025 SoleasDetection - Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>

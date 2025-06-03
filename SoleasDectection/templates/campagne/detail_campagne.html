@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails de la campagne</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/detail_campagne.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+        <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+        <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+        <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
+        <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+        <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
+        <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
+        <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
+        <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <h1>Détails de la campagne</h1>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+
+    <h3>Informations générales</h3>
+    <ul>
+        <li><strong>ID :</strong> {{ campagne.id }}</li>
+        <li><strong>Statut :</strong> {{ campagne.statut }}</li>
+        <li><strong>Fréquence :</strong> {{ campagne.frequence }}</li>
+        <li><strong>Répétition :</strong> {{ campagne.repetition }}</li>
+        <li><strong>Date début :</strong> {{ campagne.date_debut_c }}</li>
+        <li><strong>Date fin :</strong> {{ campagne.date_fin_c }}</li>
+        <li><strong>Modèle ML :</strong> {{ campagne.modele_ml.nom }}</li>
+    </ul>
+
+    <h3>Contrôle de la campagne</h3>
+    {% if campagne.statut == "en_cours" %}
+        <form method="post" action="{% url 'arreter_campagne' campagne.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Arrêter</button>
+        </form>
+        <form method="post" action="{% url 'suspendre_campagne' campagne.id %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning">Suspendre</button>
+        </form>
+    {% elif campagne.statut == "suspendue" %}
+        <form method="post" action="{% url 'reprendre_campagne' campagne.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success">Reprendre</button>
+        </form>
+    {% endif %}
+
+    <h3>Suspects détectés</h3>
+    {% if suspects %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Nom</th>
+                    <th>Matricule</th>
+                    <th>Description</th>
+                    <th>Décision</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for suspect in suspects %}
+                    <tr>
+                        <td>{{ suspect.email }}</td>
+                        <td>{{ suspect.nom }}</td>
+                        <td>{{ suspect.matricule }}</td>
+                        <td>{{ suspect.description }}</td>
+                        <td>{{ suspect.decision }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucun suspect détecté.</p>
+    {% endif %}
+
+    <h3>Rapports générés</h3>
+    {% if rapports %}
+        <ul>
+            {% for rapport in rapports %}
+                <li><a href="{{ rapport.fichier.url }}">{{ rapport.fichier.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Aucun rapport disponible.</p>
+    {% endif %}
+</div>
+
+<footer>
+    <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>
