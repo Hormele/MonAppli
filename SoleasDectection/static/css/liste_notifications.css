@@ -1,40 +1,51 @@
-body {
+/*  STRUCTURE GLOBAL */
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body, html {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f8;
+}
+
+/* SIDEBAR */
 .sidebar {
-    width: 200px;
-    height: 100vh;
-    background-color: #333;
-    color: white;
-    position: fixed;
+    width: 220px;
+    background: #2c3e50;
     padding: 20px;
+    color: white;
 }
 
 .sidebar h2 {
-    margin-top: 0;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .sidebar ul {
-    list-style-type: none;
-    padding: 0;
+    list-style: none;
+    padding-left: 0;
 }
 
 .sidebar ul li {
-    margin: 15px 0;
+    margin-bottom: 15px;
 }
 
 .sidebar ul li a {
     color: white;
     text-decoration: none;
+    display: block;
+    padding: 8px;
+    border-radius: 4px;
 }
 
-.sidebar ul li a.active {
-    font-weight: bold;
-    text-decoration: underline;
+.sidebar ul li a.active,
+.sidebar ul li a:hover {
+    background-color: #00adb5;
 }
 
+/* MAIN */
 .content {
     margin-left: 220px;
     padding: 20px;

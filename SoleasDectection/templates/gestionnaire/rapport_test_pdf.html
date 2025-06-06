@@ -63,9 +63,14 @@
         <tbody>
             {% for suspect in suspects %}
             <tr>
-                <td>{{ suspect.user_id }}</td>
-                <td>{{ suspect.username_y }}</td>
-                <td>{{ suspect.matricule_y }}</td>
+                <td>{{ suspect.user_id }}</td>        
+                {% if suspect.username_y and suspect.matricule_y %}
+                    <td>{{ suspect.username_y }}</td>
+                    <td>{{ suspect.matricule_y }}</td>
+                {% else %}:
+                    <td>{{ suspect.username }}</td>
+                    <td>{{ suspect.matricule }}</td>
+                {% endif %}
                 <td>{% if suspect.is_fraud %}Oui{% else %}Non{% endif %}</td>
                 <td>{{ suspect.description }}</td>
                 <td>{{ suspect.decision }}</td>

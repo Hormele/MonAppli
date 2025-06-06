@@ -15,14 +15,14 @@
 <div class="sidebar">
     <h2>SoleasDetection</h2>
     <ul>
-        <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+        <li><a href="{% url 'dashboard_admin' %}">Tableau de bord Admin</a></li>
         <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
         <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
         <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
         <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
         <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
         <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-        <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+        <li><a href="{% url 'dashboard_gestionnaire' %}" class="active">Gestionnaire</a></li>
         <li><a href="{% url 'logout' %}">Déconnexion</a></li>
     </ul>
 </div>
@@ -74,9 +74,10 @@
         <table>
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nom</th>
                     <th>Condition</th>
-                    <th>Répétition</th>
+                    <th>Description</th>
                     <th>Statut</th>
                     <th>Actions</th>
                 </tr>
@@ -84,9 +85,10 @@
             <tbody>
                 {% for regle in regles %}
                 <tr>
+                    <td>{{ regle.id }}</td>
                     <td>{{ regle.nom }}</td>
                     <td>{{ regle.condition }}</td>
-                    <td>{{ regle.repetition }}</td>
+                    <td>{{ regle.description }}</td>
                     <td>
                         {% if regle.actif %}
                             <span class="badge bg-success">Active</span>
@@ -95,9 +97,9 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-sm">Modifier</a>
-                        <a href="#" class="btn btn-warning btn-sm">Désactiver</a>
-                        <a href="#" class="btn btn-danger btn-sm">Supprimer</a>
+                        <a href="{% url 'modifier_regle_metier' regle.id %}" class="btn btn-primary btn-sm">Modifier</a>
+                        <a href="{% url 'toggle_regle_metier' regle.id %}" class="btn btn-warning btn-sm">Désactiver</a>
+                        <a href=" {% url 'supprimer_regle_metier' regle.id %}" class="btn btn-danger btn-sm">Supprimer</a>
                     </td>
                 </tr>
                 {% endfor %}

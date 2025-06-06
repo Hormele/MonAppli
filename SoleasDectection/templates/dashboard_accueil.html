@@ -23,7 +23,7 @@
 
             <div class="nav-right">
                 <ul>
-                    <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
+                    <li><a href="{% url 'dashboard_accueil' %}" class="active">Accueil</a></li>
                     <li><a href="{% url 'mon_profil' %}">Mon Profil</a></li>
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'logout' %}">Déconnexion</a></li>

@@ -1,50 +1,57 @@
-body {
+/*  STRUCTURE GLOBAL */
+* {
     margin: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f4f4;
+    padding: 0;
+    box-sizing: border-box;
 }
 
+body, html {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f6f8;
+}
+
+/* DASHBOARD-CINTAINER */
 .dashboard-container {
     display: flex;
     min-height: 100vh;
 }
 
+/* SIDEBAR */
 .sidebar {
-    width: 230px;
-    background-color: #1a1a2e;
-    color: white;
+    width: 220px;
+    background: #2c3e50;
     padding: 20px;
-    position: fixed;
-    height: 100%;
+    color: white;
 }
 
 .sidebar h2 {
-    text-align: center;
-    font-size: 1.5rem;
     margin-bottom: 30px;
+    text-align: center;
 }
 
 .sidebar ul {
     list-style: none;
-    padding: 0;
+    padding-left: 0;
 }
 
 .sidebar ul li {
-    margin: 15px 0;
+    margin-bottom: 15px;
 }
 
 .sidebar ul li a {
     color: white;
     text-decoration: none;
-    padding: 8px 10px;
     display: block;
-    border-radius: 5px;
+    padding: 8px;
+    border-radius: 4px;
 }
 
+.sidebar ul li a.active,
 .sidebar ul li a:hover {
     background-color: #00adb5;
 }
 
+/* MAIN */
 .main-content {
     margin-left: 230px;
     padding: 30px;

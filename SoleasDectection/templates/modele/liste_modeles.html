@@ -19,7 +19,6 @@
             <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
             <li><a href="{% url 'liste_modeles' %}" class="active">Modèles ML</a></li>
             <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-            <li><a href="{% url 'liste_suspects' %}">Liste Suspects Test</a></li>
             <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
             <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
             <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
@@ -88,7 +87,7 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="{% url 'supprimer_modele' modele.id %}">Supprimer</a>
+                        <a href="{% url 'supprimer_modele' modele.id %}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce test ?');">Supprimer</a>
                     </td>
                 </tr>
                 {% endfor %}

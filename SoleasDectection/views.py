@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.db.models import Count
 from django.contrib import messages
 from django.http import HttpResponse
+from django.core.files.base import ContentFile
 from django.db.models.functions import ExtractMonth
 from django.template.loader import get_template
 from django.shortcuts import render, redirect, get_object_or_404
@@ -23,7 +24,10 @@ def admin_required(view_func):
     decorated_view_func = user_passes_test(lambda u: u.is_authenticated and u.role == 'admin')(view_func)
     return decorated_view_func
 
+
 Utilisateur = get_user_model()
+
+
 
 #1.-------------------- VUE POUR LE DASHBOARD D'ACCEUIL----------------------
 def dashboard_accueil(request):
@@ -33,8 +37,8 @@ def dashboard_accueil(request):
 def dashboard_admin(request):
     # Cartes de résumé
     users_count = Utilisateur.objects.count()
-    campaigns_count = Campagne.objects.filter(statut='en cours').count()
-    finished_campaigns_count = Campagne.objects.filter(statut='terminee').count()
+    campaigns_count = CampagneTest.objects.filter(statut='en cours').count()
+    finished_campaigns_count = CampagneTest.objects.filter(statut='terminee').count()
     datasets_count = Dataset.objects.count()
 
     # Données pour le graphique des datasets par mois
@@ -52,8 +56,8 @@ def dashboard_admin(request):
             datasets_data[d['month'] - 1] = d['total']
 
     # Données pour le graphique des campagnes par mois
-    campaigns_par_mois = Campagne.objects.annotate(
-        month=ExtractMonth('date_debut_c')  # change selon ton modèle
+    campaigns_par_mois = CampagneTest.objects.annotate(
+        month=ExtractMonth('date_test')  # change selon ton modèle
     ).values('month').annotate(
         total=Count('id')
     ).order_by('month')
@@ -83,8 +87,8 @@ def dashboard_admin(request):
 #-------------------------------- VUE DASHBOARD ANALYSTE -----------------------
 def dashboard_analyste(request):
     # Récupérer les données des campagnes
-    campaigns_count = Campagne.objects.filter(statut='en cours').count()
-    finished_campaigns_count = Campagne.objects.filter(statut='terminee').count()
+    campaigns_count = CampagneTest.objects.filter(statut='en cours').count()
+    finished_campaigns_count = CampagneTest.objects.filter(statut='terminee').count()
     datasets_count = Dataset.objects.count()
 
     # Récupérer les suspects
@@ -104,8 +108,8 @@ def dashboard_analyste(request):
         datasets_data[d['month'] - 1] = d['total']
 
     # Données pour le graphique des campagnes par mois
-    campaigns_par_mois = Campagne.objects.annotate(
-        month=ExtractMonth('date_debut_c')  # change selon ton modèle
+    campaigns_par_mois = CampagneTest.objects.annotate(
+        month=ExtractMonth('date_test')  # change selon ton modèle
     ).values('month').annotate(
         total=Count('id')
     ).order_by('month')
@@ -163,18 +167,18 @@ def liste_datasets(request):
 
     # Gestion des filtres GET
     type_filtre = request.GET.get('type')
-    format_filtre = request.GET.get('format')
+    format_filtre = request.GET.get('format_fichier')
     date_min = request.GET.get('date_min')
     date_max = request.GET.get('date_max')
 
     if type_filtre:
         datasets = datasets.filter(type=type_filtre)
     if format_filtre:
-        datasets = datasets.filter(format=format_filtre)
+        datasets = datasets.filter(format_fichier=format_filtre)
     if date_min:
-        datasets = datasets.filter(date__gte=date_min)
+        datasets = datasets.filter(dateC__gte=date_min)
     if date_max:
-        datasets = datasets.filter(date__lte=date_max)
+        datasets = datasets.filter(dateC__lte=date_max)
 
     # Statistiques
     brut_count = datasets.filter(type='brut').count()
@@ -200,17 +204,10 @@ def uploader_dataset(request):
 
         nom_initial = request.POST.get('nom')
         type_fichier = request.POST.get('type')
+        description = request.POST.get('description', '')
 
-        # Ajouter le suffixe _cleaned seulement si c’est un fichier nettoyé
-        if type_fichier == 'nettoye':
-            nom = f"{nom_initial}_cleaned"
-        else:
-            nom = nom_initial
-        description = request.POST.get('description')
         fichier = request.FILES.get('fichier')
         fichier_brut = request.FILES.get('fichier_brut')
-
-        print(f">>> Nom : {nom}, Type : {type_fichier}, Extension brute : {fichier.name if fichier else 'Aucun fichier'}")
 
         if not fichier and not fichier_brut:
             message = "Veuillez sélectionner au moins un fichier à uploader."
@@ -218,30 +215,44 @@ def uploader_dataset(request):
                 'message': message,
                 'erreur': erreur,
             })
-
+        
         fichier_utilise = fichier if fichier else fichier_brut
         extension = os.path.splitext(fichier_utilise.name)[1].lower().replace('.', '')
         print(f">>> Extension détectée : {extension}")
 
-        if extension not in ['csv', 'json']:
+        if extension not in ['csv', 'json']: # RETIRER JSON ICI ------------------------------------------------
             erreur = "Format de fichier non pris en charge (CSV ou JSON uniquement)."
             print(">>> Erreur : extension non supportée")
             return render(request, 'dataset/uploader_dataset.html', {'erreur': erreur})
+        
+        if type_fichier == 'nettoye':
+            nom = f"{nom_initial.strip()}_cleaned"
+        else:
+            nom = nom_initial.strip()
 
         try:
-            extension_with_dot = os.path.splitext(fichier_utilise.name)[1].lower()
-            if type_fichier.lower() == 'nettoye' and fichier:
-                fichier.name = f"{nom}_cleaned{extension_with_dot}"
-            elif fichier:
-                fichier.name = f"{nom}{extension_with_dot}"
-            print(f">>> Nom du fichier renommé : {fichier.name if fichier else 'aucun renommage nece'}")
+            #extension_with_dot = os.path.splitext(fichier_utilise.name)[1].lower()
+            #nom_base = nom_initial.lower().replace(' ', '_')
 
+            #if nom_base.endswitch('_cleaned'):
+                #nom_base = nom_base[:-8]
+
+            #if type_fichier.lower() == 'nettoye' and fichier:
+                #nom = f"{nom_base}_cleaned{extension_with_dot}"
+            #elif fichier:
+                #nom = f"{nom_base}{extension_with_dot}"
+            #else:
+                #nom = nom_base # si brut uniquement
+
+            #fichier.name = nom
+            print(f">>> Nom du fichier renommé : {fichier.name if fichier else 'aucun fichier renomme'}")
+        
             dataset = Dataset.objects.create(
                 nom=nom,
                 description=description,
                 type=type_fichier,
                 format_fichier=extension,
-                fichier=fichier,
+                fichier=fichier if fichier else None,
                 fichier_brut=fichier_brut if fichier_brut else None
             )
             print(f">>> Dataset enregistré avec ID {dataset.id}")
@@ -258,6 +269,8 @@ def uploader_dataset(request):
         'message': message,
         'erreur': erreur
     })
+
+            
         
 #2-3. VUE POUR Supprimer un dataset ----------------------------------------------------------------
 @login_required
@@ -467,42 +480,35 @@ def lancer_campagne_test_view(request):
             print("total a enregistrer:", total)
 
             #recuperer les informations du modele
-            type_fraude = modele.type_fraude
-            algorithme = modele.algorithme
-
+            #type_fraude = modele.type_fraude
+            #algorithme = modele.algorithme
 
             # Sauvegarde du résultat
-            # Sauvegarde du résultat
-            result_filename = f"resultat_{type_fraude}_{algorithme}_fraude.csv"
+            result_filename = f"resultat_{modele.nom}_fraude.csv".replace(" ", "_")
             relative_result_path = os.path.join('resultats_fraude', result_filename)
 
             # Création du répertoire si nécessaire
-            result_path = os.path.join(settings.MEDIA_ROOT, relative_result_path)
-            os.makedirs(os.path.dirname(result_path), exist_ok=True)
-
+            #result_path = os.path.join(settings.MEDIA_ROOT, relative_result_path)
+            #os.makedirs(os.path.dirname(result_path), exist_ok=True)
 
             # Sauvegarde du DataFrame en CSV dans le répertoire approprié
-            try:
-                df_resultat.to_csv(result_path, index=False)
-                print(f">>> Résultat enregistré dans {relative_result_path}")
-            except Exception as e:
-                print(f"Erreur lors de l'enregistrement du fichier : {e}")
-                # Gérer l'erreur ou envoyer une notification si nécessaire
-                raise
+            csv_bytes = df_resultat.to_csv(index=False).encode('utf-8')
 
 
             # Création du test dans la base de données
-            CampagneTest.objects.create(
+            campagne = CampagneTest.objects.create(
                 modele=modele,
                 dataset=dataset,
                 statut='succes',  # Statut par défaut, peut être mis à jour selon le contexte
                 nb_fraudes=nb_fraudes,
                 nb_total=total,
                 nom_fichier_resultat=result_filename,
-                fichier_fraude=relative_result_path,  # Chemin relatif pour le fichier
+                fichier_fraude=ContentFile(csv_bytes, name=result_filename),  # Chemin relatif pour le fichier
                 graph_data=json.dumps(graph_data)  # Assurez-vous que `graph_data` est bien préparé
             )
 
+            #with open (result_path, 'rb') as f:
+                #campagne.fichier_fraude.save(result_filename, File(f), save=True)
             print(">>> campagne test sauvegardé dans la base")
 
             messages.success(request, f"{nb_fraudes} fraudes détectées sur {total} lignes. Rapport généré avec succès.")
@@ -511,7 +517,7 @@ def lancer_campagne_test_view(request):
 
         except Exception as e:
             print(">>> Erreur lors du test :", str(e))
-            return render(request, "campagne_test/lancer_camapgne_test.html", {
+            return render(request, "campagne_test/lancer_campagne_test.html", {
                 "error": str(e),
                 "modeles": modeles,
                 "datasets": datasets
@@ -547,9 +553,9 @@ def liste_campagne_test_view(request):
 
     # Filtrage par date (date_min et date_max)
     if date_debut:
-        datasets = datasets.filter(date__gte=date_debut)
+        tests = tests.filter(date_test__gte=date_debut)
     if date_fin:
-        datasets = datasets.filter(date__lte=date_fin)
+        tests = tests.filter(date_test__lte=date_fin)
 
     print(f">>> Tests après filtrage : {tests.count()} tests")
 
@@ -600,7 +606,7 @@ def uploader_resultats_fraude(request):
     dossiers_datasets = os.path.join(settings.MEDIA_ROOT, 'datasets')
 
     fichiers_resultats = [f for f in os.listdir(dossiers_resultats) if f.endswith('.csv')]
-    fichiers_users = [f for f in os.listdir(dossiers_users) if f.endswith('.csv')]
+    fichiers_users = [f for f in os.listdir(dossiers_users) if f == 'user.csv']
     fichiers_datasets = [f for f in os.listdir(dossiers_datasets) if f.endswith('.csv')]
     regles = RegleMetier.objects.filter(actif=True)
 
@@ -714,8 +720,8 @@ def uploader_resultats_fraude(request):
 
                 # Détection des colonnes à afficher
                 if 'username_y' in df_rapport.columns and 'matricule_y' in df_rapport.columns:
-                    username_col = 'username_y'
-                    matricule_col = 'matricule_y'
+                    username = 'username_y'
+                    matricule = 'matricule_y'
                 else:
                     username_col = 'username'
                     matricule_col = 'matricule'
@@ -772,7 +778,7 @@ def uploader_resultats_fraude(request):
 
                 message = "Résultats traités avec succès."
 
-                print(">>> Enregist suspect")
+                print(">>> Enregistrement suspect")
                 for _, row in rapport_final.iterrows():
                     SuspectTest.objects.create(
                         user_id=int(row['user_id']),
@@ -876,13 +882,21 @@ def detail_campagne_test_view(request, fichier_id):
 
         suspects = df.to_dict(orient='records')
 
-        
+        # if 'username_y' in df.columns and 'matricule_y' in df.columns:
+            # username_col = 'username_y'
+            # matricule_col = 'matricule_y'
+        # else:
+            # username_col = 'username'
+            # matricule_col = 'matricule'
 
+        
         return render(request, 'gestionnaire/detail_test.html', {
             'fichier': fichier,
             'suspects': suspects,
             'filtre_decision': filtre_decision,
             'filtre_date': filtre_date,
+            # 'username_col': username_col,
+            # 'matricule_col': matricule_col,
             'message': "Aperçu CSV chargé avec succès"
         })
     except Exception as e:
@@ -948,7 +962,7 @@ def supprimer_liste_test(request, fichier_id):
     fichier.delete()
     messages.success(request, "Fichier des suspects supprimé avec succès.")
 
-    return redirect('liste_suspects')
+    return redirect('dashboard_gestionnaire')
 
 # VUE POUR SUPPRIMER UN RESULTAT TEST
 @login_required
@@ -956,23 +970,21 @@ def supprimer_campagne_test(request, test_id):
     test = get_object_or_404(CampagneTest, id=test_id)
 
     # Supprimer le fichier CSV du dossier
-    if test.fichier_fraude and os.path.join.exist(test.fichier_fraude.path):
+    if test.fichier_fraude and os.path.exists(test.fichier_fraude.path):
         try:
             chemin_fichier = test.fichier_fraude.path
-            if os.path.exists(chemin_fichier):
-                os.remove(chemin_fichier)
-                print(f">>> Fichier supprimé du disque : {chemin_fichier}")
-            else:
-                print(f"!!! Fichier introuvable sur le disque : {chemin_fichier}")
+            os.remove(chemin_fichier)
+            print(f">>> Fichier supprimé du disque : {chemin_fichier}")
         except Exception as e:
             print(">>> erreur supp fichier :", str(e))
+    else:
+        print(f"!!! Fichier introuvable sur le disque ou non défini.")
 
     # Supprimer l’entrée dans la base de données
     test.delete()
     messages.success(request, "Fichier des suspects supprimé avec succès.")
 
     return redirect('liste_campagne_test')
-
 
 
 # 3. ------------------------------------------- VUE POUR DASHBOARD CAMAPGNE --------------------------------------------------------------

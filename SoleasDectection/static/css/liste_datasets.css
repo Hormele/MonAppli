@@ -47,8 +47,9 @@ body, html {
     border-radius: 4px;
 }
 
+.sidebar ul li a.active,
 .sidebar ul li a:hover {
-    background: #34495e;
+     background-color: #00adb5;
 }
 
 /* MAIN */

@@ -16,10 +16,10 @@
     <nav class="sidebar">
         <h2>Menu</h2>
         <ul>
-            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_admin' %}">Tableau de bord Admin</a></li>
             <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
             <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
-            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
+            <li><a href="{% url 'liste_datasets' %}" class="active">Datasets</a></li>
             <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
             <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
             <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
@@ -55,21 +55,55 @@
             <textarea name="description" rows="4" class="form-control"></textarea>
 
             <label for="type">Type de fichier :</label>
-            <select name="type" class="form-control" required>
+            <select id="type_fichier" name="type" required>
                 <option value="brut">Fichier brut</option>
                 <option value="nettoye">Fichier nettoyé</option>
             </select>
 
-            <label for="fichier">Fichier nettoye :</label>
-            <input type="file" name="fichier" class="form-control" accept=".csv, .json">
+            <div id="bloc_fichier_nettoye" style="display: none;">
+                <label for="fichier">Fichier nettoye :</label>
+                <input type="file" name="fichier" id="fichier_nettoye" class="form-control" accept=".csv, .json">
+            </div>
 
-            <label for="fichier_brut">Fichier brut :</label>
-            <input type="file" name="fichier_brut" class="form-control" accept=".csv, .json">
+            <div id="bloc_fichier_brut">
+                <label for="fichier_brut">Fichier brut :</label>
+                <input type="file" name="fichier_brut"  id="fichier_brut" class="form-control" accept=".csv, .json">
+            </div>
 
+            <br>
             <button type="submit" class="btn btn-primary mt-3">Uploader</button>
         </form>
+
+        <!-- Script js pour bqsculer es champs uploader-->>
+        <script>
+            document.getElementById('type_fichier').addEventListener('change', function () {
+                const type = this.value;
+                const blocBrut = document.getElementById('bloc_fichier_brut');
+                const blocNettoye = document.getElementById('bloc_fichier_nettoye');
+
+                if (type === 'nettoye') {
+                    blocBrut.style.display = 'none';
+                    blocNettoye.style.display = 'block';
+                } else {
+                    blocBrut.style.display = 'block';
+                    blocNettoye.style.displaye = 'none';
+                } 
+            });
+
+            // toujours forcer la mise a jour 
+            document.getElementById('type_fichier').addEventListener('click', function () {
+                this.dispatchEvent(new Event('change'));
+            });
+
+            // lancer le changement a l`ouverture de la page
+            window.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('type_fichier').dispatchEvent(new Event('change'));
+            });
+        </script>
     </main>
 </div>
+
+
 
 <!-- Footer -->
 <footer class="footer">

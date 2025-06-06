@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,7 +11,7 @@
     <div class="sidebar">
         <h2>SoleasDetection</h2>
         <ul>
-            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
+            <li><a href="{% url 'dashboard_admin' %}">Tableau de bord Admin</a></li>
             <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
             <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
             <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
@@ -18,7 +19,7 @@
             <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
             <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
             <li><a href="{% url 'gestionnaire_regles_metier' %}">Gerer les regles metiers</a></li>
-            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
+            <li><a href="{% url 'dashboard_gestionnaire' %}" class="active">Gestionnaire</a></li>
             <li><a href="{% url 'logout' %}">Déconnexion</a></li>
         </ul>
     </div>
@@ -68,8 +69,14 @@
                     <tr>
                         <td>{{ suspect.id }}</td>
                         <td>{{ suspect.user_id }}</td>
-                        <td>{{ suspect.username_y }}</td>
-                        <td>{{ suspect.matricule_y }}</td>
+                        {% if suspect.username_y and suspect.matricule_y %}
+                            <td>{{ suspect.username_y }}</td>
+                            <td>{{ suspect.matricule_y }}</td>
+                        {% else %}:
+                            <td>{{ suspect.username }}</td>
+                            <td>{{ suspect.matricule }}</td>
+                        {% endif %}
+                        </td>
                         <td>{{ suspect.is_fraud }}</td>
                         <td>{{ suspect.description }}</td>
                         <td>

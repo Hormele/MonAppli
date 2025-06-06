@@ -16,27 +16,30 @@ body {
 }
 
 .sidebar h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .sidebar ul {
     list-style: none;
-    padding: 0;
+    padding-left: 0;
 }
 
 .sidebar ul li {
-    margin: 10px 0;
+    margin-bottom: 15px;
 }
 
 .sidebar ul li a {
     color: white;
     text-decoration: none;
-    font-weight: bold;
+    display: block;
+    padding: 8px;
+    border-radius: 4px;
 }
 
+.sidebar ul li a.active,
 .sidebar ul li a:hover {
-    text-decoration: underline;
+     background-color: #00adb5;
 }
 
 .content {

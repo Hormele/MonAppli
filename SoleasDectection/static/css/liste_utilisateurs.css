@@ -1,9 +1,13 @@
 /* --- BASE --- */
-body {
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
     font-family: 'Segoe UI', sans-serif;
-    background-color: #f5f7fa;
-    color: #333;
+    background-color: #f4f6f8;
 }
 
 /* --- SIDEBAR --- */
@@ -19,28 +23,30 @@ body {
 }
 
 .sidebar h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
 .sidebar ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
+    padding-left: 0;
 }
 
 .sidebar ul li {
-    margin: 12px 0;
+    margin-bottom: 15px;
 }
 
 .sidebar ul li a {
-    color: #ecf0f1;
+    color: white;
     text-decoration: none;
-    font-size: 15px;
+    display: block;
+    padding: 8px;
+    border-radius: 4px;
 }
 
+.sidebar ul li a.active,
 .sidebar ul li a:hover {
-    text-decoration: underline;
+     background-color: #00adb5;
 }
 
 /* --- MAIN CONTAINER --- */
