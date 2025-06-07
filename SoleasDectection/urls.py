@@ -4,6 +4,8 @@ urlpatterns = [
     #route pour mon profil
     path('mon_profil/', views.mon_profil, name='mon_profil'),
     path('mon_profil/editer/', views.edit_profil, name='edit_profil'),
+    path('register/', views.register_view, name='register'),
+    
 
     #1 route pour le dashboard d'accueil
     path('dashboard_accueil/', views.dashboard_accueil, name='dashboard_accueil'),

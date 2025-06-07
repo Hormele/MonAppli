@@ -23,7 +23,7 @@ class UtilisateurCreationForm(forms.ModelForm):
 
     class Meta:
         model = Utilisateur
-        fields = ['email', 'nom', 'role', 'is_active']
+        fields = ['email', 'nom', 'password', 'password_confirm', 'role']
 
     def clean(self):
         cleaned_data = super().clean()
@@ -39,10 +39,6 @@ class UtilisateurCreationForm(forms.ModelForm):
         if commit:
             user.save()
         return user
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['is_active'].initial = True
 
 #3. ---------------------formulaire pour editer un profil
 from django import forms

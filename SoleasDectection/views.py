@@ -161,6 +161,8 @@ def edit_profil(request):
 
 #2. ----------------------- VUE DASHBOARD DATASET ----------------------------------------------------------------------------
 #2-1. VUE POUR Liste des datasets + Statistiques -------------
+
+@login_required
 def liste_datasets(request):
     # Récupérer tous les datasets
     datasets = Dataset.objects.all()
@@ -947,6 +949,7 @@ def generer_rapport_test_pdf(request, fichier_id):
 
 
 # VUE SUPPRIMER UN FICHIER D'UN TEST
+@login_required
 def supprimer_liste_test(request, fichier_id):
     fichier = get_object_or_404(FichierSuspectsTest, id=fichier_id)
 
@@ -1056,6 +1059,7 @@ def lancer_campagne(request):
         return render(request, "campagne/lancer_campagne.html", {"modeles": modeles, "datasets": datasets})
 
 # Liste des campagnes + Graphiques
+@login_required
 def liste_campagnes(request):
     # Filtres par algo et dates
     algo = request.GET.get('algo')
@@ -1462,7 +1466,19 @@ def deconnexion_view(request):
     return redirect('login')
 
 
-
+# -----------------------
+# CREATION DU COMPTE
+# -----------------------
+def register_view(request):
+    if request.method == 'POST':
+        form = UtilisateurCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Compte créé avec succès ! Connectez-vous.")
+            return redirect('login')  # redirection vers la page login
+    else:
+        form = UtilisateurCreationForm()
+    return render(request, 'register.html', {'form': form})
 
 # -----------------------
 # GESTION UTILISATEURS (Admin uniquement)

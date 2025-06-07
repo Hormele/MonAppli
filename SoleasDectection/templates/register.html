@@ -1,0 +1,21 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Créer un compte - Soleas Detection</title>
+  <link rel="stylesheet" href="{% static 'css/register.css' %}">
+</head>
+<body>
+  <div class="register-container">
+    <h1>Créer un compte</h1>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-register">S’inscrire</button>
+    </form>
+    <p class="login-link">Déjà inscrit ? <a href="{% url 'login' %}">Connectez-vous ici</a></p>
+  </div>
+</body>
+</html>

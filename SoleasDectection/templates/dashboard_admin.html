@@ -11,98 +11,255 @@
 </head>
 <body>
 
-<div class="wrapper">
-    <!-- Barre latérale -->
-    <nav class="sidebar">
-        <h2>SoleasDetection</h2>
-        <ul>
-            <li><a href="{% url 'dashboard_admin' %}" class="active">Tableau de bord Admin</a></li>
-            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
-            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
-            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
-            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
-            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
-            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
-            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
-        </ul>
-    </nav>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>SoleasDetection</h2>
+                <p>Dashboard Administrateur</p>
+            </div>
+            <ul>
+                <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="{% url 'dashboard_admin' %}" class="active"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
+                <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
+                <li><a href="{% url 'liste_datasets' %}"><i class="fas fa-database"></i>Datasets</a></li>
+                <li><a href="{% url 'liste_modeles' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                <li><a href="{% url 'dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </nav>
 
-    
-    <!--contenu principal-->
-    <div class="main-content">
-        <h1>Dashboard Administrateur</h1>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <h1>Bienvenu sur le Dashboard Administrateur</h1>
+                <p>Vue d'ensemble de votre plateforme SoleasDetection</p>
+            </div>
 
-        <div class="cards">
-            <div class="card"><h2>{{ users_count }}</h2><p>Utilisateurs</p></div>
-            <div class="card"><h2>{{ campaigns_count }}</h2><p>Campagnes en cours</p></div>
-            <div class="card"><h2>{{ finished_campaigns_count }}</h2><p>Campagnes terminées</p></div>
-            <div class="card"><h2>{{ datasets_count }}</h2><p>Jeux de données</p></div>
+            <!-- Content -->
+            <div class="content">
+                <!-- Statistics Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>{{ users_count|default:3 }}</h3>
+                        <p>Utilisateurs actifs</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h3>{{ campaigns_count|default:0 }}</h3>
+                        <p>Campagnes en cours</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <h3>{{ finished_campaigns_count|default:0 }}</h3>
+                        <p>Campagnes terminées</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>{{ datasets_count|default:11 }}</h3>
+                        <p>Jeux de données</p>
+                    </div>
+                </div>
+
+                <!-- Modules Section -->
+                <div class="modules-section">
+                    <div class="section-header">
+                        <h2>Modules de Gestion</h2>
+                        <p>Accédez rapidement aux différentes sections de votre plateforme</p>
+                    </div>
+
+                    <div class="modules-grid">
+                        <div class="module-card datasets-card" onclick="location.href='{% url 'liste_datasets' %}'">
+                            <div class="module-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3>Gestion des Datasets</h3>
+                            <p>Gérez vos jeux de données, importez de nouveaux fichiers et analysez les performances de vos données d'entraînement.</p>
+                            <a href="{% url 'liste_datasets' %}" class="btn">Gérer les Datasets</a>
+                        </div>
+
+                        <div class="module-card models-card" onclick="location.href='{% url 'liste_modeles' %}'">
+                            <div class="module-icon">
+                                <i class="fas fa-brain"></i>
+                            </div>
+                            <h3>Modèles Machine Learning</h3>
+                            <p>Créez, entraînez et déployez vos modèles IA. Suivez les performances et optimisez vos algorithmes de détection.</p>
+                            <a href="{% url 'liste_modeles' %}" class="btn">Gérer les Modèles</a>
+                        </div>
+
+                        <div class="module-card campaigns-card" onclick="location.href='{% url 'liste_campagnes' %}'">
+                            <div class="module-icon">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <h3>Campagnes de Détection</h3>
+                            <p>Lancez et supervisez vos campagnes de détection. Analysez les résultats et exportez les rapports détaillés.</p>
+                            <a href="{% url 'liste_campagnes' %}" class="btn">Gérer les Campagnes</a>
+                        </div>
+
+                        <div class="module-card manager-card" onclick="location.href='{% url 'dashboard_gestionnaire' %}'">
+                            <div class="module-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <h3>Panel Gestionnaire</h3>
+                            <p>Accédez aux outils de gestion avancés, configurations système et paramètres de sécurité de la plateforme.</p>
+                            <a href="{% url 'dashboard_gestionnaire' %}" class="btn">Accéder au Panel</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="section-header">
+                        <h2>Analyses et Statistiques</h2>
+                        <p>Visualisez l'évolution de votre plateforme</p>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="chart-container">
+                            <h3>Évolution des jeux de données par mois</h3>
+                            <canvas id="datasetsChart"></canvas>
+                        </div>
+
+                        <div class="chart-container">
+                            <h3>Évolution des Campagnes Test par mois</h3>
+                            <canvas id="campaignsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
-        <div class="chart-container">
-            <h2>Évolution des jeux de données par mois</h2>
-            <canvas id="datasetsChart"></canvas>
-        </div>
-
-        <div class="chart-container">
-            <h2>Évolution des Campagnes_Test par mois</h2>
-            <canvas id="campaignsChart" width="600" height="300"></canvas>
-        </div>
-
-        <!-- Pied de page -->
-        <footer>
-            <p>© 2025 SoleasDetection. Tous droits réservés.</p>
-        </footer>
     </div>
-</div>
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2025 SoleasDetection. Tous droits réservés.</p>
+    </div>
+    </div>
 
-<script>
-    const moisLabels = {{ mois_labels|safe }};
-    const datasetsData = {{ datasets_data|safe }};
-    const campaignsData = {{ campaigns_data|safe }};
 
-    new Chart(document.getElementById('datasetsChart'), {
-        type: 'bar',
-        data: {
-            labels: moisLabels,
-            datasets: [{
-                label: 'Jeux de données',
-                data: datasetsData,
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: { 
-                y: { 
-                    beginAtZero: true,
-                    stepSize: 1 
+    <canvas id="datasetsChart" class="chart-canvas"></canvas>
+    <canvas id="campaignsChart" class="chart-canvas"></canvas>
+    <script>
+        // Données pour les graphiques (remplacez par vos vraies données Django)
+        const moisLabels = {{ mois_labels|safe|default:"['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun']" }};
+        const datasetsData = {{ datasets_data|safe|default:"[2, 4, 3, 5, 7, 6]" }};
+        const campaignsData = {{ campaigns_data|safe|default:"[1, 3, 2, 4, 5, 3]" }};
+
+        // Graphique des datasets
+        new Chart(document.getElementById('datasetsChart'), {
+            type: 'bar',
+            data: {
+                labels: moisLabels,
+                datasets: [{
+                    label: 'Jeux de données',
+                    data: datasetsData,
+                    backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    borderSkipped: false,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: { 
+                    y: { 
+                        beginAtZero: true,
+                        stepSize: 1,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
                 }
             }
-        }
-    });
+        });
 
-    new Chart(document.getElementById('campaignsChart'), {
-        type: 'line',
-        data: {
-            labels: moisLabels,
-            datasets: [{
-                label: 'Campagnes',
-                data: campaignsData,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
-                fill: true,
-                tension: 0.4
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: { y: { beginAtZero: true } }
-        }
-    });
-</script>
+        // Graphique des campagnes
+        new Chart(document.getElementById('campaignsChart'), {
+            type: 'line',
+            data: {
+                labels: moisLabels,
+                datasets: [{
+                    label: 'Campagnes',
+                    data: campaignsData,
+                    backgroundColor: 'rgba(240, 147, 251, 0.2)',
+                    borderColor: 'rgba(240, 147, 251, 1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: 'rgba(240, 147, 251, 1)',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: { 
+                    y: { 
+                        beginAtZero: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.05)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card, .module-card').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+
 </body>
 </html>

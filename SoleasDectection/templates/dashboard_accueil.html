@@ -5,41 +5,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de bord Accueil</title>
+    <title>Accueil - SoleasDetection</title>
 
     <!-- Lien vers le CSS spécifique de la page Dashboard -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/dashboard_accueil.css' %}">
-
-    <!-- Autres styles et éléments de l'entête peuvent être ajoutés ici -->
+<!-- Autres styles et éléments de l'entête peuvent être ajoutés ici -->
 </head>
 <body>
-
-    <!-- En-tête avec barre de navigation -->
+    
+    <!-- En-tête fixe -->
     <header>
-        <nav>
-            <div class="nav-left">
-                <a href="{% url 'dashboard_accueil' %}"><img src="{% static 'img/logo.png' %}" alt="SoleasDetection Logo" class="logo"></a>
-            </div>
+        <div class="logo">
+            <a href="{% url 'dashboard_accueil' %}"><img src="{% static 'img/logo.jpg' %}" alt="SoleasDetection Logo" class="logo-img"></a>
+            <span>Soleas Detection</span>
+        </div>
 
-            <div class="nav-right">
-                <ul>
-                    <li><a href="{% url 'dashboard_accueil' %}" class="active">Accueil</a></li>
-                    <li><a href="{% url 'mon_profil' %}">Mon Profil</a></li>
+        <div class="nav-right">
+            <ul>
+                <li><a href="{% url 'dashboard_accueil' %}" title="Accueil"><i class="fas fa-house"></i></a></li>
+                <li><a href="#" title="Notifications"><i class="fas fa-bell"></i></a></li>
+                <li>><a href="#" title="Aide"><i class="fas fa-circle-question"></i></a></li>
+                <li>><a href="#" title="Recherche"><i class="fas fa-magnifying-glass"></i></a></li>
+                <li>
                     {% if user.is_authenticated %}
-                        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+                        <a href="{% url 'logout' %}"><i class="fas fa-user"></i></a>
                     {% else %}
-                        <li><a href="{% url 'login' %}">Se connecter</a></li>
+                        <a href="{% url 'login' %}"><i class="fas fa-user"></i></a>
                     {% endif %}
-                </ul>
-            </div>
-        </nav>
+                </li>
+                    
+            </ul>
+        </div>
     </header>
 
     <!-- Contenu principal -->
     <div class="container">
         <section class="hero">
-            <h1>Bienvenue sur SoleasDetection</h1>
-            <p>Analysez vos transactions, détectez des anomalies, et prenez des décisions informées rapidement.</p>
+            <h1>Bienvenue sur <span class="gradient-text">Soleas Detection</span></h1>
+            <p>SoleasDetection est une plateforme d'analysez intelligente qui vous permet de surveillez vos transactions, identifiez les comportements suspects et prendre des decisons eclairées en toute securité.</p>
             <a href="{% url 'login' %}" class="btn-connexion">Se connecter</a>
         </section>
 
@@ -49,9 +53,11 @@
         </section>
     </div>
 
-    <!-- Pied de page -->
+    <!-- Pied de page fixe -->
     <footer>
         <p>&copy; 2025 SoleasDetection - Tous droits réservés</p>
+        <a href="#">Condition d'utilisation</a>
+        <a href="#">Contact</a>
     </footer>
     
 </body>
