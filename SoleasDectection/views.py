@@ -192,9 +192,11 @@ def liste_datasets(request):
     nettoye_count = datasets.filter(type='nettoye').count()
 
     context = {
+        "page_title": "Gestion des Datasets",
         'datasets': datasets,
         'brut_count': brut_count,
         'nettoye_count': nettoye_count,
+        
     }
     return render(request, 'dataset/liste_datasets.html', context)
 
@@ -1567,12 +1569,31 @@ def supprimer_utilisateur(request, user_id):
 # dashboard fierst de chaque module --------------------------
 @login_required
 def first_dashboard_datasets(request):
-    """
-    Vue pour afficher le first dashboard des datasets
-    """
-    context = {
-        'page_title': 'Gestion des Datasets',
-        'module_name': 'datasets',
-        'user': request.user,
-    }
-    return render(request, 'dataset/first_dashboard_datasets.html', context)
+    # Statistiques dynamiques
+    total = Dataset.objects.count()
+    # Exemple de stats par type (brut/nettoye)
+    nb_brut = Dataset.objects.filter(type='brut').count()
+    nb_nettoye = Dataset.objects.filter(type='nettoye').count()
+    # Espace utilisé (en Mo) si tu veux, sinon retire cette ligne
+    espace_utilise = 0
+    for d in Dataset.objects.all():
+        if d.fichier and hasattr(d.fichier, 'size'):
+            espace_utilise += d.fichier.size
+    espace_utilise = espace_utilise / (1024 * 1024)  # conversion en Mo
+
+    stats_list = [
+        {"number": total, "label": "Datasets Total"},
+    ]
+    stats_upload = [
+        {"number": f"{espace_utilise:.2f} Mo", "label": "Espace Utilisé"},
+    ]
+    stats_stats = [
+        {"number": nb_brut, "label": "Bruts"},
+        {"number": nb_nettoye, "label": "Nettoyés"},
+    ]
+    return render(request, 'dataset/first_dashboard_datasets.html', {
+        "page_title": "Gestion des Datasets",
+        "stats_list": stats_list,
+        "stats_upload": stats_upload,
+        "stats_stats": stats_stats,
+    })

@@ -367,6 +367,7 @@ header {
     color: white;
     margin: 0 auto 25px;
     transition: all 0.3s ease;
+    
 }
 
 .module-card:hover .module-icon {

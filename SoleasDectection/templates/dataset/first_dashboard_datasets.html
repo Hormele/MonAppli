@@ -51,64 +51,59 @@
             <p>Gérez vos jeux de données, importez de nouveaux fichiers et analysez leurs performances pour optimiser vos modèles d'IA</p>
         </div>
 
-        <!-- Quick Stats -->
-        <div class="stats-section loading" style="animation-delay: 0.2s;">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <div class="stat-number">24</div>
-                    <div class="stat-label">Datasets Total</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Datasets Actifs</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">2.3 GB</div>
-                    <div class="stat-label">Espace Utilisé</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">Qualité Moyenne</div>
-                </div>
-            </div>
-        </div>
+        <!-- Quick Stats: J'AI SUPP CETTE PARTIE -->
 
         <!-- Features Grid -->
         <div class="features-grid">
-            <!-- Consulter la liste des datasets -->
-            <div class="feature-card loading" style="animation-delay: 0.3s;" onclick="navigateToPage('{% url "liste_datasets" %}')">
-                <div class="feature-icon">
-                    <i class="fas fa-list"></i>
-                </div>
+            <!-- Card 1: Consulter la liste des datasets -->
+            <div class="feature-card" style="animation-delay: 0.3s;" onclick="navigateToPage('{% url "liste_datasets" %}')">
+                <div class="feature-icon"><i class="fas fa-list"></i></div>    
                 <h3 class="feature-title">Consulter la Liste des Datasets</h3>
                 <p class="feature-description">
                     Visualisez tous vos datasets existants avec leurs métadonnées, statuts de traitement et informations détaillées. Filtrez et triez selon vos critères.
                 </p>
-                <button class="feature-button">Accéder à la liste</button>
+                <div class="card-stats single-stat">
+                    {% for stat in stats_list %}
+                        <div class="stat-item">
+                            <div class="stat-number">{{ stat.number }}</div>
+                            <div class="stat-label">{{ stat.label }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
 
-            <!-- Télécharger un dataset -->
-            <div class="feature-card loading" style="animation-delay: 0.4s;" onclick="navigateToPage('{% url "uploader_dataset" %}')">
-                <div class="feature-icon">
-                    <i class="fas fa-upload"></i>
-                </div>
+            <!--Card 2: Télécharger un dataset -->
+            <div class="feature-card" style="animation-delay: 0.4s;" onclick="navigateToPage('{% url "uploader_dataset" %}')">
+                <div class="feature-icon"><i class="fas fa-upload"></i></div>
                 <h3 class="feature-title">Télécharger un Dataset</h3>
                 <p class="feature-description">
                     Importez de nouveaux jeux de données depuis votre ordinateur, URLs ou services cloud. Formats supportés: CSV, JSON, XML, Excel.
                 </p>
-                <button class="feature-button">Télécharger</button>
+                <div class="card-stats single-stat">
+                    {% for stat in stats_upload %}
+                        <div class="stat-item">
+                            <div class="stat-number">{{ stat.number }}</div>
+                            <div class="stat-label">{{ stat.label }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
 
             <!-- Voir les statistiques -->
-            <div class="feature-card loading" style="animation-delay: 0.5s;" onclick="navigateToPage('#')">
-                <div class="feature-icon">
-                    <i class="fas fa-chart-bar"></i>
-                </div>
+            <div class="feature-card" style="animation-delay: 0.5s;" onclick="navigateToPage('#')">
+                <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
                 <h3 class="feature-title">Voir les Statistiques</h3>
                 <p class="feature-description">
                     Analysez les performances de vos datasets avec des graphiques détaillés, métriques de qualité et recommandations d'amélioration.
                 </p>
-                <button class="feature-button">Voir les stats</button>
+                <div class="card-stats">
+                    {% for stat in stats_stats %}
+                        <div class="stat-item">
+                            <div class="stat-number">{{ stat.number }}</div>
+                            <div class="stat-label">{{ stat.label }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </div>
