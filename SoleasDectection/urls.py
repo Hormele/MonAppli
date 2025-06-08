@@ -71,4 +71,7 @@ urlpatterns = [
     # Authentification
     path('login/', views.connexion_view, name='login'),
     path('logout/', views.deconnexion_view, name='logout'),
+
+    # Routes pour le dashboard premier utilisateur
+    path('first-dashboard-datasets/', views.first_dashboard_datasets, name='first_dashboard_dataset'),
 ]

@@ -34,8 +34,10 @@ def dashboard_accueil(request):
     return render(request, 'dashboard_accueil.html')
 
 #-------------------------- VUE DASHBOARD ADMIN 
+@admin_required
 def dashboard_admin(request):
     # Cartes de résumé
+    user = request.user
     users_count = Utilisateur.objects.count()
     campaigns_count = CampagneTest.objects.filter(statut='en cours').count()
     finished_campaigns_count = CampagneTest.objects.filter(statut='terminee').count()
@@ -79,12 +81,15 @@ def dashboard_admin(request):
         'mois_labels': mois_labels,
         'datasets_data': datasets_data,
         'campaigns_data': campaigns_data,
+        'user': user,
     }
 
     return render(request, 'dashboard_admin.html', context)
 
 
 #-------------------------------- VUE DASHBOARD ANALYSTE -----------------------
+@login_required
+@user_passes_test(lambda u: u.role == 'analyste')
 def dashboard_analyste(request):
     # Récupérer les données des campagnes
     campaigns_count = CampagneTest.objects.filter(statut='en cours').count()
@@ -1558,3 +1563,16 @@ def supprimer_utilisateur(request, user_id):
         return redirect('liste_utilisateurs')
 
     return render(request, 'utilisateur/supprimer_utilisateur.html', {'utilisateur': utilisateur})
+
+# dashboard fierst de chaque module --------------------------
+@login_required
+def first_dashboard_datasets(request):
+    """
+    Vue pour afficher le first dashboard des datasets
+    """
+    context = {
+        'page_title': 'Gestion des Datasets',
+        'module_name': 'datasets',
+        'user': request.user,
+    }
+    return render(request, 'dataset/first_dashboard_datasets.html', context)

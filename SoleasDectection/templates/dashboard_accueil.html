@@ -24,9 +24,10 @@
         <div class="nav-right">
             <ul>
                 <li><a href="{% url 'dashboard_accueil' %}" title="Accueil"><i class="fas fa-house"></i></a></li>
+                <li><a href="#" title="Recherche"><i class="fas fa-magnifying-glass"></i></a></li>
                 <li><a href="#" title="Notifications"><i class="fas fa-bell"></i></a></li>
-                <li>><a href="#" title="Aide"><i class="fas fa-circle-question"></i></a></li>
-                <li>><a href="#" title="Recherche"><i class="fas fa-magnifying-glass"></i></a></li>
+                <li><a href="#" title="Aide"><i class="fas fa-circle-question"></i></a></li>
+                
                 <li>
                     {% if user.is_authenticated %}
                         <a href="{% url 'logout' %}"><i class="fas fa-user"></i></a>

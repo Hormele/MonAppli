@@ -7,27 +7,48 @@
     <title>Dashboard Administrateur</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/dashboard_admin.css' %}">
 </head>
 <body>
+    <header>
+        <div class="logo">
+            <a href="{% url 'dashboard_accueil' %}"><img src="{% static 'img/logo.jpg' %}" alt="SoleasDetection Logo" class="logo-img"></a>
+            <span>Soleas Detection</span>
+        </div>
+
+        <div class="nav-right">
+            <ul>
+                <li><a href="{% url 'dashboard_accueil' %}" title="Accueil"><i class="fas fa-house"></i></a></li>
+                <li><a href="#" title="Notifications"><i class="fas fa-bell"></i></a></li>
+                <li><a href="#" title="Aide"><i class="fas fa-circle-question"></i></a></li>
+                <li><a href="#" title="Recherche"><i class="fas fa-magnifying-glass"></i></a></li>
+                <li>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}"><i class="fas fa-user"></i></a>
+                    {% else %}
+                        <a href="{% url 'login' %}"><i class="fas fa-user"></i></a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </header>
 
     <div class="wrapper">
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="sidebar-header">
-                <h2>SoleasDetection</h2>
-                <p>Dashboard Administrateur</p>
+                <h2>Soleas Detection</h2>
             </div>
             <ul>
                 <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
                 <li><a href="{% url 'dashboard_admin' %}" class="active"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
                 <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
-                <li><a href="{% url 'liste_datasets' %}"><i class="fas fa-database"></i>Datasets</a></li>
+                <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
                 <li><a href="{% url 'liste_modeles' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
                 <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
                 <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
                 <li><a href="{% url 'dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
-                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
                 <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
                 <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
             </ul>
@@ -35,11 +56,10 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
-            <div class="header">
-                <h1>Bienvenu sur le Dashboard Administrateur</h1>
-                <p>Vue d'ensemble de votre plateforme SoleasDetection</p>
-            </div>
+            <h1 style="margin-bottom: 30px; color: #2d3748; font-size: 2em;">
+                Bienvenue sur le Dashboard Administrateur, {{ user.nom }}
+            </h1>
+        
 
             <!-- Content -->
             <div class="content">
@@ -75,6 +95,8 @@
                     </div>
                 </div>
 
+                <hr class="custom-separator">
+
                 <!-- Modules Section -->
                 <div class="modules-section">
                     <div class="section-header">
@@ -89,7 +111,7 @@
                             </div>
                             <h3>Gestion des Datasets</h3>
                             <p>Gérez vos jeux de données, importez de nouveaux fichiers et analysez les performances de vos données d'entraînement.</p>
-                            <a href="{% url 'liste_datasets' %}" class="btn">Gérer les Datasets</a>
+                            <a href="{% url 'first_dashboard_dataset' %}" class="btn">Gérer les Datasets</a>
                         </div>
 
                         <div class="module-card models-card" onclick="location.href='{% url 'liste_modeles' %}'">
@@ -98,7 +120,7 @@
                             </div>
                             <h3>Modèles Machine Learning</h3>
                             <p>Créez, entraînez et déployez vos modèles IA. Suivez les performances et optimisez vos algorithmes de détection.</p>
-                            <a href="{% url 'liste_modeles' %}" class="btn">Gérer les Modèles</a>
+                            <a href="#" class="btn">Gérer les Modèles</a>
                         </div>
 
                         <div class="module-card campaigns-card" onclick="location.href='{% url 'liste_campagnes' %}'">
@@ -107,7 +129,7 @@
                             </div>
                             <h3>Campagnes de Détection</h3>
                             <p>Lancez et supervisez vos campagnes de détection. Analysez les résultats et exportez les rapports détaillés.</p>
-                            <a href="{% url 'liste_campagnes' %}" class="btn">Gérer les Campagnes</a>
+                            <a href="#" class="btn">Gérer les Campagnes</a>
                         </div>
 
                         <div class="module-card manager-card" onclick="location.href='{% url 'dashboard_gestionnaire' %}'">
@@ -116,7 +138,7 @@
                             </div>
                             <h3>Panel Gestionnaire</h3>
                             <p>Accédez aux outils de gestion avancés, configurations système et paramètres de sécurité de la plateforme.</p>
-                            <a href="{% url 'dashboard_gestionnaire' %}" class="btn">Accéder au Panel</a>
+                            <a href="#" class="btn">Accéder au Panel</a>
                         </div>
                     </div>
                 </div>
@@ -143,15 +165,11 @@
             </div>
         </div>
     </div>
-    <!-- Footer -->
+    <!-- Footer en dehors de .wrapper -->
     <div class="footer">
         <p>© 2025 SoleasDetection. Tous droits réservés.</p>
     </div>
-    </div>
 
-
-    <canvas id="datasetsChart" class="chart-canvas"></canvas>
-    <canvas id="campaignsChart" class="chart-canvas"></canvas>
     <script>
         // Données pour les graphiques (remplacez par vos vraies données Django)
         const moisLabels = {{ mois_labels|safe|default:"['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun']" }};
