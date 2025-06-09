@@ -7,108 +7,142 @@
     <title>Uploader un dataset</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/uploader_dataset.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- Header EN DEHORS du wrapper -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="dashboard-title">{{ page_title }}</h1>
+        </div>
+        <div class="header-icons">
+            <button class="header-icon" onclick="goHome()" title="Accueil">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="header-icon" onclick="openSearch()" title="Rechercher">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="header-icon" onclick="openNotifications()" title="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="header-icon" onclick="openHelp()" title="Aide">
+                <i class="fas fa-question"></i>
+            </button>
+            <button class="header-icon" onclick="openProfile()" title="Profil">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </header>
 
-<div class="wrapper">
-    <!-- Sidebar -->
-    <nav class="sidebar">
-        <h2>Menu</h2>
-        <ul>
-            <li><a href="{% url 'dashboard_admin' %}">Tableau de bord Admin</a></li>
-            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
-            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
-            <li><a href="{% url 'liste_datasets' %}" class="active">Datasets</a></li>
-            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
-            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
-            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
-            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
-        </ul>
-    </nav>
+    <div class="wrapper">
+        <!-- Sidebar -->
+            <nav class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Gestion des Datasets</h2>
+                </div>
+                <ul>
+                    <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
+                    <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
+                    <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
+                    <li><a href="{% url 'first_dashboard_dataset' %}" class="active"><i class="fas fa-database"></i>Datasets</a></li>
+                    <li><a href="{% url 'liste_modeles' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                    <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                    <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                    <li><a href="{% url 'dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                    <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                    <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+                </ul>
+            </nav>
 
-    <!-- Main content -->
-    <main class="main-content">
-        <h1>Uploader un dataset</h1>
-
-        <!-- Display errors -->
-        {% if erreur %}
-            <div style="background-color: #ffe0e0; color: #b30000; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
-                {{ erreur }}
-            </div>
-        {% endif %}
-
-        {% if message %}
-            <div style="background-color: #d4eda0; color: #175724; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
-                {{ message }}
-            </div>
-        {% endif %}
-
-        <!-- Form -->
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label for="nom">Nom :</label>
-            <input type="text" name="nom" required class="form-control">
-
-            <label for="description">Description :</label>
-            <textarea name="description" rows="4" class="form-control"></textarea>
-
-            <label for="type">Type de fichier :</label>
-            <select id="type_fichier" name="type" required>
-                <option value="brut">Fichier brut</option>
-                <option value="nettoye">Fichier nettoyé</option>
-            </select>
-
-            <div id="bloc_fichier_nettoye" style="display: none;">
-                <label for="fichier">Fichier nettoye :</label>
-                <input type="file" name="fichier" id="fichier_nettoye" class="form-control" accept=".csv, .json">
-            </div>
-
-            <div id="bloc_fichier_brut">
-                <label for="fichier_brut">Fichier brut :</label>
-                <input type="file" name="fichier_brut"  id="fichier_brut" class="form-control" accept=".csv, .json">
+        <!-- Main content -->
+        <div class="main-content">
+            <div class="page-header loading">
+                <h1>
+                    <i class="fas fa-database"></i>
+                    Uploader un Dataset
+                </h1>
+                <p>importez de nouveaux fichiers, pour entrainer vos modèles d'IA</p>
             </div>
 
-            <br>
-            <button type="submit" class="btn btn-primary mt-3">Uploader</button>
-        </form>
+            <!-- Display errors -->
+            {% if erreur %}
+                <div style="background-color: #ffe0e0; color: #b30000; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                    {{ erreur }}
+                </div>
+            {% endif %}
 
-        <!-- Script js pour bqsculer es champs uploader-->>
-        <script>
-            document.getElementById('type_fichier').addEventListener('change', function () {
-                const type = this.value;
-                const blocBrut = document.getElementById('bloc_fichier_brut');
-                const blocNettoye = document.getElementById('bloc_fichier_nettoye');
+            {% if message %}
+                <div style="background-color: #d4eda0; color: #175724; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
+                    {{ message }}
+                </div>
+            {% endif %}
 
-                if (type === 'nettoye') {
-                    blocBrut.style.display = 'none';
-                    blocNettoye.style.display = 'block';
-                } else {
-                    blocBrut.style.display = 'block';
-                    blocNettoye.style.displaye = 'none';
-                } 
-            });
+            <!-- Form -->
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="nom">Nom :</label>
+                <input type="text" name="nom" required class="form-control">
 
-            // toujours forcer la mise a jour 
-            document.getElementById('type_fichier').addEventListener('click', function () {
-                this.dispatchEvent(new Event('change'));
-            });
+                <label for="description">Description :</label>
+                <textarea name="description" rows="4" class="form-control"></textarea>
 
-            // lancer le changement a l`ouverture de la page
-            window.addEventListener('DOMContentLoaded', function () {
-                document.getElementById('type_fichier').dispatchEvent(new Event('change'));
-            });
-        </script>
-    </main>
-</div>
+                <label for="type">Type de fichier :</label>
+                <select id="type_fichier" name="type" required>
+                    <option value="brut">Fichier brut</option>
+                    <option value="nettoye">Fichier nettoyé</option>
+                </select>
 
+                <div id="bloc_fichier_nettoye" style="display: none;">
+                    <label for="fichier">Fichier nettoye :</label>
+                    <input type="file" name="fichier" id="fichier_nettoye" class="form-control" accept=".csv, .json">
+                </div>
 
+                <div id="bloc_fichier_brut">
+                    <label for="fichier_brut">Fichier brut :</label>
+                    <input type="file" name="fichier_brut"  id="fichier_brut" class="form-control" accept=".csv, .json">
+                </div>
 
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2025 SoleasDetection - Tous droits réservés.</p>
-</footer>
+                <br>
+                <button type="submit" class="btn btn-primary mt-3">Uploader</button>
+            </form>
+        </div>
+    </div>
 
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 SoleasDetection - Tous droits réservés.</p>
+    </footer>
+
+    <!-- Script js pour bqsculer es champs uploader-->
+    <script>
+        document.getElementById('type_fichier').addEventListener('change', function () {
+            const type = this.value;
+            const blocBrut = document.getElementById('bloc_fichier_brut');
+            const blocNettoye = document.getElementById('bloc_fichier_nettoye');
+
+            if (type === 'nettoye') {
+                blocBrut.style.display = 'none';
+                blocNettoye.style.display = 'block';
+            } else {
+                blocBrut.style.display = 'block';
+                blocNettoye.style.displaye = 'none';
+            } 
+        });
+
+        // toujours forcer la mise a jour 
+        document.getElementById('type_fichier').addEventListener('click', function () {
+            this.dispatchEvent(new Event('change'));
+        });
+
+        // lancer le changement a l`ouverture de la page
+        window.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('type_fichier').dispatchEvent(new Event('change'));
+        });
+    </script>
 </body>
 </html>

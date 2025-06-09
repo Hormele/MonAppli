@@ -275,6 +275,7 @@ def uploader_dataset(request):
 
     print(">>> Fin de la vue uploader_dataset")
     return render(request, 'dataset/uploader_dataset.html', {
+        "page_title": "Gestion des Datasets",
         'message': message,
         'erreur': erreur
     })
@@ -1596,4 +1597,25 @@ def first_dashboard_datasets(request):
         "stats_list": stats_list,
         "stats_upload": stats_upload,
         "stats_stats": stats_stats,
+    })
+
+
+@login_required
+def first_dashboard_ML(request):
+    modeles = ModeleML.objects.all().order_by('-date_creation')
+    total_modeles = modeles.count()
+    nb_algorithmes = modeles.values('algorithme').distinct().count()
+    dernier_modele = modeles.first()  # déjà trié par date_creation desc
+
+    date_dernier = dernier_modele.date_creation if dernier_modele else None
+
+    stats_list = [
+        {"number": total_modeles, "label": "Modèles ML Total"},
+        {"number": nb_algorithmes, "label": "Algorithmes différents"},
+        {"number": date_dernier|date:"d/m/Y H:i" if date_dernier else "Aucun", "label": "Dernier modèle créé"},
+    ]
+    return render(request, 'modele/first_dashboard_ML.html', {
+        "page_title": "Gestion des Modeles Ml",
+        'modeles': modeles,
+        'stats_list': stats_list,
     })

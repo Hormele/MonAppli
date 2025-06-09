@@ -1,0 +1,139 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} - Plateforme IA</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/first_dashboard_ML.css' %}">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="dashboard-title">{{ page_title }}</h1>
+        </div>
+        <div class="header-icons">
+            <button class="header-icon" onclick="goHome()" title="Accueil">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="header-icon" onclick="openSearch()" title="Rechercher">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="header-icon" onclick="openNotifications()" title="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="header-icon" onclick="openHelp()" title="Aide">
+                <i class="fas fa-question"></i>
+            </button>
+            <button class="header-icon" onclick="openProfile()" title="Profil">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="page-header loading">
+            <h1>
+                <i class="fas fa-brain"></i>
+                Gestion des Modèles Machine Learning
+            </h1>
+            <p>Visualisez, importez et gérez vos modèles d'apprentissage automatique pour la détection de fraudes.</p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <!-- Card 1: Consulter la liste des modèles -->
+            <div class="feature-card" onclick="window.location.href='{% url 'liste_modeles' %}'">
+                <div class="feature-icon"><i class="fas fa-list"></i></div>
+                <h3 class="feature-title">Liste des Modèles</h3>
+                <p class="feature-description">
+                    Parcourez tous vos modèles ML, consultez leurs détails, téléchargez les fichiers et supprimez ceux qui ne sont plus utilisés.
+                </p>
+                <div class="stats-cards">
+                    {% for stat in stats_list %}
+                        <div class="stat-card">
+                            <div class="stat-number">{{ stat.number }}</div>
+                            <div class="stat-label">{{ stat.label }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+            <!-- Card 2: Ajouter un modèle -->
+            <div class="feature-card" onclick="window.location.href='{% url 'entrainer_modele' %}'">
+                <div class="feature-icon"><i class="fas fa-plus-circle"></i></div>
+                <h3 class="feature-title">Ajouter un Modèle</h3>
+                <p class="feature-description">
+                    Entrainer vos modeles et ajoutez-le à votre bibliothèque.
+                </p>
+                <div class="stats-cards">
+                    {% for stat in stats_list %}
+                        <div class="stat-card">
+                            <div class="stat-number">{{ stat.number }}</div>
+                            <div class="stat-label">{{ stat.label }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Voir les statistiques -->
+            <div class="feature-card" style="animation-delay: 0.5s;" onclick="navigateToPage('{% url "dashboard_admin" %}')">
+                <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
+                <h3 class="feature-title">Voir les Statistiques</h3>
+                <p class="feature-description">
+                    Analysez les performances de vos datasets avec des graphiques détaillés, métriques de qualité et recommandations d'amélioration.
+                </p>
+                <div class="stats-cards">
+                    {% for stat in stats_list %}
+                        <div class="stat-card">
+                            <div class="stat-number">{{ stat.number }}</div>
+                            <div class="stat-label">{{ stat.label }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Navigation rapide par fonction JS (si tu utilises des boutons sans href)
+    function navigateToPage(url) {
+        window.location.href = url;
+    }
+
+    // Recherche (exemple simple)
+    function openSearch() {
+        alert("Fonction de recherche à implémenter !");
+    }
+
+    // Notifications (exemple)
+    function openNotifications() {
+        alert("Vous avez 3 notifications !");
+    }
+
+    // Aide (exemple)
+    function openHelp() {
+        alert("Centre d'aide à venir !");
+    }
+
+    // Profil (exemple)
+    function openProfile() {
+        alert("Profil utilisateur à venir !");
+    }
+
+    // Animation au chargement (exemple fade-in)
+    document.addEventListener("DOMContentLoaded", function() {
+        document.body.classList.add("loaded");
+    });
+    </script>
+</body>
+</html>
