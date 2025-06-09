@@ -59,9 +59,9 @@
                 <p class="feature-description">
                     Parcourez tous vos modèles ML, consultez leurs détails, téléchargez les fichiers et supprimez ceux qui ne sont plus utilisés.
                 </p>
-                <div class="stats-cards">
-                    {% for stat in stats_list %}
-                        <div class="stat-card">
+                <div class="card-stats">
+                    {% for stat in stats_liste_modeles %}
+                        <div class="stat-item">
                             <div class="stat-number">{{ stat.number }}</div>
                             <div class="stat-label">{{ stat.label }}</div>
                         </div>
@@ -69,16 +69,16 @@
                 </div>
 
             </div>
-            <!-- Card 2: Ajouter un modèle -->
+            <!-- Card 2: Entrainer un modèle -->
             <div class="feature-card" onclick="window.location.href='{% url 'entrainer_modele' %}'">
                 <div class="feature-icon"><i class="fas fa-plus-circle"></i></div>
-                <h3 class="feature-title">Ajouter un Modèle</h3>
+                <h3 class="feature-title">Entrainer un Modèle</h3>
                 <p class="feature-description">
                     Entrainer vos modeles et ajoutez-le à votre bibliothèque.
                 </p>
-                <div class="stats-cards">
-                    {% for stat in stats_list %}
-                        <div class="stat-card">
+                <div class="card-stats">
+                    {% for stat in stats_entrainer_modele %}
+                        <div class="stat-item">
                             <div class="stat-number">{{ stat.number }}</div>
                             <div class="stat-label">{{ stat.label }}</div>
                         </div>
@@ -92,9 +92,9 @@
                 <p class="feature-description">
                     Analysez les performances de vos datasets avec des graphiques détaillés, métriques de qualité et recommandations d'amélioration.
                 </p>
-                <div class="stats-cards">
-                    {% for stat in stats_list %}
-                        <div class="stat-card">
+                <div class="card-stats">
+                    {% for stat in stats_stats %}
+                        <div class="stat-item">
                             <div class="stat-number">{{ stat.number }}</div>
                             <div class="stat-label">{{ stat.label }}</div>
                         </div>

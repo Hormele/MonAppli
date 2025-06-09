@@ -355,6 +355,7 @@ def liste_modeles(request):
 
     # Passer les données au template
     context = {
+        "page_title_ml": "Gestion des Modeles ML",
         "modeles": modeles,
         "algo_labels": algo_labels,
         "algo_data": algo_data,
@@ -446,6 +447,7 @@ def entrainer_modele_view(request):
         return redirect('liste_modeles')
 
     return render(request, 'modele/entrainer_modele.html', {
+        "page_title_ml": "Gestion des Modeles ML",
         'datasets': datasets,
         'message': message,
         'erreur': erreur
@@ -1605,17 +1607,25 @@ def first_dashboard_ML(request):
     modeles = ModeleML.objects.all().order_by('-date_creation')
     total_modeles = modeles.count()
     nb_algorithmes = modeles.values('algorithme').distinct().count()
-    dernier_modele = modeles.first()  # déjà trié par date_creation desc
+    dernier_modele = modeles.first()
+    date_dernier = dernier_modele.date_creation.strftime("%d/%m/%Y %H:%M") if dernier_modele else "Aucun"
 
-    date_dernier = dernier_modele.date_creation if dernier_modele else None
-
-    stats_list = [
-        {"number": total_modeles, "label": "Modèles ML Total"},
-        {"number": nb_algorithmes, "label": "Algorithmes différents"},
-        {"number": date_dernier|date:"d/m/Y H:i" if date_dernier else "Aucun", "label": "Dernier modèle créé"},
+    # Statistiques pour chaque card
+    stats_liste_modeles = [
+        {"number": total_modeles, "label": "Modèles ML"},
+        {"number": nb_algorithmes, "label": "Algorithmes"},   
     ]
+    stats_entrainer_modele = [
+        {"number": date_dernier, "label": "Dernier créé"},
+    ]
+    stats_stats = [
+        {"number": ModeleML.objects.filter(type_fraude__isnull=False).count(), "label": "Types de fraudes"},
+        {"number": ModeleML.objects.filter(type_fraude='fraude').count(), "label": "Modèles fraude"},
+    ]
+
     return render(request, 'modele/first_dashboard_ML.html', {
-        "page_title": "Gestion des Modeles Ml",
-        'modeles': modeles,
-        'stats_list': stats_list,
+        "page_title": "Gestion des Modèles ML",
+        'stats_liste_modeles': stats_liste_modeles,
+        'stats_entrainer_modele': stats_entrainer_modele,
+        'stats_stats': stats_stats,
     })

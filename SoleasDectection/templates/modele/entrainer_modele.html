@@ -4,83 +4,122 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Entraîner un modèle ML</title>
+    <title>{{ page_title_ml }} - Plateforme IA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/entrainer_modele.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
 </head>
 <body>
+    <!-- Header EN DEHORS du wrapper -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="dashboard-title">{{ page_title_ml }}</h1>
+        </div>
+        <div class="header-icons">
+            <button class="header-icon" onclick="goHome()" title="Accueil">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="header-icon" onclick="openSearch()" title="Rechercher">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="header-icon" onclick="openNotifications()" title="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="header-icon" onclick="openHelp()" title="Aide">
+                <i class="fas fa-question"></i>
+            </button>
+            <button class="header-icon" onclick="openProfile()" title="Profil">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </header>
 
-<div class="dashboard-container">
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <h2>Menu</h2>
-        <ul>
-            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
-            <li><a href="{% url 'liste_modeles' %}" class="active">Modèles ML</a></li>
-            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
-            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
-            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
-            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
-            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
-        </ul>
-    </aside>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Gestion des Modeles</h2>
+            </div>
+            <ul>
+                <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
+                <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
+                <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
+                <li><a href="{% url 'liste_modeles' %}" class="active"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                <li><a href="{% url 'dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </nav>
 
-    <!-- Contenu principal -->
-    <main class="main-content">
-        <h1>Entraîner un nouveau modèle ML</h1>
-
-        {% if message %}
-            <div class="success">{{ message }}</div>
-        {% endif %}
-
-        {% if erreur %}
-            <div class="error">{{ erreur }}</div>
-        {% endif %}
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <!-- Dataset -->
-            <div class="mb-4">
-                <label for="dataset" class="form-label">Choisir un dataset nettoyé :</label>
-                <select name="dataset" id="dataset" class="form-select" required>
-                    {% for dataset in datasets %}
-                        <option value="{{ dataset.id }}">{{ dataset.nom }}</option>
-                    {% endfor %}
-                </select>
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <div class="page-header loading">
+                <h1>
+                    <i class="fas fa-database"></i>
+                    Entrainer un Modele
+                </h1>
+                <p>Entrainer vos modèles a partir d'un jeu de donnee nettoye et d'un algorithme au choix.</p>
             </div>
 
-            <!-- Algorithme -->
-            <div class="mb-4">
-                <label for="algorithme" class="form-label">Choisir l'algorithme :</label>
-                <select name="algorithme" id="algorithme" class="form-select" required>
-                    <option value="isolation_forest">Isolation Forest</option>
-                    <option value="svm">SVM</option>
-                    <option value="kmeans">K-Means</option>
-                </select>
-            </div>
+            <!-- Display errors -->
+            {% if message %}
+                <div class="success">{{ message }}</div>
+            {% endif %}
 
-            <!-- Type de fraude -->
-            <div class="mb-4">
-                <label for="type_fraude" class="form-label">Type de fraude :</label>
-                <select name="type_fraude" id="type_fraude" class="form-select" required>
-                    <option value="cartes">Cartes virtuelles</option>
-                    <option value="transactions">Transactions</option>
-                </select>
-            </div>
+            {% if erreur %}
+                <div class="error">{{ erreur }}</div>
+            {% endif %}
 
-            <!-- Bouton submit -->
-            <button type="submit" class="btn btn-primary">Entraîner le modèle</button>
-        </form>
-    </main>
-</div>
+            <form method="POST">
+                {% csrf_token %}
 
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2025 SoleasDetection - Tous droits réservés.</p>
-</footer>
+                <!-- Dataset -->
+                <div class="mb-4">
+                    <label for="dataset" class="form-label">Choisir un dataset nettoyé :</label>
+                    <select name="dataset" id="dataset" class="form-select" required>
+                        {% for dataset in datasets %}
+                            <option value="{{ dataset.id }}">{{ dataset.nom }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Algorithme -->
+                <div class="mb-4">
+                    <label for="algorithme" class="form-label">Choisir l'algorithme :</label>
+                    <select name="algorithme" id="algorithme" class="form-select" required>
+                        <option value="isolation_forest">Isolation Forest</option>
+                        <option value="svm">SVM</option>
+                        <option value="kmeans">K-Means</option>
+                    </select>
+                </div>
+
+                <!-- Type de fraude -->
+                <div class="mb-4">
+                    <label for="type_fraude" class="form-label">Type de fraude :</label>
+                    <select name="type_fraude" id="type_fraude" class="form-select" required>
+                        <option value="cartes">Cartes virtuelles</option>
+                        <option value="transactions">Transactions</option>
+                    </select>
+                </div>
+
+                <!-- Bouton submit -->
+                <button type="submit" class="btn btn-primary">Entraîner le modèle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 SoleasDetection - Tous droits réservés.</p>
+    </footer>
 
 </body>
 </html>
