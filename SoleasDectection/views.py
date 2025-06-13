@@ -39,8 +39,8 @@ def dashboard_admin(request):
     # Cartes de résumé
     user = request.user
     users_count = Utilisateur.objects.count()
-    campaigns_count = CampagneTest.objects.filter(statut='en cours').count()
-    finished_campaigns_count = CampagneTest.objects.filter(statut='terminee').count()
+    campaigns_count = CampagneTest.objects.filter(statut='echec').count()
+    finished_campaigns_count = CampagneTest.objects.filter(statut='succes').count()
     datasets_count = Dataset.objects.count()
 
     # Données pour le graphique des datasets par mois
@@ -536,6 +536,7 @@ def lancer_campagne_test_view(request):
             })
 
     return render(request, "campagne_test/lancer_campagne_test.html", {
+        "page_title": 'Gestion Campagnes Test',
         "modeles": modeles,
         "datasets": datasets
     })
@@ -593,6 +594,7 @@ def liste_campagne_test_view(request):
 
 
     context = {
+        "page_title": 'Gestion Campagnes Test',
         'statut_labels': statut_labels,
         'statut_data': statut_data,
         'graph_labels': graph_data['labels'],
@@ -810,6 +812,7 @@ def uploader_resultats_fraude(request):
                 erreur = f"Erreur pendant le traitement : {e}"
 
     return render(request, 'campagne_test/uploader_resultats_fraude.html', {
+        "page_title": 'Gestion Campagnes Test',
         'fichiers_resultats': fichiers_resultats,
         'fichiers_datasets': fichiers_datasets,
         'fichiers_users': fichiers_users,
@@ -849,6 +852,7 @@ def detail_campagne_test_view(request, fichier_id):
     if not os.path.exists(chemin_csv):
         erreur = "Le fichier de suspects est introuvable."
         return render(request, 'gestionnaire/detail_test.html', {
+            "page title": 'Panel Gestionnaire',
             'erreur': erreur,
             #'test': test,
             'fichier': fichier,
@@ -903,6 +907,7 @@ def detail_campagne_test_view(request, fichier_id):
 
         
         return render(request, 'gestionnaire/detail_test.html', {
+            "page_title": 'Panel de Gestionnaire',
             'fichier': fichier,
             'suspects': suspects,
             'filtre_decision': filtre_decision,
@@ -913,11 +918,10 @@ def detail_campagne_test_view(request, fichier_id):
         })
     except Exception as e:
         return render(request, 'gestionnaire/detail_test.html', {
+            "page_title": 'Panel de Gestionnaire',
             'fichier': fichier,
             'erreur': f"Erreur lors du chargement du fichier : {str(e)}"
         })
-
-
 
 
 # VUE GENERER RAPPORT ---------------------------------
@@ -1216,7 +1220,11 @@ def dashboard_gestionnaire(request):
     fichiers_suspects = FichierSuspectsTest.objects.all().order_by('-date_enregistrement')
     # Expoer CSV des suspects
     
-
+# Filtrer par date si un filtre de date est appliqué
+    date_filter = request.GET.get("date")
+    if date_filter:
+        fichiers_suspects = fichiers_suspects.filter(date__date=date_filter)
+        
     # Statistiques pour le graphique (répartition des décisions)
     nb_bloques = suspects.filter(decision='bloque').count()
     nb_legitimes = suspects.filter(decision='legitime').count()
@@ -1226,6 +1234,7 @@ def dashboard_gestionnaire(request):
     decision_labels = ['Bloqués', 'Légitimes', 'En attente']
 
     return render(request, 'gestionnaire/dashboard_gestionnaire.html', {
+        "page_title": 'Panel de Gestionnaire',
         'suspects': suspects,
         'regles': regles,
         'fichiers_suspects': fichiers_suspects,
@@ -1308,7 +1317,10 @@ def prendre_decision_suspect(request, suspect_id):
 @login_required
 def gestionnaire_regles_metier(request):
     regles = RegleMetier.objects.all()
-    return render(request, "gestionnaire/gestionnaire_regles_metier.html", {"regles": regles})
+    return render(request, "gestionnaire/gestionnaire_regles_metier.html", {
+        "page title": 'Panel Gestionnaire',
+        "regles": regles,
+    })
 
 # Activer/Désactiver une règle
 @login_required
@@ -1335,7 +1347,9 @@ def ajouter_regles_metier(request):
             actif=True
         )
         return redirect("gestionnaire_regles_metier")
-    return render(request, "gestionnaire/ajouter_regles_metier.html")
+    return render(request, "gestionnaire/ajouter_regles_metier.html", {
+    "page_title": 'Panel de Gestonnaire',
+    })
 
 # Modifier une regle
 @login_required
@@ -1628,4 +1642,61 @@ def first_dashboard_ML(request):
         'stats_liste_modeles': stats_liste_modeles,
         'stats_entrainer_modele': stats_entrainer_modele,
         'stats_stats': stats_stats,
+    })
+
+from django.contrib.auth.decorators import login_required
+from django.utils import timezone
+from .models import Campagne, CampagneTest
+
+@login_required
+def first_dashboard_campagnes(request):
+    # Campagnes automatiques (Campagne)
+    campagnes_auto = Campagne.objects.select_related('utilisateur', 'modele_ml').prefetch_related('datasets').order_by('-date_debut_c')
+
+    # Campagnes manuelles (CampagneTest)
+    campagnes_manuelles = CampagneTest.objects.select_related('modele', 'dataset').order_by('-date_test')
+
+    # Statistiques simples (exemple)
+    stats = {
+        "total_auto": campagnes_auto.count(),
+        "total_manuelles": campagnes_manuelles.count(),
+        "auto_en_cours": campagnes_auto.filter(statut='en_cours').count(),
+        "manuelles_succes": campagnes_manuelles.filter(statut='succes').count(),
+        "manuelles_echec": campagnes_manuelles.filter(statut='echec').count(),
+    }
+
+    stats_stats = [
+    {"number": stats["auto_en_cours"], "label": "Auto en cours"},
+    {"number": stats["manuelles_succes"], "label": "Manuelles succès"},
+    {"number": stats["manuelles_echec"], "label": "Manuelles échecs"},
+]
+
+    context = {
+        "page_title": "Gestion des campagnes",
+        "campagnes_auto": campagnes_auto,
+        "campagnes_manuelles": campagnes_manuelles,
+        "stats": stats,
+        "stats_stats": stats_stats,
+    }
+    return render(request, "first_dashboard_campagnes.html", context)
+
+@login_required
+def dashboard_campagnes_manuelles(request):
+    return render(request, "campagne_test/dashboard_campagnes_manuelles.html", {
+        "page_title": "Gestion des Campagnes"
+    })
+    
+
+@login_required
+def dashboard_campagnes_automatiques(request):
+    return render(request, "campagne/dashboard_campagnes_automatiques.html", {
+        "page_title": "Gestion des Campagnes"
+    })
+
+@login_required
+def first_dashboard_gestionnaire(request):
+    fichier = FichierSuspectsTest.objects.first()
+    return render(request, "gestionnaire/first_dashboard_gestionnaire.html", {
+        'fichier': fichier,
+        "page_title": "Panel de Gestionnaire"
     })

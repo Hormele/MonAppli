@@ -157,14 +157,15 @@ body {
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
 }
 
-.footer {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.9em;
+footer {
+    width: 100%;
     text-align: center;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
+    bottom: 0;
+    left: 0;
 }
 
 @keyframes slideIn {

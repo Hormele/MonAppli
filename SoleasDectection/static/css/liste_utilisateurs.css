@@ -135,14 +135,14 @@ canvas {
 
 /* --- FOOTER --- */
 footer {
-    background-color: #ecf0f1;
+    width: 100%;
     text-align: center;
-    padding: 15px;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
     position: relative;
     bottom: 0;
-    width: 100%;
-    color: #555;
-    font-size: 14px;
+    left: 0;
 }
 
 /* --- RESPONSIVE --- */

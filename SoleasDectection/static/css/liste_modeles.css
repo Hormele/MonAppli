@@ -13,6 +13,7 @@ html, body {
 }
 
 /* HEADER */
+
 .dashboard-header {
 
     background: rgba(15, 23, 42, 0.95);
@@ -275,7 +276,7 @@ html, body {
     background: #e11d48;
 }
 
-/* Ajoute dans ton fichier liste_modeles.css */
+/* FILRES */
 .form-inline {
     display: flex;
     flex-direction: row;
@@ -312,12 +313,14 @@ form {
 
 /* FOOTER */
 footer {
-    margin-top: 2.5rem;
+    width: 100%;
     text-align: center;
-    color: #64748b;
-    font-size: 0.98em;
-    padding: 1.5rem 0 0 0;
-    border-top: 1px solid #e5e7eb;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
+    bottom: 0;
+    left: 0;
 }
 
 /* RESPONSIVE */

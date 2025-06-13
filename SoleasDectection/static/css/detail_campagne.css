@@ -64,10 +64,14 @@ button {
 }
 
 footer {
+    width: 100%;
     text-align: center;
-    margin-top: 50px;
-    color: #aaa;
-    font-size: 0.9em;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
+    bottom: 0;
+    left: 0;
 }
 
 .alert {

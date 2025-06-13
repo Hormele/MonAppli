@@ -204,9 +204,55 @@ html, body {
     font-style: italic;
 }
 
+/* FILTRES */
+.form-inline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-end;
+    margin-bottom: 24px;
+    
+}
+
+.form-inline label {
+    font-weight: 300;
+    color: #2d3748;
+    margin-right: 2px;
+}
+.form-inline select,
+.form-inline input[type="date"] {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background: #f8fafc;
+    font-size: 0.9em;
+    margin-right: 12px;
+}
+
+.form-inline button[type="submit"] {
+    background: #667eea;
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-left: 0;
+    margin-top: 0;
+    white-space: nowrap;
+}
+
+.form-inline button[type="submit"]:hover {
+    background: #495acb;
+}
+
+/* TABLE */
 /* TABLE */
 .table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
     margin-bottom: 2.5rem;
     background: #fff;
@@ -219,18 +265,37 @@ html, body {
     color: #fff;
 }
 .table th, .table td {
-    padding: 0.85rem 1rem;
     text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 1rem;
+    padding: 10px 8px;
+    word-break: break-word;
+    width: auto;
 }
 .table th {
     font-weight: 600;
     letter-spacing: 0.5px;
 }
-.table tr:last-child td {
-    border-bottom: none;
+/* Fixe la largeur de la colonne ID et ajuste Nom */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+    width: 50px;
+    max-width: 60px;
+    min-width: 40px;
+    text-align: center;
 }
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 180px;
+    max-width: 220px;
+    min-width: 120px;
+}
+
+/* Les autres colonnes prennent l'espace restant */
+.table th,
+.table td {
+    width: auto;
+}
+
 .table tbody tr:hover {
     background: #f0f4fa;
 }
@@ -260,12 +325,14 @@ form {
 
 /* FOOTER */
 footer {
-    margin-top: 2.5rem;
+    width: 100%;
     text-align: center;
-    color: #64748b;
-    font-size: 0.98em;
-    padding: 1.5rem 0 0 0;
-    border-top: 1px solid #e5e7eb;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
+    bottom: 0;
+    left: 0;
 }
 
 /* RESPONSIVE */

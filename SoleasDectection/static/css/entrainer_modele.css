@@ -283,13 +283,16 @@ input[type="date"]:focus {
 }
 
 /* Footer */
-.footer {
-    margin-top: 2.5rem;
+/* FOOTER */
+footer {
+    width: 100%;
     text-align: center;
-    color: #64748b;
-    font-size: 0.98em;
-    padding: 1.5rem 0 0 0;
-    border-top: 1px solid #e5e7eb;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
+    bottom: 0;
+    left: 0;
 }
 
 /* Animation */

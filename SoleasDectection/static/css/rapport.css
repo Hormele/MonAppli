@@ -71,9 +71,13 @@ th {
     font-weight: bold;
 }
 
-.footer {
+footer {
+    width: 100%;
     text-align: center;
-    font-size: 10px;
-    margin-top: 50px;
-    color: #777;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
+    bottom: 0;
+    left: 0;
 }

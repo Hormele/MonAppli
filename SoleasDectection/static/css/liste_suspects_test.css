@@ -84,15 +84,14 @@ table td a {
 }
 
 footer {
+    width: 100%;
     text-align: center;
-    margin-top: 50px;
-    padding: 15px;
-    background-color: #2c3e50;
-    color: white;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
     position: relative;
     bottom: 0;
-    width: calc(100% - 230px);
-    margin-left: 230px;
+    left: 0;
 }
 
 /* Responsive */

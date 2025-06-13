@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }} - Plateforme IA</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/dashboard_campagnes_automatiques.css' %}">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="dashboard-title">{{ page_title }}</h1>
+        </div>
+        <div class="header-icons">
+            <button class="header-icon" onclick="goHome()" title="Accueil">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="header-icon" onclick="openSearch()" title="Rechercher">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="header-icon" onclick="openNotifications()" title="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="header-icon" onclick="openHelp()" title="Aide">
+                <i class="fas fa-question"></i>
+            </button>
+            <button class="header-icon" onclick="openProfile()" title="Profil">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="page-header">
+            <h1><i class="fas fa-flask"></i> {{ page_title }}</h1>
+        </div>
+        <div class="cards-row">
+            <a href="{% url 'liste_campagnes' %}" class="action-card">
+                <i class="fas fa-list"></i>
+                <span>Liste des campagnes automatiques enregistree</span>
+                <i class="fas fa-chevron-right chevron-right"></i>
+            </a>
+            <a href="{% url 'lancer_campagne' %}" class="action-card">
+                <i class="fas fa-play-circle"></i>
+                <span>Enregistrer des camapgnes qui seront executees automatiquement</span>
+                <i class="fas fa-chevron-right chevron-right"></i>
+            </a>
+            
+        </div>
+    </div>
+</body>
+</html>

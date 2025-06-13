@@ -1,57 +1,111 @@
 {% load static %}
 
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Détail de la Campagne_Test - {{ fichier.id }}</title>
+    <title>{{ page_title }} - Détail de la Campagne_Test - {{ fichier.id }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/detail_test.css' %}">
 </head>
 <body>
-    <div class="sidebar">
-        <h2>SoleasDetection</h2>
-        <ul>
-            <li><a href="{% url 'dashboard_admin' %}">Tableau de bord Admin</a></li>
-            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
-            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
-            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
-            <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
-            <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
-            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-            <li><a href="{% url 'gestionnaire_regles_metier' %}">Gerer les regles metiers</a></li>
-            <li><a href="{% url 'dashboard_gestionnaire' %}" class="active">Gestionnaire</a></li>
-            <li><a href="{% url 'logout' %}">Déconnexion</a></li>
-        </ul>
-    </div>
+    <!-- Header -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="dashboard-title">{{ page_title }}</h1>
+        </div>
+        <div class="header-icons">
+            <button class="header-icon" onclick="goHome()" title="Accueil">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="header-icon" onclick="openSearch()" title="Rechercher">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="header-icon" onclick="openNotifications()" title="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="header-icon" onclick="openHelp()" title="Aide">
+                <i class="fas fa-question"></i>
+            </button>
+            <button class="header-icon" onclick="openProfile()" title="Profil">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </header>
 
-    <div class="main-content">
-        <h1>Détail de la Campagne_Test #{{ fichier.id }}</h1>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Panel Gestionnaire</h2>
+            </div>
+            <ul>
+                <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
+                <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
+                <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
+                <li><a href="{% url 'liste_modeles' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                <li><a href="{% url 'dashboard_gestionnaire' %}" class="active"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </nav>
 
-        {% if erreur %}
-            <p class="error">{{ erreur }}</p>
-        {% endif %}
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <div class="page-header loading">
+                <h1>
+                    <i class="fas fa-brain"></i>
+                    Détail de la Campagne_Test #{{ fichier.id }}
+                </h1>
+                <p>Consulter, filtrer et voir les details des fichiers d'une campagne.</p>
+            </div>
 
-        {% if message %}
-            <p class="message">{{ message }}
-        {% endif %} 
+            <!-- Bouton Générer le rapport PDF en haut -->
+            <div class="center" style="justify-content: flex-start; margin-bottom: 18px;">
+                <a href="{% url 'generer_rapport_test_pdf' fichier.id %}" class="btn-pdf">
+                    <i class="fas fa-download"></i> Générer le rapport PDF
+                </a>
+            </div>
 
-        <form method="get" class="filters">
-            <label for="decision">Filtrer par décision :</label>
-            <select name="decision" id="decision">
-                <option value="">-- Toutes --</option>
-                <option value="suspect" {% if filtre_decision == 'suspect' %}selected{% endif %}>Suspect</option>
-                <option value="legitime" {% if filtre_decision == 'legitime' %}selected{% endif %}>Légitime</option>
-                <option value="en_attente" {% if filtre_decision == 'en_attente' %}selected{% endif %}>En attente</option>
-            </select>
+            {% if erreur %}
+                <p class="error">{{ erreur }}</p>
+            {% endif %}
 
-            <label for="date">Filtrer par date :</label>
-            <input type="date" name="date" value="{{ filtre_date }}">
+            {% if message %}
+                <p class="message">{{ message }}
+            {% endif %} 
 
-            <button type="submit">Filtrer</button>
-        </form>
+            <!-- Formulaires de filtre -->
+            <h2>Filtres</h2>
+            <form method="get" class="form-inline mb-4">
+                <div>
+                    <label for="decision" class="form-label">Filtrer par décision :</label>
+                    <select name="decision" id="decision" class="form-select">
+                        <option value="">-- Toutes --</option>
+                        <option value="suspect" {% if filtre_decision == 'suspect' %}selected{% endif %}>Suspect</option>
+                        <option value="legitime" {% if filtre_decision == 'legitime' %}selected{% endif %}>Légitime</option>
+                        <option value="en_attente" {% if filtre_decision == 'en_attente' %}selected{% endif %}>En attente</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="date" class="form-label">Filtrer par date :</label>
+                    <input type="date" name="date" value="{{ filtre_date }}">
+                </div>
 
-        <form method="post">
-            {% csrf_token %}
+                <button type="submit">Filtrer</button>
+            </form>
+
+            <!-- Tableau des modèles -->
             <table>
                 <thead>
                     <tr>
@@ -92,18 +146,20 @@
                     {% endfor %}
                 </tbody>
             </table>
-
+            
             {% if suspects %}
             <div class="center">
-                <a href="{% url 'generer_rapport_test_pdf' fichier.id %}" class="btn-pdf">Générer le rapport PDF</a>
-                <button type="submit" class="btn btn-succes">Valider les decisions</button>
+                <button type="submit" class="btn btn-succes">
+                    <i class="fas fa-check-circle"></i> Valider les décisions
+                </button>
             </div>
             {% endif %}
-        </form>
-    </div>
 
+        </div>
+    </div>
+    <!-- Pied de page -->
     <footer>
-        <p>&copy; 2025 SoleasDetection</p>
+        <p>© 2025 SoleasDetection. Tous droits réservés.</p>
     </footer>
 </body>
 </html>

@@ -183,11 +183,14 @@ body, html {
 
 /* Pied de page */
 footer {
+    width: 100%;
     text-align: center;
-    padding: 20px;
-    font-size: 0.9em;
-    color: #fff;
-    background-color: #1d3557;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
+    bottom: 0;
+    left: 0;
 }
 
 /* Responsive */

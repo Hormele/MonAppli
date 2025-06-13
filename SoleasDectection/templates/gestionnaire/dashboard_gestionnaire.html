@@ -4,155 +4,167 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard Gestionnaire</title>
+    <title>{{ page_title }} - Plateforme IA</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{% static 'css/dashboard_gestionnaire.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/dashboard_gestionnaire.css' %}">
 </head>
 <body>
 
-<div class="sidebar">
-    <h2>SoleasDetection</h2>
-    <ul>
-        <li><a href="{% url 'dashboard_admin' %}">Tableau de bord Admin</a></li>
-        <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
-        <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
-        <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
-        <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
-        <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
-        <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-        <li><a href="{% url 'dashboard_gestionnaire' %}" class="active">Gestionnaire</a></li>
-        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
-    </ul>
-</div>
+    <!-- Header EN DEHORS du wrapper -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="dashboard-title">{{ page_title }}</h1>
+        </div>
+        <div class="header-icons">
+            <button class="header-icon" onclick="goHome()" title="Accueil">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="header-icon" onclick="openSearch()" title="Rechercher">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="header-icon" onclick="openNotifications()" title="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="header-icon" onclick="openHelp()" title="Aide">
+                <i class="fas fa-question"></i>
+            </button>
+            <button class="header-icon" onclick="openProfile()" title="Profil">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </header>
 
-<div class="content">
-    <h1>Gestionnaire Risque</h1>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Gestion des Modeles</h2>
+            </div>
+            <ul>
+                <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
+                <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
+                <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
+                <li><a href="{% url 'liste_modeles' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                <li><a href="{% url 'dashboard_gestionnaire' %}" class="active"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </nav>
 
-    <section>
-        <h2>Fichiers de suspects détectés</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom du fichier</th>
-                    <th>Télécharger</th>
-                    <th>Date</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for fichier in fichiers_suspects %}
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <div class="page-header loading">
+                <h1>
+                    <i class="fas fa-brain"></i>
+                    Fichiers des suspects d'une campagne
+                </h1>
+                <p>Consulter, filtrer et voir les details des fichiers d'une campagne.</p>
+            </div>
+
+            <!-- Formulaires de filtre -->
+            <h2>Filtres</h2>
+            <form method="get" class="form-inline mb-4">
+                <div>
+                    <label for="date" class="form-label">Filtrer par date :</label>
+                    <input type="date" name="date" id="date" class="form-control">
+                </div>
+
+                <div>
+                    <button type="submit" class="btn btn-primary mt-2">Filtrer</button>
+                </div>
+            </form>
+
+            <!-- Tableau des modèles -->
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ fichier.id }}</td>
-                        <td>{{ fichier.nom_fichier }}</td>
-                        <td>
-                            {% if fichier.campagne_test.fichier_suspects_temp %}
-                                <a href="{{ fichier.campagne_test.fichier_suspects_temp.url }}">Télécharger</a> <!-- A REVOIR-->
-                            {% else %}
-                                <sapn style="color: gray;">Aucun fichier</span>
-                            {% endif %}
-                        </td>
-                        <td>{{ fichier.date_enregistrement|date:"d/m/Y H:i" }}</td>
-                        <td>
-                            <a href="{% url 'detail_test' fichier.id %}" class="btn-detail">Detail</a> |
-                            <a href="{% url 'supprimer_liste_test' fichier.id %}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce test ?');">Supprimer</a>
-                        </td>
+                        <th>ID</th>
+                        <th>Nom du fichier</th>
+                        <th "width: 180px;">Télécharger</th>
+                        <th>Date</th>
+                        <th>Action</th>
                     </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="5">Aucun fichier de suspects disponible.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+                </thead>
+                <tbody>
+                    {% for fichier in fichiers_suspects %}
+                        <tr>
+                            <td>{{ fichier.id }}</td>
+                            <td>{{ fichier.nom_fichier }}</td>
+                            <td>
+                                {% if fichier.campagne_test.fichier_suspects_temp %}
+                                    <a href="{{ fichier.campagne_test.fichier_suspects_temp.url }}">Télécharger</a> <!-- A REVOIR-->
+                                {% else %}
+                                    <sapn style="color: gray;">Aucun fichier</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ fichier.date_enregistrement|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                <a href="{% url 'detail_test' fichier.id %}" class="btn-detail">Detail</a> |
+                                <a href="{% url 'supprimer_liste_test' fichier.id %}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce test ?');">Supprimer</a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5">Aucun fichier de suspects disponible.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-    <section>
-        <h2>Règles appliquées</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
-                    <th>Condition</th>
-                    <th>Description</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for regle in regles %}
-                <tr>
-                    <td>{{ regle.id }}</td>
-                    <td>{{ regle.nom }}</td>
-                    <td>{{ regle.condition }}</td>
-                    <td>{{ regle.description }}</td>
-                    <td>
-                        {% if regle.actif %}
-                            <span class="badge bg-success">Active</span>
-                        {% else %}
-                            <span class="badge bg-danger">Inactive</span>
-                        {% endif %}
-                    </td>
-                    <td>
-                        <a href="{% url 'modifier_regle_metier' regle.id %}" class="btn btn-primary btn-sm">Modifier</a>
-                        <a href="{% url 'toggle_regle_metier' regle.id %}" class="btn btn-warning btn-sm">Désactiver</a>
-                        <a href=" {% url 'supprimer_regle_metier' regle.id %}" class="btn btn-danger btn-sm">Supprimer</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+            <!-- Statistiques (graphes) -->
+            <h2>Répartition des décisions</h2>
+            <canvas id="decisionChart" width="300" height="300"></canvas>
+        </div>
+    </div>
 
-    <!-- Graphique de répartition des décisions -->
-    <section>
-      <h2>Répartition des décisions</h2>
-      <canvas id="decisionChart" width="300" height="300"></canvas>
+    <!-- Pied de page -->
+    <footer>
+        <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
+    </footer>
 
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script>
-          // Vérification des données envoyées depuis Django
-          console.log("Labels :", {{ decision_labels|safe }});
-          console.log("Data :", {{ decision_data|safe }});
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Vérification des données envoyées depuis Django
+        console.log("Labels :", {{ decision_labels|safe }});
+        console.log("Data :", {{ decision_data|safe }});
 
-          const ctx = document.getElementById('decisionChart').getContext('2d');
-          const decisionChart = new Chart(ctx, {
-              type: 'doughnut',
-              data: {
-                  labels: {{ decision_labels|safe }},
-                  datasets: [{
-                      label: 'Décisions',
-                      data: {{ decision_data|safe }},
-                      borderWidth: 1
-                  }]
-              },
-              options: {
-                  responsive: true,
-                  plugins: {
-                      legend: {
-                          position: 'bottom'
-                      },
-                      tooltip: {
-                          callbacks: {
-                              label: function(context) {
-                                  return ${context.label} : ${context.parsed};
-                              }
-                          }
-                      }
-                  }
-              }
-          });
-      </script>
-    </section>
-
-</div>
-
-<footer>
-    <p>&copy; 2025 SoleasDetection. Tous droits réservés.</p>
-</footer>
-
+        const ctx = document.getElementById('decisionChart').getContext('2d');
+        const decisionChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: {{ decision_labels|safe }},
+                datasets: [{
+                    label: 'Décisions',
+                    data: {{ decision_data|safe }},
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return ${context.label} : ${context.parsed};
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>

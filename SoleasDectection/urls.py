@@ -75,4 +75,8 @@ urlpatterns = [
     # Routes pour le dashboard premier utilisateur
     path('first-dashboard-datasets/', views.first_dashboard_datasets, name='first_dashboard_dataset'),
     path('first_dashboard_ML/', views.first_dashboard_ML, name='first_dashboard_ML'),
+    path('first_dashboard_gestionnaire/', views.first_dashboard_gestionnaire, name='first_dashboard_gestionnaire'),
+    path('first_dashboard_campagnes/', views.first_dashboard_campagnes, name='first_dashboard_campagnes'),
+    path('campagnes-manuelles/', views.dashboard_campagnes_manuelles, name='dashboard_campagnes_manuelles'),
+    path('campagnes-automatiques/', views.dashboard_campagnes_automatiques, name='dashboard_campagnes_automatiques'),
 ]

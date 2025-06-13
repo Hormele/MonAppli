@@ -52,8 +52,12 @@ body, html {
 }
 
 footer {
-    margin-top: 40px;
+    width: 100%;
     text-align: center;
-    font-size: 14px;
-    color: gray;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
+    bottom: 0;
+    left: 0;
 }

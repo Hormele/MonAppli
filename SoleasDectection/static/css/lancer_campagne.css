@@ -75,11 +75,12 @@ select, button {
 }
 
 footer {
-    background-color: #f4f4f4;
-    padding: 10px;
+    width: 100%;
     text-align: center;
-    position: fixed;
-    width: calc(100% - 200px);
-    left: 200px;
+    padding: 18px 0 10px 0;
+    background: transparent;
+    color: #718096;
+    position: relative;
     bottom: 0;
+    left: 0;
 }

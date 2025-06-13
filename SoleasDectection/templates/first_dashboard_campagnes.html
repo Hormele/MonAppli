@@ -8,7 +8,7 @@
     <title>{{ page_title }} - Plateforme IA</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/first_dashboard_ML.css' %}">
+    <link rel="stylesheet" href="{% static 'css/first_dashboard_campagnes.css' %}">
 </head>
 
 <body>
@@ -44,53 +44,65 @@
     <div class="main-container">
         <div class="page-header">
             <h1>
-                <i class="fas fa-brain"></i>
-                Gestion des Modèles Machine Learning
+                <i class="fas fa-bullhor"></i>
+                Gestion des Campagnes
             </h1>
-            <p>Visualisez, importez et gérez vos modèles d'apprentissage automatique pour la détection de fraudes.</p>
+            <p>Visualisez et gérez vos campagnes automatiques et manuelles.</p>
         </div>
 
         <!-- Features Grid -->
         <div class="features-grid">
-            <!-- Card 1: Consulter la liste des modèles -->
-            <div class="feature-card" onclick="window.location.href='{% url 'liste_modeles' %}'">
+            <!-- Card 1: Tester une campagne manuele -->
+            <div class="feature-card" onclick="window.location.href='{% url 'dashboard_campagnes_manuelles' %}'">
                 <div class="feature-icon"><i class="fas fa-list"></i></div>
-                <h3 class="feature-title">Liste des Modèles</h3>
+                <h3 class="feature-title">Campagnes Manuelles</h3>
                 <p class="feature-description">
-                    Parcourez tous vos modèles ML, consultez leurs détails, téléchargez les fichiers et supprimez ceux qui ne sont plus utilisés.
+                    Lancez des campagnes de test ponctuelles et consultez les résultats.
                 </p>
                 <div class="card-stats">
-                    {% for stat in stats_liste_modeles %}
-                        <div class="stat-item">
-                            <div class="stat-number">{{ stat.number }}</div>
-                            <div class="stat-label">{{ stat.label }}</div>
-                        </div>
-                    {% endfor %}
-                </div>
+                    <div class="stat-item">
+                        <div class="stat-number">{{ stats.total_manuelles }}</div>
+                        <div class="stat-label">Total</div>
+                    </div>
 
-            </div>
-            <!-- Card 2: Entrainer un modèle -->
-            <div class="feature-card" onclick="window.location.href='{% url 'entrainer_modele' %}'">
-                <div class="feature-icon"><i class="fas fa-plus-circle"></i></div>
-                <h3 class="feature-title">Entrainer un Modèle</h3>
-                <p class="feature-description">
-                    Entrainer vos modeles et ajoutez-le à votre bibliothèque.
-                </p>
-                <div class="card-stats">
-                    {% for stat in stats_entrainer_modele %}
-                        <div class="stat-item">
-                            <div class="stat-number">{{ stat.number }}</div>
-                            <div class="stat-label">{{ stat.label }}</div>
-                        </div>
-                    {% endfor %}
+                    <div class="stat-item">
+                        <div class="stat-number">{{ stats.manuelles_succes }}</div>
+                        <div class="stat-label">Succès</div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-number">{{ stats.manuelles_echec }}</div>
+                        <div class="stat-label">Échecs</div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Card 2: Lancer une camapgne automatique -->
+            <div class="feature-card" onclick="window.location.href='{% url 'dashboard_campagnes_automatiques' %}'">
+                <div class="feature-icon"><i class="fas fa-plus-circle"></i></div>
+                <h3 class="feature-title">Campagnes Automatiques</h3>
+                <p class="feature-description">
+                    Planifiez, surveillez et analysez vos campagnes récurrentes.
+                </p>
+                <div class="card-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">{{ stats.total_auto }}</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+
+                    <div class="stat-item">
+                        <div class="stat-number">{{ stats.auto_en_cours }}</div>
+                        <div class="stat-label">En cours</div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Voir les statistiques -->
             <div class="feature-card" style="animation-delay: 0.5s;" onclick="navigateToPage('{% url "dashboard_admin" %}')">
                 <div class="feature-icon"><i class="fas fa-chart-bar"></i></div>
                 <h3 class="feature-title">Voir les Statistiques</h3>
                 <p class="feature-description">
-                    Analysez les performances de vos datasets avec des graphiques détaillés, métriques de qualité et recommandations d'amélioration.
+                    Analysez les performances de vos campagnes avec des graphiques détaillés, métriques de qualité et recommandations d'amélioration.
                 </p>
                 <div class="card-stats">
                     {% for stat in stats_stats %}
