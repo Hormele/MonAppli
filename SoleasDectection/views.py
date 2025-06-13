@@ -1491,20 +1491,6 @@ def deconnexion_view(request):
 
 
 # -----------------------
-# CREATION DU COMPTE
-# -----------------------
-def register_view(request):
-    if request.method == 'POST':
-        form = UtilisateurCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Compte créé avec succès ! Connectez-vous.")
-            return redirect('login')  # redirection vers la page login
-    else:
-        form = UtilisateurCreationForm()
-    return render(request, 'register.html', {'form': form})
-
-# -----------------------
 # GESTION UTILISATEURS (Admin uniquement)
 # -----------------------
 @admin_required
@@ -1700,3 +1686,77 @@ def first_dashboard_gestionnaire(request):
         'fichier': fichier,
         "page_title": "Panel de Gestionnaire"
     })
+
+# -------------------------------------------
+# CREATION DU COMPTE ET OTP
+# ------------------------------------------
+import random
+from django.core.mail import send_mail
+from django.utils import timezone
+
+def generate_otp():
+    return str(random.randint(100000, 999999))
+
+def send_otp_email(user):
+    send_mail(
+        'Votre code de vérification',
+        f'Votre code OTP est : {user.otp_code}',
+        'no-reply@soleasdetection.com',
+        [user.email],
+        fail_silently=False,
+    )
+
+from django.contrib.auth import login, get_backends
+from django.shortcuts import render, redirect, get_object_or_404
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UtilisateurCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.otp_code = generate_otp()
+            user.otp_verified = False
+            user.otp_created_at = timezone.now()
+            user.save()
+            send_otp_email(user)
+            # Spécifie le backend explicitement
+            backend = 'SoleasDectection.backends.EmailOrUsernameModelBackend'
+            login(request, user, backend=backend)
+            messages.info(request, "Un code de vérification a été envoyé à votre email.")
+            return redirect('otp_verification')
+    else:
+        form = UtilisateurCreationForm()
+    return render(request, 'register.html', {'form': form})
+
+
+def otp_verification(request):
+    if request.method == 'POST':
+        code = request.POST.get('otp_code')
+        user = request.user
+        if user.otp_code == code and not user.otp_verified:
+            user.otp_verified = True
+            user.save()
+            messages.success(request, "Votre compte est vérifié.")
+            # Redirection selon le rôle
+            if user.role == 'admin':
+                return redirect('dashboard_admin')
+            elif user.role == 'analyste':
+                return redirect('dashboard_analyste')
+            else:
+                return redirect('login')
+        else:
+            messages.error(request, "Code incorrect ou déjà vérifié.")
+    return render(request, 'otp_verification.html')
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+
+@login_required
+@csrf_exempt
+def resend_otp(request):
+    user = request.user
+    user.otp_code = generate_otp()
+    user.otp_created_at = timezone.now()
+    user.save()
+    send_otp_email(user)
+    return JsonResponse({'message': "Code renvoyé à votre email."})

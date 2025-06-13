@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "SoleasDectection",
+    "widget_tweaks",  # Pour les attributs HTML dans les formulaires
 ]
 
 MIDDLEWARE = [
@@ -48,6 +49,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "SoleasDectection.middleware.OTPVerificationMiddleware",
 ]
 
 ROOT_URLCONF = "myproject.urls"
@@ -158,6 +160,6 @@ CELERY_BEAT_SCHEDULE = {
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Exemple pour Gmail
 EMAIL_PORT = 587
+EMAIL_HOST_USER = 'jerosensima@gmail.com'
+EMAIL_HOST_PASSWORD = 'nimyuiemxrdanmld'
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'tonemail@gmail.com'
-EMAIL_HOST_PASSWORD = 'tonmotdepasse'

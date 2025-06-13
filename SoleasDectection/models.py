@@ -265,6 +265,11 @@ class Utilisateur(AbstractBaseUser, PermissionsMixin):
     nom = models.CharField(max_length=255)
     role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='analyste')
 
+    # Champs OTP
+    otp_code = models.CharField(max_length=6, null=True, blank=True)
+    otp_verified = models.BooleanField(default=False)
+    otp_created_at = models.DateTimeField(null=True, blank=True)
+
     # Champs nécessaires pour Django Admin
     is_active = models.BooleanField(default=True)      # Le compte est actif ou désactivé
     is_staff = models.BooleanField(default=False)      # Peut accéder à l'admin Django
