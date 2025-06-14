@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vérification OTP</title>
+    <link rel="stylesheet" href="{% static 'css/otp_verification.css' %}">
+</head>
+<body>
+
+    <div class="otp-main">
+        <div class="otp-container">
+            <div class="otp-title">Vérification de votre compte</div>
+            <div class="otp-instructions">
+                Veuillez entrer le code à 6 chiffres envoyé à votre email.<br>
+                <span class="otp-timer" id="timer">01:30</span>
+            </div>
+            {% if messages %}
+                <div class="alert">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <form method="post" id="otp-form" autocomplete="off">
+                {% csrf_token %}
+                <div class="otp-inputs">
+                    {% for i in "123456" %}
+                    <input type="text" name="otp_code_{{ forloop.counter }}" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                    {% endfor %}
+                </div>
+                <input type="hidden" name="otp_code" id="otp_code_hidden">
+                <button type="submit" class="btn">Vérifier</button>
+            </form>
+            <div class="otp-resend">
+                <a href="#" id="resend-link" class="disabled">Renvoyer le code</a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 SoleasDetection - Tous droits réservés</p>
+    </footer>
+    <script>
+        // OTP input auto-focus
+        const inputs = document.querySelectorAll('.otp-inputs input');
+        inputs.forEach((input, idx) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && idx < inputs.length - 1) {
+                    inputs[idx + 1].focus();
+                }
+                updateHidden();
+            });
+            input.addEventListener('keydown', function(e) {
+                if (e.key === "Backspace" && !this.value && idx > 0) {
+                    inputs[idx - 1].focus();
+                }
+            });
+        });
+        function updateHidden() {
+            document.getElementById('otp_code_hidden').value = Array.from(inputs).map(i => i.value).join('');
+        }
+
+        // Timer
+        let timeLeft = 90;
+        const timer = document.getElementById('timer');
+        const resendLink = document.getElementById('resend-link');
+        function updateTimer() {
+            let min = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+            let sec = String(timeLeft % 60).padStart(2, '0');
+            timer.textContent = `${min}:${sec}`;
+            if (timeLeft > 0) {
+                timeLeft--;
+                setTimeout(updateTimer, 1000);
+            } else {
+                resendLink.classList.remove('disabled');
+            }
+        }
+        updateTimer();
+
+        // Renvoyer le code
+        resendLink.addEventListener('click', function(e) {
+            if (resendLink.classList.contains('disabled')) {
+                e.preventDefault();
+                return;
+            }
+            resendLink.textContent = "Renvoi en cours...";
+            resendLink.classList.add('disabled');
+            fetch("{% url 'resend_otp' %}", {method: "POST", headers: {'X-CSRFToken': '{{ csrf_token }}'}})
+                .then(resp => resp.json())
+                .then(data => {
+                    resendLink.textContent = "Renvoyer le code";
+                    timeLeft = 90;
+                    updateTimer();
+                    alert(data.message || "Code renvoyé !");
+                });
+            e.preventDefault();
+        });
+
+        // Form submit: concatène les chiffres
+        document.getElementById('otp-form').addEventListener('submit', function(e) {
+            updateHidden();
+        });
+    </script>
+</body>
+</html>

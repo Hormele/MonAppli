@@ -1,0 +1,100 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e40af 75%, #0f172a 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+@keyframes gradientShift {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+.otp-main {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.otp-container {
+    max-width: 400px;
+    margin: 60px auto 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    padding: 32px 24px 24px 24px;
+    text-align: center;
+}
+.otp-title {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #1e293b;
+    font-weight: 700;
+}
+.otp-instructions {
+    color: #64748b;
+    margin-bottom: 18px;
+}
+.otp-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+.otp-inputs input {
+    width: 44px;
+    height: 54px;
+    font-size: 2em;
+    text-align: center;
+    border: 2px solid #e2e8f0;
+    border-radius: 8px;
+    background: #f7fafc;
+    transition: border 0.2s;
+}
+.otp-inputs input:focus {
+    border-color: #667eea;
+    outline: none;
+    background: #fff;
+}
+.otp-timer {
+    color: #f97316;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.otp-resend {
+    margin-top: 10px;
+}
+.otp-resend a {
+    color: #3b82f6;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 600;
+}
+.otp-resend a.disabled {
+    color: #a0aec0;
+    pointer-events: none;
+    text-decoration: none;
+}
+.alert {
+    background: #fed7d7;
+    color: #c53030;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    border-left: 4px solid #e53e3e;
+}

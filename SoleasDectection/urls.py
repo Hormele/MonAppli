@@ -2,9 +2,6 @@ from django.urls import path
 from . import views
 urlpatterns = [
     #route pour mon profil
-    path('mon_profil/', views.mon_profil, name='mon_profil'),
-    path('mon_profil/editer/', views.edit_profil, name='edit_profil'),
-    path('register/', views.register_view, name='register'),
     
 
     #1 route pour le dashboard d'accueil
@@ -69,8 +66,14 @@ urlpatterns = [
     path('utilisateur/utilisateur/supprimer/<int:user_id>/', views.supprimer_utilisateur, name='supprimer_utilisateur'),
 
     # Authentification
+    path('mon_profil/', views.mon_profil, name='mon_profil'),
+    path('mon_profil/editer/', views.edit_profil, name='edit_profil'),
+    path('register/', views.register_view, name='register'),
+    
     path('login/', views.connexion_view, name='login'),
     path('logout/', views.deconnexion_view, name='logout'),
+    path('otp-verification/', views.otp_verification, name='otp_verification'),
+    path('resend-otp/', views.resend_otp, name='resend_otp'),
 
     # Routes pour le dashboard premier utilisateur
     path('first-dashboard-datasets/', views.first_dashboard_datasets, name='first_dashboard_dataset'),
