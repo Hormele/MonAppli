@@ -1,79 +1,129 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="fr">
+    
 <head>
     <meta charset="UTF-8">
-    <title>Utilisateurs</title>
+    <title>{{ page_title }} - Plateforme IA</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/liste_utilisateurs.css' %}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Gestion des utilisateurs</h1>
-        <p>Visualisez, filtrez et gérez les utilisateurs de la plateforme.</p>
-
-    <!-- Sidebar -->
-    <nav class="sidebar">
-        <h2>Menu</h2>
-        <ul>
-            <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
-            <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
-            <li><a href="{% url 'liste_modeles' %}">Modeles ML</a></li>
-            <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-            <li><a href="{% url 'liste_campagnes' %}">Campagnes</a></li>
-            <li><a href="{% url 'liste_utilisateurs' %}" class="active">Utilisateurs</a></li>
-            <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
-            <li><a href="{% url 'logout' %}">Deconnexion</a></li>
-        </ul>
-    </nav>
-
-        <form method="get" class="form-inline mb-4">
-            <label for="role" class="mr-2">Filtrer par rôle :</label>
-            <select name="role" id="role" class="form-control mr-2">
-                <option value="">Tous</option>
-                <option value="admin" {% if role_filter == 'admin' %}selected{% endif %}>Admin</option>
-                <option value="analyste" {% if role_filter == 'analyste' %}selected{% endif %}>Analyste</option>
-            </select>
-            <button type="submit" class="btn btn-primary">Filtrer</button>
-        </form>
-
-        <div class="ajouter-btn">
-            <a href="{% url 'ajouter_utilisateur' %}" class="btn btn-success">+ Ajouter un utilisateur</a>
+<!-- Header EN DEHORS du wrapper -->
+    <header class="dashboard-header">
+        <div class="header-left">
+            <button class="back-button" onclick="window.history.back()">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="dashboard-title">{{ page_title }}</h1>
         </div>
+        <div class="header-icons">
+            <button class="header-icon" onclick="goHome()" title="Accueil">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="header-icon" onclick="openSearch()" title="Rechercher">
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="header-icon" onclick="openNotifications()" title="Notifications">
+                <i class="fas fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="header-icon" onclick="openHelp()" title="Aide">
+                <i class="fas fa-question"></i>
+            </button>
+            <button class="header-icon" onclick="openProfile()" title="Profil">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </header>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Email</th>
-                    <th>Rôle</th>
-                    <th>Statut</th>
-                    <th>Date d'adhésion</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for utilisateur in utilisateurs %}
-                <tr>
-                    <td>{{ utilisateur.nom }}</td>
-                    <td>{{ utilisateur.email }}</td>
-                    <td>{{ utilisateur.role|title }}</td>
-                    <td>{{ utilisateur.is_active|yesno:"Actif,Inactif" }}</td>
-                    <td>{{ utilisateur.date_joined|date:"d/m/Y" }}</td>
-                    <td>
-                        <a href="{% url 'modifier_utilisateur' utilisateur.id %}" class="btn btn-warning btn-sm">Modifier</a>
-                        <a href="{% url 'supprimer_utilisateur' utilisateur.id %}" class="btn btn-danger btn-sm">Supprimer</a>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr><td colspan="6">Aucun utilisateur trouvé.</td></tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Gestion des Utilisateurs</h2>
+            </div>
+            <ul>
+                <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
+                <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
+                <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
+                <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
+                <li><a href="{% url 'first_dashboard_ML' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                <li><a href="{% url 'first_dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                <li><a href="{% url 'first_dashboard_utilisateurs' %}" class="active"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
+            </ul>
+        </nav>
 
-        <h4>Répartition des utilisateurs</h4>
-        <canvas id="roleChart" width="400" height="300" style="max-width: 100%; max-height: 300px;"></canvas>
+        <!-- Contenu principal -->
+        <div class="main-content">
+            <div class="page-header loading">
+                <h1>
+                    <i class="fas fa-users-cog"></i>
+                    Listes des Utilisateurs
+                </h1>
+                <p>Gérez facilement vos utilisateurs, attribuez des rôles et suivez leur activité pour renforcer la sécurité et l’efficacité de votre plateforme de détection de fraudes.</p>
+            </div>
+
+            <!-- Formulaires de filtre -->
+            <h2>Filtres</h2>
+            <form method="get" class="form-inline mb-4">
+                <div class="form-group">
+                    <label for="role" class="form-label">Filtrer par rôle :</label>
+                    <select name="role" id="role" class="form-select">
+                        <option value="">Tous</option>
+                        <option value="admin" {% if role_filter == 'admin' %}selected{% endif %}>Admin</option>
+                        <option value="analyste" {% if role_filter == 'analyste' %}selected{% endif %}>Analyste</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="date" class="form-label">Filtrer par date :</label>
+                    <input type="date" name="date" id="date" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Filtrer</button>
+            </form>
+
+            <!-- Tableau des modèles -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                        <th>Date d'adhésion</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for utilisateur in utilisateurs %}
+                    <tr>
+                        <td>{{ utilisateur.nom }}</td>
+                        <td>{{ utilisateur.email }}</td>
+                        <td>{{ utilisateur.role|title }}</td>
+                        <td>{{ utilisateur.is_active|yesno:"Actif,Inactif" }}</td>
+                        <td>{{ utilisateur.date_joined|date:"d/m/Y" }}</td>
+                        <td>
+                            <a href="{% url 'modifier_utilisateur' utilisateur.id %}" class="btn btn-warning btn-sm">Modifier</a>
+                            <a href="{% url 'supprimer_utilisateur' utilisateur.id %}" class="btn btn-danger btn-sm">Supprimer</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="6">Aucun utilisateur trouvé.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <!-- Statistiques (graphes) -->
+            <h4>Répartition des utilisateurs</h4>
+            <canvas id="roleChart" width="400" height="300" style="max-width: 100%; max-height: 300px;"></canvas>
+        </div>
     </div>
 
     <footer>

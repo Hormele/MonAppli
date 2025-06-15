@@ -273,6 +273,90 @@ header {
     font-size: 1.1rem;
     line-height: 1.6;
 }
+.stats-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background: rgba(30, 41, 59, 0.85);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    border-radius: 18px;
+    box-shadow: 0 6px 24px rgba(59, 130, 246, 0.10);
+    padding: 1.5rem 2rem;
+    min-width: 180px;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 12px 32px rgba(59, 130, 246, 0.18);
+    border-color: #3b82f6;
+}
+
+.stat-card i {
+    font-size: 2.2rem;
+    color: #3b82f6;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 8px rgba(59,130,246,0.15));
+}
+
+.stat-value {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.2rem;
+    letter-spacing: 1px;
+}
+
+.stat-label {
+    display: block;
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 900px) {
+    .stats-cards {
+        gap: 1.2rem;
+    }
+    .stat-card {
+        min-width: 140px;
+        padding: 1.2rem 1rem;
+    }
+    .stat-card i {
+        font-size: 1.7rem;
+    }
+    .stat-value {
+        font-size: 1.3rem;
+    }
+    .stat-label {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .stats-cards {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+    }
+    .stat-card {
+        width: 100%;
+        justify-content: flex-start;
+    }
+}
 
 /* Footer fixe */
 footer {

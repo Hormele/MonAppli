@@ -241,7 +241,15 @@ html, body {
     text-align: center;
 }
 
+/* Ajoute un padding à gauche à la deuxième colonne pour l'éloigner de la première */
 .table th:nth-child(2),
+.table td:nth-child(2) {
+    width: 180px;
+    max-width: 220px;
+    min-width: 120px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
 .table td:nth-child(2) {
     width: 180px;
     max-width: 220px;

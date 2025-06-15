@@ -51,11 +51,11 @@
                 <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
                 <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
                 <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
-                <li><a href="{% url 'liste_modeles' %}" class="active"><i class="fas fa-brain"></i>Modèles ML</a></li>
-                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
-                <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
-                <li><a href="{% url 'dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
-                <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'first_dashboard_ML' %}" class="active"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                <li><a href="{% url 'first_dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                <li><a href="{% url 'first_dashboard_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
                 <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
             </ul>
         </nav>
@@ -64,10 +64,10 @@
         <div class="main-content">
             <div class="page-header loading">
                 <h1>
-                    <i class="fas fa-brain"></i>
-                    Gestion des Modèles ML
+                    <i class="fas fa-list"></i>
+                    Liste des Modèles ML
                 </h1>
-                <p>Visualisez, importez et gérez vos modèles d'apprentissage automatique pour la détection de fraudes.</p>
+                <p>Visualisez, téléchargez ou supprimez vos modèles de machine learning pour la détection de fraude.</p>
             </div>
 
             <!-- Formulaires de filtre -->
@@ -97,13 +97,13 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Algorithme</th>
-                        <th>Type de fraude</th>
-                        <th>Date</th>
-                        <th>Fichier</th>
-                        <th>Actions</th>
+                        <th style="width: 60px;">ID</th>
+                        <th style="width: 180px;">Nom</th>
+                        <th style="width: 120px;">Algorithme</th>
+                        <th style="width: 120px;">Type de fraude</th>
+                        <th style="width: 120px;">Date</th>
+                        <th style="width: 180px;">Fichier</th>
+                        <th style="width: 120px;">Actions</th>
                     </tr>
                 </thead>
                 <tbody>

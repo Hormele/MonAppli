@@ -80,6 +80,10 @@ urlpatterns = [
     path('first_dashboard_ML/', views.first_dashboard_ML, name='first_dashboard_ML'),
     path('first_dashboard_gestionnaire/', views.first_dashboard_gestionnaire, name='first_dashboard_gestionnaire'),
     path('first_dashboard_campagnes/', views.first_dashboard_campagnes, name='first_dashboard_campagnes'),
+    path('first_dashboard_utilisateurs/', views.first_dashboard_utilisateurs, name='first_dashboard_utilisateurs'),
     path('campagnes-manuelles/', views.dashboard_campagnes_manuelles, name='dashboard_campagnes_manuelles'),
     path('campagnes-automatiques/', views.dashboard_campagnes_automatiques, name='dashboard_campagnes_automatiques'),
+
+    path('terms/', views.terms_view, name='terms'),
+    path('contact/', views.contact_view, name='contact'),
 ]

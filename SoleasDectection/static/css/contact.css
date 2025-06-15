@@ -1,0 +1,109 @@
+/* contact.css */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    color: #222;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 40px;
+    color: #1a4d6b;
+}
+body {
+    background: linear-gradient(-45deg, #e3e8ee, #cfd8dc, #b0bec5, #eceff1);
+    background-size: 400% 400%;
+    animation: gradientBG 12s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+form {
+    max-width: 700px;
+}
+form {
+    background: #fff;
+    max-width: 400px;
+    margin: 40px auto 20px auto;
+    padding: 30px 25px 20px 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #b0c4d6;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: #f4f8fb;
+    transition: border 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    border-color: #1a4d6b;
+    outline: none;
+}
+
+button[type="submit"] {
+    background: #1a4d6b;
+    color: #fff;
+    border: none;
+    padding: 10px 0;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+button[type="submit"]:hover {
+    background: #17608a;
+}
+
+hr {
+    max-width: 400px;
+    margin: 30px auto;
+    border: none;
+    border-top: 1px solid #d1e0ea;
+}
+
+p {
+    text-align: center;
+    color: #444;
+}
+
+a {
+    color: #1a4d6b;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

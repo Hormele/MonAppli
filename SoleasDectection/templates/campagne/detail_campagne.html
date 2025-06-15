@@ -11,17 +11,18 @@
 <body>
 
 <div class="sidebar">
-    <h2>Menu</h2>
+    <h2>Campagne</h2>
     <ul>
-        <li><a href="{% url 'dashboard_admin' %}">Tableau de bord Admin</a></li>
-        <li><a href="{% url 'dashboard_accueil' %}">Accueil</a></li>
-        <li><a href="{% url 'liste_campagnes' %}" class="active">Campagnes</a></li>
-        <li><a href="{% url 'liste_datasets' %}">Datasets</a></li>
-        <li><a href="{% url 'liste_utilisateurs' %}">Utilisateurs</a></li>
-        <li><a href="{% url 'liste_modeles' %}">Modèles ML</a></li>
-        <li><a href="{% url 'liste_campagne_test' %}">Campagne Test</a></li>
-        <li><a href="{% url 'dashboard_gestionnaire' %}">Gestionnaire</a></li>
-        <li><a href="{% url 'logout' %}">Déconnexion</a></li>
+        <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
+        <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
+        <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
+        <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
+        <li><a href="{% url 'first_dashboard_ML' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
+        <li><a href="{% url 'first_dashboard_campagnes' %}" class="active"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+        <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+        <li><a href="{% url 'first_dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+        <li><a href="{% url 'first_dashboard_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+        <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
     </ul>
 </div>
 

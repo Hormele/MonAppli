@@ -206,6 +206,7 @@ header {
     font-weight: 700;
     margin: 0;
 }
+    
 
 .header-haut p {
     color: #718096;
@@ -293,6 +294,7 @@ header {
     margin-right: 0;
 }
 
+
 /* Modules Grid */
 .modules-section {
     margin-top: 50px;
@@ -378,6 +380,7 @@ header {
 .models-card .module-icon { background: linear-gradient(135deg, #f093fb, #f5576c); }
 .campaigns-card .module-icon { background: linear-gradient(135deg, #4facfe, #00f2fe); }
 .manager-card .module-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+.users-card .module-icon { background: linear-gradient(135deg, #ea667c, #764ba2); }
 
 
 .module-card h3 {
@@ -410,6 +413,7 @@ header {
 .models-card:hover .btn { border-color: #f093fb; color: #f093fb; }
 .campaigns-card:hover .btn { border-color: #4facfe; color: #4facfe; }
 .manager-card:hover .btn { border-color: #43e97b; color: #43e97b; }
+.users-card:hover .btn { border-color: #ea667c; color: #ea667c; }
 
 /* Chart Section */
 .charts-section {

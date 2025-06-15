@@ -1,15 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
 body {
-  background: linear-gradient(145deg, #0f172a, #1e293b);
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #1e40af 75%, #0f172a 100%);
+  background-size: 400% 400%;
+  min-height: 100vh;
+  animation: gradientShift 15s ease infinite;
   font-family: 'Segoe UI', sans-serif;
   color: #f1f5f9;
   margin: 0;
-  padding: 0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Animation du fond */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.main-content {
+    flex: 1 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
 }
 
 .register-container {
   max-width: 500px;
   margin: 100px auto;
-  background: #1e293b;
+  background: white;
   padding: 40px;
   border-radius: 10px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.4);
@@ -23,31 +50,49 @@ h1 {
   -webkit-text-fill-color: transparent;
 }
 
-.form-group {
-    margin-bottom: 22px;
-    position: relative;
+form {
+  width: 100%;
 }
 
-input, select {
-    border-radius: 12px;
-    padding: 12px;
-    border: 1.5px solid #e2e8f0;
-    width: 100%;
-    font-size: 1em;
-    box-sizing: border-box;
+.form-group {
+  margin-bottom: 22px;
+  position: relative;
+  color: #1e293b;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  background: #fff;                /* Fond blanc visible */
+  border: 1.5px solid #cbd5e1;     /* Bordure grise claire */
+  border-radius: 10px;             /* Bords arrondis */
+  padding: 14px 12px;
+  font-size: 14px;
+  /* Texte gris foncé */
+  transition: border 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(44,62,80,0.04); /* Optionnel, pour relief */
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+    border-color: #667eea;           /* Bordure bleue au focus */
+    outline: none;
+    box-shadow: 0 0 0 2px #e0e7ff;
 }
 
 .role-group {
-    margin-top: 32px;
-    margin-bottom: 32px;
+  margin-top: 32px;
+  margin-bottom: 32px;
 }
 
 .toggle-password {
-    position: absolute;
-    top: 38px;
-    right: 18px;
-    cursor: pointer;
-    user-select: none;
+  position: absolute;
+  top: 38px;
+  right: 18px;
+  cursor: pointer;
+  user-select: none;
 }
 
 form p {
@@ -64,7 +109,7 @@ input {
 
 .btn-register {
   background: linear-gradient(45deg, #f97316, #3b82f6);
-  color: white;
+  color: black;
   padding: 12px;
   border: none;
   border-radius: 30px;
@@ -80,4 +125,5 @@ input {
 .login-link {
   margin-top: 20px;
   text-align: center;
+  color: #0f172a;
 }

@@ -13,8 +13,10 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn-ajouter">Ajouter</button>
-        <a href="{% url 'liste_utilisateurs' %}" class="btn-retour">Retour</a>
+        <div class="form-buttons">
+            <button type="submit" class="btn-ajouter">Ajouter</button>
+            <a href="{% url 'liste_utilisateurs' %}" class="btn-retour">Retour</a>
+        </div>
     </form>
 </div>
 </body>

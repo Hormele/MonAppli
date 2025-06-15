@@ -9,42 +9,47 @@
   <link rel="stylesheet" href="{% static 'css/register.css' %}">
 </head>
 <body>
-  <div class="register-container">
-    <h1>Créer un compte</h1>
-    <form method="POST">
-      {% csrf_token %}
-      <div class="form-group">
-        {{ form.nom.label_tag }} {{ form.nom }}
-      </div>
-      <div class="form-group">
-        {{ form.email.label_tag }} {{ form.email }}
-      </div>
-      <div class="form-group" style="position:relative;">
-        {{ form.password.label_tag }}
-        {{ form.password|add_class:"form-control" }}
-        <span class="toggle-password" onclick="togglePasswordRegister('password', 'eyeIconRegister1')" style="position:absolute;top:38px;right:18px;cursor:pointer;">
-          <svg id="eyeIconRegister1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="gray">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-        </span>
-      </div>
-      <div class="form-group" style="position:relative;">
-        {{ form.password_confirm.label_tag }}
-        {{ form.password_confirm|add_class:"form-control" }}
-        <span class="toggle-password" onclick="togglePasswordRegister('password_confirm', 'eyeIconRegister2')" style="position:absolute;top:38px;right:18px;cursor:pointer;">
-          <svg id="eyeIconRegister2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="gray">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-          </svg>
-        </span>
-      </div>
-      <div class="form-group role-group">
-        {{ form.role.label_tag }} {{ form.role }}
-      </div>
-      <button type="submit" class="btn-register">S’inscrire</button>
-    </form>
-    <p class="login-link">Déjà inscrit ? <a href="{% url 'login' %}">Connectez-vous ici</a></p>
+  <div class="main-content">
+    <div class="register-container">
+      <h1>Créer un compte</h1>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          {{ form.nom.label_tag }} 
+          {{ form.nom|attr:"placeholder:Entrez votre nom" }}
+        </div>
+        <div class="form-group">
+          {{ form.email.label_tag }} 
+          {{ form.email|attr:"placeholder:Entrez votre adresse e-mail" }}
+        </div>
+        <div class="form-group" style="position:relative;">
+          {{ form.password.label_tag }}
+          {{ form.password|add_class:"form-control"|attr:"placeholder:Créez le mot de passe" }}
+          <span class="toggle-password" onclick="togglePasswordRegister('password', 'eyeIconRegister1')" style="position:absolute;top:38px;right:18px;cursor:pointer;">
+            <svg id="eyeIconRegister1" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="gray">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </span>
+        </div>
+        <div class="form-group" style="position:relative;">
+          {{ form.password_confirm.label_tag }}
+          {{ form.password_confirm|add_class:"form-control"|attr:"placeholder:Confirmez le mot de passe" }}
+          <span class="toggle-password" onclick="togglePasswordRegister('password_confirm', 'eyeIconRegister2')" style="position:absolute;top:38px;right:18px;cursor:pointer;">
+            <svg id="eyeIconRegister2" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="gray">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </span>
+        </div>
+        <div class="form-group role-group">
+          {{ form.role.label_tag }} 
+          {{ form.role|attr:"placeholder:Sélectionnez votre rôle" }}
+        </div>
+        <button type="submit" class="btn-register">S’inscrire</button>
+      </form>
+      <p class="login-link">Déjà inscrit ? <a href="{% url 'login' %}">Connectez-vous ici</a></p>
+    </div>
   </div>
   <script>
     function togglePasswordRegister(fieldName, eyeId) {

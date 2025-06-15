@@ -44,18 +44,18 @@
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="sidebar-header">
-                <h2>Panel Gestionnaire</h2>
+                <h2>Gestionnaire</h2>
             </div>
             <ul>
                 <li><a href="{% url 'dashboard_accueil' %}"><i class="fas fa-home"></i>Accueil</a></li>
                 <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
                 <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
                 <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
-                <li><a href="{% url 'liste_modeles' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
-                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
-                <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
-                <li><a href="{% url 'dashboard_gestionnaire' %}" class="active"><i class="fas fa-cog"></i>Gestionnaire</a></li>
-                <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'first_dashboard_ML' %}"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                <li><a href="{% url 'first_dashboard_gestionnaire' %}" class="active"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                <li><a href="{% url 'first_dashboard_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
                 <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
             </ul>
         </nav>
@@ -64,10 +64,10 @@
         <div class="main-content">
             <div class="page-header loading">
                 <h1>
-                    <i class="fas fa-brain"></i>
+                    <i class="fas fa-user-check"></i>
                     Détail de la Campagne_Test #{{ fichier.id }}
                 </h1>
-                <p>Consulter, filtrer et voir les details des fichiers d'une campagne.</p>
+                <p>Consulter, filtrer, statuer et générer le rapport des détails des fichiers suspects d'une campagne.</p>
             </div>
 
             <!-- Bouton Générer le rapport PDF en haut -->

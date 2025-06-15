@@ -8,7 +8,7 @@
     <title>{{ page_title }} - Plateforme IA</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/first_dashboard_gestionnaire.css' %}">
+    <link rel="stylesheet" href="{% static 'css/first_dashboard_utilisateur.css' %}">
 </head>
 
 <body>
@@ -43,27 +43,17 @@
     <!-- Main Content -->
     <div class="main-container">
         <div class="page-header">
-            <h1><i class="fas fa-cog"></i> {{ page_title }}</h1>
+            <h1><i class="fas fa-users"></i> {{ page_title }}</h1>
         </div>
         <div class="cards-row">
-            <a href="{% url 'dashboard_gestionnaire' %}" class="action-card">
-                <i class="fas fa-list"></i>
-                <span>Liste des fichiers suspects</span>
+            <a href="{% url 'liste_utilisateurs' %}" class="action-card">
+                <i class="fas fa-users-cog"></i>
+                <span>Consulter et gerer vos utilisateurs</span>
                 <i class="fas fa-chevron-right chevron-right"></i>
             </a>
-            <a href="{% url 'detail_test' fichier.id %}" class="action-card">
-                <i class="fas fa-user-check"></i>
-                <span>Detail des suspects et prise de decion de l'utilisateur </span>
-                <i class="fas fa-chevron-right chevron-right"></i>
-            </a>
-            <a href="{% url 'gestionnaire_regles_metier' %}" class="action-card">
-                <i class="fas fa-sliders-h"></i>
-                <span>Consulter et gerer les regles metiers appliquees</span>
-                <i class="fas fa-chevron-right chevron-right"></i>
-            </a>
-            <a href="{% url 'ajouter_regle_metier' %}" class="action-card">
-                <i class="fas fa-plus-circle"></i>
-                <span>Ajouter regles metiers appliquees</span>
+            <a href="{% url 'ajouter_utilisateur' %}" class="action-card">
+                <i class="fas fa-user-plus"></i>
+                <span>Ajouter un utilisateur</span>
                 <i class="fas fa-chevron-right chevron-right"></i>
             </a>
         </div>

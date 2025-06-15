@@ -51,11 +51,11 @@
                 <li><a href="{% url 'dashboard_admin' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Admin</a></li>
                 <li><a href="{% url 'dashboard_analyste' %}"><i class="fas fa-tachometer-alt"></i>Tableau de bord Analyste</a></li>
                 <li><a href="{% url 'first_dashboard_dataset' %}"><i class="fas fa-database"></i>Datasets</a></li>
-                <li><a href="{% url 'liste_modeles' %}" class="active"><i class="fas fa-brain"></i>Modèles ML</a></li>
-                <li><a href="{% url 'liste_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
-                <li><a href="{% url 'liste_campagne_test' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
-                <li><a href="{% url 'dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
-                <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'first_dashboard_ML' %}" class="active"><i class="fas fa-brain"></i>Modèles ML</a></li>
+                <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
+                <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
+                <li><a href="{% url 'first_dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
+                <li><a href="{% url 'first_dashboard_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
                 <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
             </ul>
         </nav>
@@ -64,10 +64,10 @@
         <div class="main-content">
             <div class="page-header loading">
                 <h1>
-                    <i class="fas fa-database"></i>
+                    <i class="fas fa-robot"></i>
                     Entrainer un Modele
                 </h1>
-                <p>Entrainer vos modèles a partir d'un jeu de donnee nettoye et d'un algorithme au choix.</p>
+                <p>Entraînez vos modèles à partir d’un jeu de données déjà présent sur la plateforme et d’un algorithme de votre choix.</p>
             </div>
 
             <!-- Display errors -->

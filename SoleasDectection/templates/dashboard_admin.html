@@ -20,7 +20,29 @@
         <div class="nav-right">
             <ul>
                 <li><a href="{% url 'dashboard_accueil' %}" title="Accueil"><i class="fas fa-house"></i></a></li>
-                <li><a href="#" title="Notifications"><i class="fas fa-bell"></i></a></li>
+                <li class="notification">
+                    <a href="#" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notif-badge" style="right: 2px; top: -6px; transform: none;">3</span>
+                    </a>
+                </li>
+                <style>
+                    .notification {
+                        position: relative;
+                    }
+                    .notif-badge {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        background: red;
+                        color: white;
+                        border-radius: 50%;
+                        padding: 2px 6px;
+                        font-size: 12px;
+                        font-weight: bold;
+                        transform: translate(50%, -40%);
+                    }
+                </style>
                 <li><a href="#" title="Aide"><i class="fas fa-circle-question"></i></a></li>
                 <li><a href="#" title="Recherche"><i class="fas fa-magnifying-glass"></i></a></li>
                 <li>
@@ -49,7 +71,7 @@
                 <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-bullhorn"></i>Campagnes</a></li>
                 <li><a href="{% url 'first_dashboard_campagnes' %}"><i class="fas fa-flask"></i>Campagne Test</a></li>
                 <li><a href="{% url 'first_dashboard_gestionnaire' %}"><i class="fas fa-cog"></i>Gestionnaire</a></li>
-                <li><a href="{% url 'liste_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
+                <li><a href="{% url 'first_dashboard_utilisateurs' %}"><i class="fas fa-users"></i>Utilisateurs</a></li>
                 <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Déconnexion</a></li>
             </ul>
         </nav>
@@ -128,7 +150,7 @@
                                 <i class="fas fa-bullhorn"></i>
                             </div>
                             <h3>Campagnes de Détection</h3>
-                            <p>Lancez et supervisez vos campagnes de détection. Analysez les résultats et exportez les rapports détaillés.</p>
+                            <p>Lancez et supervisez vos campagnes de détection. Analysez les résultats de vos campagnes en temps réel.</p>
                             <a href="{% url 'first_dashboard_campagnes' %}" class="btn">Gérer les Campagnes</a>
                         </div>
 
@@ -137,8 +159,17 @@
                                 <i class="fas fa-cog"></i>
                             </div>
                             <h3>Panel Gestionnaire</h3>
-                            <p>Accédez aux outils de gestion avancés, configurations système et paramètres de sécurité de la plateforme.</p>
+                            <p>Consultez la liste des résultats obtenus après entraînement, examinez les suspects avec leurs informations, prenez une décision et exportez un rapport au format PDF.</p>
                             <a href="{% url 'first_dashboard_gestionnaire' %}" class="btn">Accéder au Panel</a>
+                        </div>
+
+                        <div class="module-card users-card" onclick="location.href='{% url 'first_dashboard_utilisateurs' %}'">
+                            <div class="module-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h3>Gestion des Utilisateurs</h3>
+                            <p>Gérez les utilisateurs de la plateforme, attribuez des rôles et suivez les activités.</p>
+                            <a href="{% url 'first_dashboard_utilisateurs' %}" class="btn">Gérer les Utilisateurs</a>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,30 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Condition d'utilisation - Soleas dectection</title>
+  <link rel="stylesheet" href="{% static 'css/terms.css' %}">
+</head>
+<body>
+    <h1>Conditions d'utilisation</h1>
+    <p>
+        Seuls les utilisateurs disposant d'une adresse e-mail professionnelle @mysoleas peuvent accéder à ce site.
+    </p>
+    <p>
+        En utilisant ce site, vous acceptez les conditions suivantes :<br>
+        <ul>
+            <li>Le contenu du site est fourni à titre informatif et peut être modifié à tout moment.</li>
+            <li>Vous vous engagez à ne pas utiliser ce site à des fins illégales ou non autorisées.</li>
+            <li>La reproduction, la distribution ou l'utilisation du contenu sans autorisation est interdite.</li>
+            <li>Nous ne sommes pas responsables des dommages résultant de l'utilisation du site.</li>
+            <li>Pour toute question, veuillez nous contacter via la page de contact.</li>
+        </ul>
+    </p>
+    <nav>
+        <a href="{% url 'terms' %}">Condition d'utilisation</a>
+        <a href="{% url 'contact' %}">Contact</a>
+    </nav>
+</body>
+</html>

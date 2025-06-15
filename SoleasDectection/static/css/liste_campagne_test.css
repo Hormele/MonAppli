@@ -217,7 +217,7 @@ html, body {
 }
 
 .form-inline label {
-    font-weight: 500;
+    font-weight: 350;
     color: #2d3748;
     margin-right: 6px;
 }
@@ -276,17 +276,42 @@ html, body {
 /* Fixe la largeur de la colonne ID et ajuste Nom */
 .table th:nth-child(1),
 .table td:nth-child(1) {
-    width: 50px;
-    max-width: 60px;
+    width: 70px;
+    max-width: 70px;
     min-width: 40px;
     text-align: center;
 }
 
 .table th:nth-child(2),
 .table td:nth-child(2) {
-    width: 180px;
+    width: 130px;
     max-width: 220px;
     min-width: 120px;
+}
+
+/* Suppose que la colonne Actions est la 8ème colonne */
+.table th:last-child,
+.table td:last-child {
+    min-width: 150px;   /* Augmente si tu as plusieurs boutons */
+    width: 170px;
+    max-width: 200px;
+    white-space: normal;      /* Permet le retour à la ligne si besoin */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.table td button,
+.table td a.btn {
+    padding: 6px 10px;        /* Réduit le padding pour gagner de la place */
+    font-size: 0.95em;
+    margin: 2px 2px;
+    max-width: 100%;
+    box-sizing: border-box;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
 }
 
 /* Les autres colonnes prennent l'espace restant */
@@ -297,6 +322,21 @@ html, body {
 
 .table tbody tr:hover {
     background: #f0f4fa;
+}
+
+.cell-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; /* espace entre les boutons */
+    height: 100%;
+    justify-content: space-between;
+}
+
+.cell-actions .btn {
+    width: 90%; /* ou 100% si tu veux des boutons larges */
+    box-sizing: border-box;
+    margin: 0;
 }
 
 /* BUTTONS */
@@ -311,8 +351,13 @@ html, body {
     text-decoration: none;
 }
 .btn-danger {
-    background: #ff5252;
+    background: #e11d48;
     color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s;
 }
 .btn-danger:hover {
     background: #e11d48;

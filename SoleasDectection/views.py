@@ -31,7 +31,20 @@ Utilisateur = get_user_model()
 
 #1.-------------------- VUE POUR LE DASHBOARD D'ACCEUIL----------------------
 def dashboard_accueil(request):
-    return render(request, 'dashboard_accueil.html')
+    # Statistiques fictives pour l'accueil (à remplacer par des vraies données si besoin)
+    stats = {
+        "precision_modele": 98.7,
+        "transactions_analysees": 1245,
+        "anomalies_detectees": 12,
+        "temps_moyen_analyse": 1.2,
+    }
+    return render(request, 'dashboard_accueil.html', {"stats": stats})
+
+def terms_view(request):
+    return render(request, 'terms.html')
+
+def contact_view(request):
+    return render(request, 'contact.html')
 
 #-------------------------- VUE DASHBOARD ADMIN 
 @admin_required
@@ -1513,6 +1526,7 @@ def liste_utilisateurs(request):
     chart_data = [admins_count, analystes_count]
 
     context = {
+        "page_title": 'Liste des Utilisateurs',
         'utilisateurs': utilisateurs,
         'role_filter': role_filter,
         'admins_count': admins_count,
@@ -1687,6 +1701,12 @@ def first_dashboard_gestionnaire(request):
         "page_title": "Panel de Gestionnaire"
     })
 
+
+@login_required
+def first_dashboard_utilisateurs(request):
+    return render(request, "utilisateur/first_dashboard_utilisateur.html", {
+        "page_title": "Gestion des Utilisateurs"
+    })
 # -------------------------------------------
 # CREATION DU COMPTE ET OTP
 # ------------------------------------------
