@@ -20,10 +20,11 @@ from .models import Campagne, Utilisateur, Dataset, GestionnaireRisque, Notifica
 
 
 
-def admin_required(view_func):
-    decorated_view_func = user_passes_test(lambda u: u.is_authenticated and u.role == 'admin')(view_func)
+def admin_required(view_func): #superuser ou  admin peuvent y acceder
+    decorated_view_func = user_passes_test(
+        lambda u: u.is_authenticated and (u.role == 'admin' or u.is_superuser)
+    )(view_func)
     return decorated_view_func
-
 
 Utilisateur = get_user_model()
 
@@ -55,6 +56,12 @@ def dashboard_admin(request):
     campaigns_count = CampagneTest.objects.filter(statut='echec').count()
     finished_campaigns_count = CampagneTest.objects.filter(statut='succes').count()
     datasets_count = Dataset.objects.count()
+    
+
+    # Récupérer les suspects
+    suspects_legitime = SuspectTest.objects.filter(decision='légitime').count()
+    suspects_bloque = SuspectTest.objects.filter(decision='bloque').count()
+    suspects_attente = SuspectTest.objects.filter(decision='en attente').count()
 
     # Données pour le graphique des datasets par mois
     datasets_par_mois = Dataset.objects.annotate(
@@ -81,6 +88,33 @@ def dashboard_admin(request):
     for d in campaigns_par_mois:
         campaigns_data[d['month'] - 1] = d['total']
 
+    # Données pour le graphique modeles par mois
+    modele_par_mois = ModeleML.objects.annotate(
+        month=ExtractMonth('date_creation')  # Assurez-vous que 'date_creation' est le bon champ
+    ).values('month').annotate(
+        total=Count('id')
+    ).order_by('month')
+
+    print ("modele_par_mois :", list(modele_par_mois))
+
+    modele_data = [0] * 12
+    for m in modele_par_mois:
+        if m['month']:
+            modele_data[m['month'] - 1] = m['total']
+
+    # Afficher les stats de prédiction du dernier test
+    tests = CampagneTest.objects.all()
+    dernier_test = tests.last()
+
+    if dernier_test and dernier_test.graph_data:
+        try:
+            graph_data = json.loads(dernier_test.graph_data)  # Convertir la chaîne en dictionnaire
+        except json.JSONDecodeError:
+            graph_data = {'labels': ['Normal (1)', 'Anomalie (-1)'], 'data': [0, 0]}
+    else:
+        graph_data = {'labels': ['Normal (1)', 'Anomalie (-1)'], 'data': [0, 0]}
+
+
     # Labels des mois
     mois_labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -94,6 +128,12 @@ def dashboard_admin(request):
         'mois_labels': mois_labels,
         'datasets_data': datasets_data,
         'campaigns_data': campaigns_data,
+        'modele_data': modele_data,
+        'graph_labels': graph_data['labels'],
+        'graph_values': graph_data['data'],
+        'suspects_legitime': suspects_legitime,
+        'suspects_bloque': suspects_bloque,
+        'suspects_attente': suspects_attente,
         'user': user,
     }
 
@@ -102,11 +142,11 @@ def dashboard_admin(request):
 
 #-------------------------------- VUE DASHBOARD ANALYSTE -----------------------
 @login_required
-@user_passes_test(lambda u: u.role == 'analyste')
+@user_passes_test(lambda u: (u.role == 'analyste' or u.is_superuser)) # superuser ou analyste a l'acces
 def dashboard_analyste(request):
     # Récupérer les données des campagnes
-    campaigns_count = CampagneTest.objects.filter(statut='en cours').count()
-    finished_campaigns_count = CampagneTest.objects.filter(statut='terminee').count()
+    campaigns_count = CampagneTest.objects.filter(statut='echec').count()
+    finished_campaigns_count = CampagneTest.objects.filter(statut='succes').count()
     datasets_count = Dataset.objects.count()
 
     # Récupérer les suspects
@@ -200,16 +240,10 @@ def liste_datasets(request):
     if date_max:
         datasets = datasets.filter(dateC__lte=date_max)
 
-    # Statistiques
-    brut_count = datasets.filter(type='brut').count()
-    nettoye_count = datasets.filter(type='nettoye').count()
-
+    
     context = {
         "page_title": "Gestion des Datasets",
         'datasets': datasets,
-        'brut_count': brut_count,
-        'nettoye_count': nettoye_count,
-        
     }
     return render(request, 'dataset/liste_datasets.html', context)
 
@@ -348,32 +382,10 @@ def liste_modeles(request):
     if date_filter:
         modeles = modeles.filter(date_creation__date=date_filter)
 
-    # Données pour les graphiques (statistiques par algorithme)
-    algo_stats = (
-        modeles.values("algorithme")
-        .annotate(nombre=Count("id"))
-        .order_by("algorithme")
-    )
-    algo_labels = [item["algorithme"] for item in algo_stats]
-    algo_data = [item["nombre"] for item in algo_stats]
-
-    # Données pour les graphiques (statistiques par type de fraude)
-    fraude_stats = (
-        modeles.values("type_fraude")
-        .annotate(nombre=Count("id"))
-        .order_by("type_fraude")
-    )
-    fraude_labels = [item["type_fraude"] for item in fraude_stats]
-    fraude_data = [item["nombre"] for item in fraude_stats]
-
     # Passer les données au template
     context = {
         "page_title_ml": "Gestion des Modeles ML",
         "modeles": modeles,
-        "algo_labels": algo_labels,
-        "algo_data": algo_data,
-        "fraude_labels": fraude_labels,
-        "fraude_data": fraude_data,
     }
 
     return render(request, "modele/liste_modeles.html", context)
@@ -1365,7 +1377,7 @@ def ajouter_regles_metier(request):
     })
 
 # Modifier une regle
-@login_required
+@admin_required
 def modifier_regles_metier(request, regle_id):
     regle = get_object_or_404(RegleMetier, id=regle_id)
 
@@ -1379,7 +1391,7 @@ def modifier_regles_metier(request, regle_id):
     return render(request, "gestionnaire/modifier_regles_metier.html", {"regle": regle})
 
 # Supprimer regle
-@login_required
+@admin_required
 def supprimer_regles_metier(request, regle_id):
     regle = get_object_or_404(RegleMetier, id=regle_id)
 

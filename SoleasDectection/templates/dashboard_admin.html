@@ -99,7 +99,7 @@
                             <i class="fas fa-play-circle"></i>
                         </div>
                         <h3>{{ campaigns_count|default:0 }}</h3>
-                        <p>Campagnes en cours</p>
+                        <p>Campagnes echouées</p>
                     </div>
                     <div class="stat-card">
                         <div class="stat-card-icon">
@@ -114,6 +114,30 @@
                         </div>
                         <h3>{{ datasets_count|default:11 }}</h3>
                         <p>Jeux de données</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h3>{{ suspects_legitime|default:0 }}</h3>
+                        <p>Suspects légitimes</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h3>{{ suspects_bloque|default:0 }}</h3>
+                        <p>Suspects bloqués</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-card-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h3>{{ suspects_attente|default:0 }}</h3>
+                        <p>Suspects en attente</p>
                     </div>
                 </div>
 
@@ -191,6 +215,18 @@
                             <h3>Évolution des Campagnes Test par mois</h3>
                             <canvas id="campaignsChart"></canvas>
                         </div>
+
+                        <div class="chart-container">
+                            <h3>Évolution des modeles par mois</h3>
+                            <canvas id="modeleChart"></canvas>
+                        </div>
+
+                        <!-- Graphique circulaire (Répartition des prédictions) -->
+                        <div class="chart-container">
+                            <h3>Répartition du dernier resultat des prédictions par fraude</h3>
+                            <canvas id="predictionChart"></canvas>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -203,9 +239,12 @@
 
     <script>
         // Données pour les graphiques (remplacez par vos vraies données Django)
-        const moisLabels = {{ mois_labels|safe|default:"['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun']" }};
-        const datasetsData = {{ datasets_data|safe|default:"[2, 4, 3, 5, 7, 6]" }};
-        const campaignsData = {{ campaigns_data|safe|default:"[1, 3, 2, 4, 5, 3]" }};
+        const moisLabels = {{ mois_labels|safe }};
+        const datasetsData = {{ datasets_data|safe }};
+        const campaignsData = {{ campaigns_data|safe }};
+        const modeleData = {{ modele_data|safe }};
+        const predictionLabels = {{ graph_labels|safe }};
+        const predictionData = {{ graph_values|safe }};
 
         // Graphique des datasets
         new Chart(document.getElementById('datasetsChart'), {
@@ -217,33 +256,33 @@
                     data: datasetsData,
                     backgroundColor: 'rgba(102, 126, 234, 0.6)',
                     borderColor: 'rgba(102, 126, 234, 1)',
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    borderSkipped: false,
+                    borderWidth: 1,
+                    
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: { 
-                    y: { 
-                        beginAtZero: true,
-                        stepSize: 1,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Graphique modeles
+        new Chart(document.getElementById('modeleChart'), {
+            type: 'bar',
+            data: {
+                labels: moisLabels,
+                datasets: [{
+                    label: 'Modeles',
+                    data: modeleData,
+                    backgroundColor: 'rgba(102, 126, 234, 0.6)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 1,
+                    
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: { y: { beginAtZero: true } }
             }
         });
 
@@ -260,30 +299,39 @@
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4,
-                    pointBackgroundColor: 'rgba(240, 147, 251, 1)',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 6
+                    
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: true,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Graphique circulaire des prédictions
+        new Chart(document.getElementById('predictionChart').getContext('2d'), {
+            type: 'pie',
+            data: {
+                labels: predictionLabels,
+                datasets: [{
+                    label: 'Prédictions',
+                    data: predictionData,
+                    backgroundColor: ['#007bff', '#ffc107'],
+                }]
+            },
+            options: {
+                responsive: true,
                 plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: { 
-                    y: { 
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0, 0, 0, 0.05)'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
+                    legend: { position: 'top' },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const data = context.chart.data.datasets[0].data;
+                                const total = data.reduce((sum, val) => sum + val, 0);
+                                const value = context.raw;
+                                const percentage = ((value / total) * 100).toFixed(2);
+                                return `${context.label}: ${percentage}%`;
+                            }
                         }
                     }
                 }

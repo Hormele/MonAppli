@@ -138,8 +138,6 @@
                 </tbody>
             </table>
 
-            <h2>Statistiques des ensembles de données</h2>
-            <canvas id="datasetChart" width="600" height="200"></canvas>
         </div>
     </div>
 
@@ -149,28 +147,6 @@
     </footer>
 
     <!-- Chart -->
-    <script>
-        var ctx = document.getElementById('datasetChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Brut', 'Nettoyé'],
-                datasets: [{
-                    label: 'Nombre de datasets',
-                    data: [{{ brut_count }}, {{ nettoye_count }}],
-                    backgroundColor: ['#6c757d', '#28a745']
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        precision: 0
-                    }
-                }
-            }
-        });
-    </script>
+    
 </body>
 </html>
